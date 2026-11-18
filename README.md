@@ -1,0 +1,67 @@
+# Steapex Market Pulse
+
+แดชบอร์ดติดตามข่าวคู่แข่งและแนวโน้มตลาดรองเท้ากีฬา 15 แบรนด์ สำหรับทีม Steapex
+เป็นเว็บ static (HTML + JSON) โฮสต์ฟรีบน GitHub Pages และมี GitHub Actions ดึงข่าวใหม่ให้ทุกเช้า
+
+```
+index.html                       หน้าเว็บ (ธีมส้มอ่อน–เข้ม มีโหมดสว่าง/มืด)
+data/config.json                 รายชื่อแบรนด์ + คำค้นข่าว (แก้ที่นี่เพื่อเพิ่ม/ลบแบรนด์)
+data/items.json                  ข่าวที่คัดแล้ว (การ์ดข่าว)
+data/daily.json                  Trending + สรุปรายวัน
+data/brands.json                 สถานะ/บทเรียนรายแบรนด์
+data/events.json                 ปฏิทินเหตุการณ์ (แก้เองได้)
+data/headlines.json              พาดหัวข่าวดิบที่ดึงอัตโนมัติ (เก็บ 45 วัน)
+scripts/update.py                สคริปต์อัปเดตรายวัน (Python มาตรฐาน ไม่ต้องติดตั้งไลบรารี)
+.github/workflows/daily-update.yml   ตั้งเวลารัน 06:30 น. เวลาไทยทุกวัน
+```
+
+## ขึ้น GitHub (ทำครั้งเดียว)
+
+1. สร้าง repository ใหม่บน GitHub (แนะนำ **Private** ถ้าไม่อยากให้ข้อมูลคู่แข่งเป็นสาธารณะ — แต่ GitHub Pages ของ repo private ต้องใช้แพ็กเกจที่รองรับ ถ้าไม่รองรับให้ใช้ Public)
+2. อัปโหลดทุกไฟล์ในโฟลเดอร์นี้ขึ้นไปที่ branch `main`
+   ```bash
+   git init && git add . && git commit -m "init"
+   git branch -M main
+   git remote add origin https://github.com/<user>/<repo>.git
+   git push -u origin main
+   ```
+3. **เปิด Pages:** Settings → Pages → Source: *Deploy from a branch* → Branch: `main` / `(root)` → Save
+   เว็บจะอยู่ที่ `https://<user>.github.io/<repo>/`
+4. **ให้บอทเขียนไฟล์ได้:** Settings → Actions → General → Workflow permissions → เลือก *Read and write permissions* → Save
+5. (ไม่บังคับ แต่แนะนำ) **เปิดโหมดวิเคราะห์ด้วย Claude:** Settings → Secrets and variables → Actions → New repository secret
+   ชื่อ `ANTHROPIC_API_KEY` ค่า = API key ของคุณ จาก console.anthropic.com
+6. ไปที่แท็บ **Actions → Daily news update → Run workflow** เพื่อรันรอบแรกทันที (รอบแรกย้อนดูข่าว 14 วัน รอบถัดไปดู 3 วัน)
+
+## ระบบอัปเดตทำงานอย่างไร
+
+| ขั้น | ทำอะไร | ต้องมี key ไหม |
+|---|---|---|
+| 1 | ดึงพาดหัวข่าวจาก Google News RSS ตามคำค้นของแต่ละแบรนด์ + ตลาดรวม (อังกฤษ/ไทย/จีน) ตัดข่าวซ้ำ เก็บใน `headlines.json` | ไม่ต้อง |
+| 2 | ส่งพาดหัวใหม่ให้ Claude คัดข่าวที่เกี่ยวข้อง เขียนสรุปไทย "Steapex เรียนรู้" Trending และสถานะแบรนด์ → อัปเดต `items/daily/brands.json` | ต้องมี `ANTHROPIC_API_KEY` |
+| 3 | commit ไฟล์ข้อมูลกลับ repo → Pages อัปเดตเว็บเอง | — |
+
+- **ไม่มี key:** เว็บยังอัปเดตทุกวัน แต่ส่วน "พาดหัวข่าวสด" เท่านั้น (ไม่มีสรุป/วิเคราะห์ใหม่)
+- **ข้อมูลที่โมเดลใช้:** พาดหัว + ชื่อแหล่ง + วันที่ เท่านั้น ลิงก์แหล่งที่มาในการ์ดมาจาก RSS ไม่ได้มาจากโมเดล และโค้ดตัดแบรนด์/ลิงก์ที่ไม่มีอยู่จริงทิ้ง การ์ดที่สร้างอัตโนมัติมีป้าย "สรุปอัตโนมัติ" รายละเอียดจึงบางกว่าการ์ดที่ทีมคัดมือ ถ้าต้องการเจาะลึกให้เปิดลิงก์ต้นฉบับ
+- ปรับโมเดลได้ที่ Settings → Secrets and variables → Actions → **Variables** ชื่อ `ANTHROPIC_MODEL` (ค่าเริ่มต้น `claude-sonnet-5-5`)
+
+## ปรับแต่ง
+
+- **เพิ่มคู่แข่ง:** เพิ่มรายการใน `data/config.json` (`id`, `name`, `origin`, `queries`) หน้าเว็บและสคริปต์ใช้รายการเดียวกัน
+- **ONKE:** คำค้นปัจจุบันครอบคลุมทั้ง `ONKE running shoes` และ `欧克` แต่ยังยืนยันไม่ได้ว่าเป็นแบรนด์เดียวกับที่ทีมหมายถึงหรือไม่ ปรับคำค้นให้ตรงได้
+- **ปฏิทินเหตุการณ์:** แก้ `data/events.json` เอง (ระบบอัตโนมัติไม่เพิ่มเหตุการณ์ให้ เพราะต้องยืนยันวันที่จากแหล่งทางการ)
+- **เวลารัน:** แก้ `cron` ใน workflow (เวลาเป็น UTC; ไทย = UTC+7)
+
+## รันในเครื่อง
+
+```bash
+python -m http.server 8000          # เปิด http://localhost:8000
+python scripts/update.py            # ดึงข่าว (ใส่ ANTHROPIC_API_KEY ถ้าต้องการวิเคราะห์)
+DRY_RUN=1 python scripts/update.py  # ลองรันโดยไม่เขียนไฟล์
+```
+การเปิด `index.html` ตรงๆ (file://) จะโหลด JSON ไม่ได้ ต้องผ่านเซิร์ฟเวอร์ด้านบนหรือ GitHub Pages
+
+## ข้อจำกัดที่ควรรู้
+
+- Google News RSS เป็นช่องทางไม่เป็นทางการ อาจเปลี่ยนรูปแบบหรือจำกัดการเรียกได้ ถ้ารอบไหนดึงไม่ได้ สคริปต์จะข้ามคำค้นนั้นและไม่ทำให้ข้อมูลเดิมหาย
+- ข่าวจากหลายแหล่งอาจเป็นเรื่องเดียวกัน ระบบตัดซ้ำจากชื่อพาดหัวที่เหมือนกันเท่านั้น
+- ตัวเลขทางธุรกิจในการ์ดควรเช็กกับต้นทางก่อนใช้ตัดสินใจ

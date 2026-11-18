@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Steapex Market Pulse</title>
+<meta name="description" content="ติดตามข่าวคู่แข่งและแนวโน้มตลาดรองเท้ากีฬา อัปเดตทุกวัน สำหรับทีม Steapex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F26B1D'/%3E%3Cpath d='M7 21l6-10 4 6 3-4 5 8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<script>
+/* ตั้งธีมก่อนวาดหน้า กันกะพริบ */
+try{var t=localStorage.getItem('smp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}
+</script>
+<style>
+/* ธีม: ส้มอ่อน → ส้มเข้ม  (light = พื้นครีมส้ม / dark = น้ำตาลส้มเข้ม) */
+:root{
+  color-scheme:light;
+  --bg:#FFF8F2; --surface:#FFFFFF; --sunk:#FFEDE0; --ink:#2A1608; --muted:#7B5B45; --line:#F5D8C2;
+  --accent:#D9480F; --accent-soft:#FFE6D3; --heat:#F26B1D;
+  --o1:#FFD3AE; --o2:#FFB06B; --o3:#F26B1D; --o4:#C2410C; --o5:#7A2A05;
+  --grad-top:linear-gradient(115deg,#F58A3A 0%,#E8590C 50%,#A93A06 100%);
+  --grad-hero:linear-gradient(120deg,#FFEBD9 0%,#FFD2AB 100%);
+  --grad-deep:linear-gradient(145deg,#C2410C 0%,#7A2A05 100%);
+  --on-deep:#FFF4EA; --rank-a:#E8590C; --rank-b:#8A2E06;
+  --up:#17784A; --up-soft:#DDF3E6; --down:#B4232F; --down-soft:#FCE3E4; --watch:#8A5A00; --watch-soft:#FDEFC9;
+  --f-display:"Archivo","IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Thai","Archivo",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:12px; --shadow:0 1px 2px rgba(122,42,5,.06),0 6px 20px rgba(122,42,5,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#170C05; --surface:#231208; --sunk:#301A0C; --ink:#FFEEE0; --muted:#D2A98A; --line:#4A2A14;
+  --accent:#FF9A4D; --accent-soft:#3F210E; --heat:#FF8A3D;
+  --grad-top:linear-gradient(115deg,#9A3406 0%,#C2410C 50%,#E8590C 100%);
+  --grad-hero:linear-gradient(120deg,#2E1709 0%,#4A230B 100%);
+  --grad-deep:linear-gradient(145deg,#8A2E06 0%,#4A1A03 100%);
+  --rank-a:#FFB06B; --rank-b:#F26B1D;
+  --up:#5BD69A; --up-soft:#10301F; --down:#FF8A92; --down-soft:#3A161B; --watch:#F3C45A; --watch-soft:#33280E;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#170C05; --surface:#231208; --sunk:#301A0C; --ink:#FFEEE0; --muted:#D2A98A; --line:#4A2A14;
+  --accent:#FF9A4D; --accent-soft:#3F210E; --heat:#FF8A3D;
+  --grad-top:linear-gradient(115deg,#9A3406 0%,#C2410C 50%,#E8590C 100%);
+  --grad-hero:linear-gradient(120deg,#2E1709 0%,#4A230B 100%);
+  --grad-deep:linear-gradient(145deg,#8A2E06 0%,#4A1A03 100%);
+  --rank-a:#FFB06B; --rank-b:#F26B1D;
+  --up:#5BD69A; --up-soft:#10301F; --down:#FF8A92; --down-soft:#3A161B; --watch:#F3C45A; --watch-soft:#33280E;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--heat);outline-offset:2px;border-radius:6px}
+[hidden]{display:none!important}
+
+/* Header */
+.top{position:sticky;top:0;z-index:20;background:var(--grad-top);color:#fff;box-shadow:0 2px 14px rgba(122,42,5,.25)}
+.top-in{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mark{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 125;letter-spacing:.05em;font-size:19px;display:flex;align-items:center;gap:11px}
+.mark svg{flex:none}
+.mark span{font-weight:600;font-variation-settings:"wdth" 75;letter-spacing:.1em;text-transform:uppercase;font-size:12.5px;opacity:.92}
+.top-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.status{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px}
+.dot{width:8px;height:8px;border-radius:50%;background:#fff;opacity:.7}
+.status.live .dot{opacity:1;background:#B7F7D3;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(183,247,211,.7)}70%{box-shadow:0 0 0 7px rgba(183,247,211,0)}100%{box-shadow:0 0 0 0 rgba(183,247,211,0)}}
+.icon-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;padding:0}
+.icon-btn:hover{background:rgba(255,255,255,.26)}
+
+/* Hero */
+.hero{background:var(--grad-hero);border-bottom:1px solid var(--line)}
+.hero-in{max-width:1240px;margin:0 auto;padding:28px 20px 22px;display:grid;gap:16px}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(25px,3.6vw,38px);line-height:1.2;margin:0;text-wrap:balance}
+.hero p{margin:6px 0 0;color:var(--muted);max-width:70ch}
+.stats{display:flex;flex-wrap:wrap;gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;min-width:112px}
+.stat b{display:block;font-family:var(--f-display);font-variation-settings:"wdth" 85;font-size:24px;line-height:1.1;color:var(--accent)}
+.stat span{font-size:12.5px;color:var(--muted)}
+
+.wrap{max-width:1240px;margin:0 auto;padding:22px 20px 64px;display:grid;gap:24px}
+.brandbar{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);padding:7px 13px;border-radius:999px;font-weight:500;font-size:14px;transition:border-color .15s,background .15s,transform .15s}
+.chip:hover{border-color:var(--heat)}
+.chip[aria-pressed="true"]{background:var(--grad-deep);color:var(--on-deep);border-color:transparent}
+.chip .n{font-family:var(--f-mono);font-size:11px;color:var(--muted);background:var(--sunk);border-radius:999px;padding:0 6px;line-height:18px}
+.chip[aria-pressed="true"] .n{background:rgba(255,255,255,.2);color:#fff}
+.chip.sm{padding:4px 11px;font-size:13px}
+
+.label{font-family:var(--f-display);font-variation-settings:"wdth" 80;text-transform:uppercase;letter-spacing:.1em;font-size:12px;font-weight:700;color:var(--muted);margin:0 0 10px}
+h2.sec{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0 0 4px;text-wrap:balance}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.stack{display:grid;gap:22px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0;box-shadow:var(--shadow)}
+
+/* Trending */
+.trend{display:grid;grid-template-columns:46px minmax(0,1fr);gap:14px;padding-block:16px;border-top:1px solid var(--line)}
+.trend:first-of-type{border-top:0;padding-top:4px}
+.rank{font-family:var(--f-display);font-variation-settings:"wdth" 70;font-weight:800;font-size:38px;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(160deg,var(--rank-a,#E8590C),var(--rank-b,#8A2E06));-webkit-background-clip:text;background-clip:text;color:transparent}
+.trend h3{margin:0 0 4px;font-size:16.5px;line-height:1.45;font-weight:600}
+.trend p{margin:0 0 8px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0;align-items:center}
+.btag{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--sunk)}
+.btag:hover{border-color:var(--heat);color:var(--accent)}
+.daysel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.lesson{background:var(--accent-soft);border-left:3px solid var(--heat);border-radius:8px;padding:10px 13px;font-size:14px;margin-top:8px}
+.lesson b{color:var(--accent);font-weight:600}
+.takeaway{background:var(--grad-deep);color:var(--on-deep);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.takeaway .label{color:rgba(255,244,234,.75)}
+.takeaway p{margin:0 0 10px}
+.takeaway ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.copybtn{margin-top:14px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);color:#fff;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600}
+.copybtn:hover{background:rgba(255,255,255,.22)}
+
+/* Calendar */
+.cal{list-style:none;margin:0;padding:0}
+.cal li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:12px;padding-block:10px;border-top:1px dashed var(--line)}
+.cal li:first-child{border-top:0}
+.cd{font-family:var(--f-mono);font-size:12px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:4px 0;line-height:1.3;background:var(--sunk)}
+.cd b{display:block;font-family:var(--f-display);font-variation-settings:"wdth" 75;font-size:20px;color:var(--heat)}
+.cal .t{font-weight:600;font-size:14px;line-height:1.45}
+.cal .d{font-size:12.5px;color:var(--muted)}
+
+/* Brand table */
+.mtable{width:100%;border-collapse:collapse;font-size:14px}
+.mtable td{padding:9px 6px;border-top:1px solid var(--line);vertical-align:top}
+.mtable tr:first-child td{border-top:0}
+.mtable tr{cursor:pointer}
+.mtable tr:hover td{background:var(--sunk)}
+.mtable .bn{font-weight:600;white-space:nowrap}
+.mtable .hl{color:var(--muted);font-size:13px}
+.mom{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:1px 9px;white-space:nowrap}
+.m-up{background:var(--up-soft);color:var(--up)} .m-steady{background:var(--sunk);color:var(--muted)}
+.m-down{background:var(--down-soft);color:var(--down)} .m-watch{background:var(--watch-soft);color:var(--watch)}
+
+/* Cards */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.feed{display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;min-width:0;box-shadow:var(--shadow);position:relative}
+.card::before{content:"";position:absolute;inset:14px auto 14px 0;width:3px;border-radius:0 3px 3px 0;background:linear-gradient(var(--o2),var(--o4))}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.kind{font-weight:600;font-size:11.5px;border-radius:5px;padding:1px 8px}
+.k-news{background:var(--sunk);color:var(--ink)} .k-product{background:var(--accent-soft);color:var(--accent)}
+.k-campaign{background:linear-gradient(90deg,var(--o1),var(--o2));color:#4A1A03} .k-finance{background:var(--up-soft);color:var(--up)}
+.auto{font-size:11px;font-family:var(--f-mono);border:1px dashed var(--muted);border-radius:5px;padding:0 6px}
+.meta time{font-family:var(--f-mono);font-size:12px}
+.heat{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.heat i{width:4px;background:var(--line);border-radius:1px}
+.heat i.on{background:linear-gradient(var(--o2),var(--o4))}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.45;font-weight:600;text-wrap:balance}
+.card p{margin:0}
+.src{margin-top:12px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.src a{text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent);overflow-wrap:anywhere}
+.src a:hover{border-bottom-color:var(--accent)}
+
+/* Live headlines */
+.hls{list-style:none;margin:0;padding:0}
+.hls li{padding:11px 0;border-top:1px solid var(--line);display:grid;gap:3px}
+.hls li:first-child{border-top:0}
+.hls a{font-weight:500;text-decoration:none;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
+.hls a:hover{color:var(--accent);text-decoration:underline}
+.hls .m{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--muted);align-items:center}
+.more{margin-top:12px;border:1px solid var(--heat);color:var(--accent);background:transparent;border-radius:8px;padding:6px 14px;font-weight:600}
+.more:hover{background:var(--accent-soft)}
+
+/* Brand header */
+.bhead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px}
+.bhead h2{font-family:var(--f-display);font-variation-settings:"wdth" 118;font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.05;margin:0;background:linear-gradient(100deg,var(--o3),var(--o5));-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-theme="dark"] .bhead h2{background:linear-gradient(100deg,var(--o1),var(--o3));-webkit-background-clip:text;background-clip:text}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bhead h2{background:linear-gradient(100deg,var(--o1),var(--o3));-webkit-background-clip:text;background-clip:text}}
+.bhead .hl{margin:10px 0 0;max-width:72ch}
+
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.empty code{font-family:var(--f-mono);background:var(--sunk);padding:1px 6px;border-radius:5px}
+.foot{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:520px){.top-in,.wrap,.hero-in{padding-inline:16px}.panel,.card{padding:16px}.trend{grid-template-columns:34px minmax(0,1fr);gap:10px}.rank{font-size:30px}.status{font-size:11px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="mark">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#fff" fill-opacity=".2"/><path d="M6 22l7-11 4 6 3-4 6 9z" fill="#fff"/></svg>
+      STEAPEX <span>Market Pulse</span>
+    </div>
+    <div class="top-r">
+      <div class="status" id="status" aria-live="polite"><span class="dot"></span><span id="statusText">กำลังโหลดข้อมูล…</span></div>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="สลับโหมดสว่าง/มืด" title="สลับโหมดสว่าง/มืด">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <h1>ข่าวคู่แข่งและแนวโน้มตลาดรองเท้ากีฬา สำหรับทีม Steapex</h1>
+      <p>รวมข่าว ผลประกอบการ สินค้าใหม่ และกิจกรรมการตลาดของ <span id="brandCount">15</span> แบรนด์ พร้อมบทเรียนที่ Steapex นำไปใช้ได้ ระบบดึงข่าวใหม่ทุกเช้าอัตโนมัติ ทุกข่าวมีลิงก์แหล่งที่มา</p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</section>
+
+<main class="wrap">
+  <nav class="brandbar" id="brandbar" aria-label="เลือกแบรนด์"></nav>
+  <div id="view"></div>
+  <p class="foot">ข่าวที่ติดป้าย "สรุปอัตโนมัติ" สร้างจากพาดหัวข่าวสาธารณะ ใช้เฉพาะข้อเท็จจริงในพาดหัว ส่วน "Steapex เรียนรู้" เป็นความเห็นเชิงกลยุทธ์ ไม่ใช่ข้อเท็จจริง ตัวเลขจากแหล่งเดียวควรตรวจกับต้นทางก่อนนำไปตัดสินใจ</p>
+</main>
+
+<script>
+const state={cfg:null,items:[],daily:[],brands:{},events:[],headlines:[],meta:null,
+  brand:'all',kind:'all',day:null,hlLimit:20,load:'loading'};
+let BRANDS=[],BMAP={};
+const KINDS={news:'ข่าว/ความเคลื่อนไหว',product:'สินค้า/นวัตกรรม',campaign:'กิจกรรมการตลาด',finance:'ธุรกิจ/ผลประกอบการ'};
+const MOM={up:'โมเมนตัมขาขึ้น',steady:'ทรงตัว',down:'ช่วงปรับตัว',watch:'ข้อมูลน้อย ต้องติดตาม'};
+const MODE={ai:'วิเคราะห์โดย Claude',headlines:'พาดหัวข่าวอัตโนมัติ',seed:'ข้อมูลตั้งต้น'};
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||'')?u:'#';
+const fmtDate=d=>{try{return new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short',year:'numeric'}).format(new Date(String(d).slice(0,10)+'T00:00:00'))}catch(e){return d}};
+const fmtStamp=d=>{try{return new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(d))}catch(e){return d}};
+const domain=u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return ''}};
+const heat=n=>{n=Math.max(0,Math.min(5,Number(n)||0));let h='';for(let i=1;i<=5;i++)h+=`<i class="${i<=n?'on':''}" style="height:${4+i*1.6}px"></i>`;return `<span class="heat" role="img" aria-label="ความร้อนแรง ${n} จาก 5">${h}</span>`};
+const brandName=id=>id==='market'?'ตลาดรวม':(BMAP[id]?BMAP[id].name:id);
+const brandTags=ids=>(ids||[]).filter(id=>BMAP[id]).map(id=>`<button class="btag" data-brand="${id}">${esc(BMAP[id].name)}</button>`).join('');
+const sources=l=>(l&&l.length)?`<div class="src"><span>แหล่งที่มา:</span>${l.map(s=>`<a href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer">${esc(s.name||domain(s.url))} ↗</a>`).join('')}</div>`:'';
+const daysUntil=d=>{const t=new Date();t.setHours(0,0,0,0);return Math.round((new Date(d+'T00:00:00')-t)/864e5)};
+const sortDesc=(a,b)=>String(b.date||b.published||'').localeCompare(String(a.date||a.published||''));
+
+try{const h=location.hash.slice(1);if(h)state.brand=h;else{const s=localStorage.getItem('smp-brand');if(s)state.brand=s}}catch(e){}
+
+async function getJSON(name,fallback){
+  try{const r=await fetch('data/'+name+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);return await r.json()}
+  catch(e){if(fallback!==undefined)return fallback;throw e}
+}
+async function boot(){
+  render();
+  try{
+    const [cfg,items,daily,brands,events,hl,meta]=await Promise.all([
+      getJSON('config.json'),getJSON('items.json',[]),getJSON('daily.json',[]),getJSON('brands.json',{}),
+      getJSON('events.json',[]),getJSON('headlines.json',{items:[]}),getJSON('meta.json',null)]);
+    state.cfg=cfg;BRANDS=cfg.brands;BMAP=Object.fromEntries(BRANDS.map(b=>[b.id,b]));
+    state.items=items.sort(sortDesc);state.daily=daily.sort(sortDesc);state.brands=brands;state.events=events;
+    state.headlines=(hl.items||[]).sort(sortDesc);state.meta=meta;state.load='ok';
+    if(state.brand!=='all'&&!BMAP[state.brand])state.brand='all';
+    document.getElementById('brandCount').textContent=BRANDS.length;
+  }catch(e){state.load='error'}
+  render();
+}
+
+function renderStatus(){
+  const el=document.getElementById('status'),tx=document.getElementById('statusText');
+  el.classList.toggle('live',state.load==='ok'&&!!(state.meta&&state.meta.mode!=='seed'));
+  if(state.load==='loading')tx.textContent='กำลังโหลดข้อมูล…';
+  else if(state.load==='error')tx.textContent='โหลดข้อมูลไม่สำเร็จ';
+  else{const m=state.meta||{};tx.textContent=(m.updatedAt?`อัปเดต ${fmtStamp(m.updatedAt)}`:'ยังไม่เคยอัปเดต')+` · ${MODE[m.mode]||'ข้อมูลตั้งต้น'}`}
+}
+function renderStats(){
+  const el=document.getElementById('stats');if(state.load!=='ok'){el.innerHTML='';return}
+  const wk=Date.now()-7*864e5;
+  const nHl=state.headlines.filter(h=>new Date(h.published).getTime()>=wk).length;
+  el.innerHTML=[[state.items.length,'ข่าวคัดแล้ว'],[nHl,'พาดหัวใน 7 วัน'],[state.events.filter(e=>daysUntil(e.date)>=0).length,'เหตุการณ์ที่จะมาถึง'],[BRANDS.length,'แบรนด์ที่ติดตาม']]
+   .map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+}
+function renderBrandbar(){
+  if(state.load!=='ok'){document.getElementById('brandbar').innerHTML='';return}
+  const cnt=id=>state.items.filter(i=>i.brand===id).length+state.headlines.filter(h=>h.tag===id).length;
+  document.getElementById('brandbar').innerHTML=
+   `<button class="chip" aria-pressed="${state.brand==='all'}" data-brand="all">ภาพรวมทุกแบรนด์</button>`+
+   BRANDS.map(b=>`<button class="chip" aria-pressed="${state.brand===b.id}" data-brand="${b.id}">${esc(b.name)} <span class="n">${cnt(b.id)}</span></button>`).join('');
+}
+function emptyState(){
+  if(state.load==='error')return `<div class="empty"><b>โหลดไฟล์ข้อมูลไม่ได้</b>ถ้าเปิดไฟล์ index.html ตรงๆ จากเครื่อง เบราว์เซอร์จะบล็อกการอ่านไฟล์ JSON ให้รันเซิร์ฟเวอร์ในโฟลเดอร์นี้ด้วย <code>python -m http.server 8000</code> แล้วเปิด http://localhost:8000 หรือใช้ผ่าน GitHub Pages</div>`;
+  if(state.load==='loading')return `<div class="empty"><b>กำลังโหลด…</b></div>`;
+  return `<div class="empty"><b>ยังไม่มีข่าว</b>รอรอบอัปเดตถัดไป</div>`;
+}
+
+function card(it,showBrand){
+  const b=BMAP[it.brand];
+  return `<article class="card">
+    <div class="meta"><span class="kind k-${esc(it.kind)}">${esc(KINDS[it.kind]||it.kind)}</span>${showBrand&&b?`<button class="btag" data-brand="${b.id}">${esc(b.name)}</button>`:''}<time datetime="${esc(it.date)}">${esc(fmtDate(it.date))}</time>${it.platform?`<span>${esc(it.platform)}</span>`:''}${heat(it.heat)}${it.auto?'<span class="auto" title="สร้างอัตโนมัติจากพาดหัวข่าว">สรุปอัตโนมัติ</span>':''}</div>
+    <h3>${esc(it.title)}</h3><p>${esc(it.summary)}</p>
+    ${it.insight?`<div class="lesson"><b>Steapex เรียนรู้:</b> ${esc(it.insight)}</div>`:''}
+    ${sources(it.sources)}</article>`;
+}
+function kindFilters(list){
+  const c={all:list.length};for(const i of list)c[i.kind]=(c[i.kind]||0)+1;
+  return `<div class="filters" role="group" aria-label="กรองประเภทข่าว">${['all','news','product','campaign','finance'].filter(k=>k==='all'||c[k]).map(k=>`<button class="chip sm" aria-pressed="${state.kind===k}" data-kind="${k}">${k==='all'?'ทั้งหมด':KINDS[k]} <span class="n">${c[k]||0}</span></button>`).join('')}</div>`;
+}
+function feed(list,showBrand){
+  const f=state.kind==='all'?list:list.filter(i=>i.kind===state.kind);
+  return kindFilters(list)+(f.length?`<div class="feed">${f.slice(0,60).map(i=>card(i,showBrand)).join('')}</div>`:`<div class="empty">ไม่มีข่าวประเภทนี้</div>`);
+}
+function headlinesPanel(list,title,showTag){
+  const rows=list.slice(0,state.hlLimit);
+  const body=rows.length?`<ul class="hls">${rows.map(h=>`<li><a href="${esc(safeUrl(h.url))}" target="_blank" rel="noopener noreferrer">${esc(h.title)} ↗</a><div class="m"><span>${esc(h.source)}</span><time>${esc(fmtDate(h.published))}</time>${showTag?`<button class="btag" ${BMAP[h.tag]?`data-brand="${esc(h.tag)}"`:''}>${esc(brandName(h.tag))}</button>`:''}</div></li>`).join('')}</ul>${list.length>rows.length?`<button class="more" data-more="1">ดูเพิ่ม (อีก ${list.length-rows.length})</button>`:''}`
+   :`<div class="empty" style="border:0;padding:12px">ยังไม่มีพาดหัวที่ดึงอัตโนมัติ ระบบจะเริ่มเก็บในรอบอัปเดตถัดไป</div>`;
+  return `<section class="panel"><h2 class="sec">${esc(title)}</h2><p class="sub">พาดหัวจาก Google News ดึงอัตโนมัติทุกเช้า (เปิดอ่านต้นฉบับที่ลิงก์)</p>${body}</section>`;
+}
+function calendar(brand){
+  let ev=state.events.slice();if(brand)ev=ev.filter(e=>(e.brands||[]).includes(brand));
+  const up=ev.filter(e=>daysUntil(e.date)>=0).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!up.length)return '';
+  return `<section class="panel"><p class="label">ปฏิทินที่ต้องจับตา</p><ul class="cal">${up.slice(0,8).map(e=>{const d=daysUntil(e.date);return `<li><div class="cd">${d===0?'วันนี้':'อีก'}<b>${d===0?'●':d}</b>${d===0?'':'วัน'}</div><div><div class="t">${esc(e.title)}</div><div class="d">${esc(fmtDate(e.date))}${e.note?' · '+esc(e.note):''}</div>${e.sources&&e.sources[0]?`<div class="d"><a href="${esc(safeUrl(e.sources[0].url))}" target="_blank" rel="noopener noreferrer">${esc(e.sources[0].name||domain(e.sources[0].url))} ↗</a></div>`:''}</div></li>`}).join('')}</ul></section>`;
+}
+
+function renderOverview(){
+  const days=state.daily;const day=days.find(d=>d.id===state.day)||days[0];
+  let trends='';
+  if(day){
+    const sel=days.length>1?`<div class="daysel">${days.slice(0,7).map(d=>`<button class="chip sm" aria-pressed="${d.id===day.id}" data-day="${esc(d.id)}">${esc(fmtDate(d.date))}</button>`).join('')}</div>`:'';
+    trends=`<section class="panel"><h2 class="sec">Trending ประจำวัน</h2><p class="sub">${esc(fmtDate(day.date))} · เรียงตามความร้อนแรงของประเด็นในตลาด</p>${sel}
+     ${(day.trends||[]).map((t,i)=>`<div class="trend"><div class="rank">${i+1}</div><div><h3>${esc(t.title)}</h3><p>${esc(t.summary)}</p><div class="tags">${heat(t.heat)}${brandTags(t.brands)}</div>${t.steapex?`<div class="lesson"><b>Steapex เรียนรู้:</b> ${esc(t.steapex)}</div>`:''}${sources(t.sources)}</div></div>`).join('')}</section>`;
+  }
+  const take=day&&day.takeaway?`<section class="takeaway"><p class="label">สรุปวิเคราะห์ของวันสำหรับ Steapex</p><p>${esc(day.takeaway)}</p>${day.actions&&day.actions.length?`<ul>${day.actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}</section>`:'';
+  const rows=BRANDS.map(b=>{const p=state.brands[b.id]||{};return `<tr data-brand="${b.id}" tabindex="0"><td class="bn">${esc(b.name)}</td><td>${p.momentum?`<span class="mom m-${esc(p.momentum)}">${esc(MOM[p.momentum]||p.momentum)}</span>`:''}</td><td class="hl">${esc(p.headline||'')}</td></tr>`}).join('');
+  const mom=`<section class="panel"><p class="label">สถานะแต่ละแบรนด์</p><div style="overflow-x:auto"><table class="mtable"><tbody>${rows}</tbody></table></div></section>`;
+  const hl=headlinesPanel(state.headlines,'พาดหัวข่าวสดล่าสุด',true);
+  document.getElementById('view').innerHTML=`<div class="grid2"><div class="stack">${trends||emptyState()}${hl}</div><div class="stack">${take}${calendar()}${mom}</div></div>
+   <section style="margin-top:26px"><h2 class="sec">ข่าวคัดสรรทุกแบรนด์</h2><p class="sub">กดชื่อแบรนด์เพื่อดูเฉพาะแบรนด์นั้น</p>${state.items.length?feed(state.items,true):emptyState()}</section>`;
+}
+function promptFor(id){
+  const b=BMAP[id],p=state.brands[id]||{};
+  const items=state.items.filter(i=>i.brand===id).slice(0,15).map(i=>`- [${i.date}] ${i.title}: ${i.summary}`).join('\n');
+  return `ฉันทำงานให้ Steapex แบรนด์รองเท้าวิ่งในไทย (คู่แข่งตรง: ONKE, XTEP) ช่วยวิเคราะห์ ${b.name} ในมุมของ Steapex: จุดแข็ง จุดอ่อน และสิ่งที่ควรเรียนรู้หรือหลีกเลี่ยง ใช้เฉพาะข้อมูลด้านล่าง ถ้าเป็นความเห็นให้บอก\n\nภาพรวม: ${p.headline||'-'}\n${items||'(ยังไม่มีข่าว)'}`;
+}
+function renderBrand(){
+  const b=BMAP[state.brand],p=state.brands[b.id]||{};
+  const list=state.items.filter(i=>i.brand===b.id).sort(sortDesc);
+  const hls=state.headlines.filter(h=>h.tag===b.id);
+  document.getElementById('view').innerHTML=`<div class="grid2"><div class="stack">
+    <section class="bhead"><div><p class="label">${esc(b.origin)}</p><h2>${esc(b.name)}</h2>${p.headline?`<p class="hl">${esc(p.headline)}</p>`:''}</div><div>${p.momentum?`<span class="mom m-${esc(p.momentum)}">${esc(MOM[p.momentum]||p.momentum)}</span>`:''}</div></section>
+    ${list.length?feed(list,false):emptyState()}
+    ${headlinesPanel(hls,'พาดหัวข่าวสดของ '+b.name,false)}
+   </div><div class="stack">
+    ${p.lesson?`<section class="takeaway"><p class="label">บทเรียนจาก ${esc(b.name)} สำหรับ Steapex</p><p>${esc(p.lesson)}</p>${p.actions&&p.actions.length?`<ul>${p.actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}<button class="copybtn" data-copy="${b.id}" type="button">คัดลอกพรอมต์ไปถาม Claude</button></section>`:''}
+    ${calendar(b.id)}
+   </div></div>`;
+}
+function render(){
+  renderStatus();renderStats();renderBrandbar();
+  if(state.load!=='ok'){document.getElementById('view').innerHTML=emptyState();return}
+  if(state.brand==='all')renderOverview();else renderBrand();
+}
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-brand],[data-kind],[data-day],[data-more],[data-copy]');if(!t)return;
+  if(t.dataset.more){state.hlLimit+=30;render();return}
+  if(t.dataset.copy){const txt=promptFor(t.dataset.copy);
+    const done=()=>{t.textContent='คัดลอกแล้ว ✓';setTimeout(()=>{t.textContent='คัดลอกพรอมต์ไปถาม Claude'},1800)};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,()=>{prompt('คัดลอกข้อความนี้',txt)});else prompt('คัดลอกข้อความนี้',txt);return}
+  if(t.dataset.brand!==undefined){if(t.dataset.brand!=='all'&&!BMAP[t.dataset.brand])return;state.brand=t.dataset.brand;state.kind='all';state.hlLimit=20;try{localStorage.setItem('smp-brand',state.brand)}catch(_){}try{history.replaceState(null,'','#'+state.brand)}catch(_){}render();window.scrollTo({top:0,behavior:'smooth'});return}
+  if(t.dataset.kind){state.kind=t.dataset.kind;render();return}
+  if(t.dataset.day){state.day=t.dataset.day;render();return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'){const r=e.target.closest&&e.target.closest('tr[data-brand]');if(r)r.click()}});
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  const next=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('smp-theme',next)}catch(_){}
+});
+boot();
+</script>
+</body>
+</html>

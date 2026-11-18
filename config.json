@@ -1,0 +1,29 @@
+{
+  "_readme": "เพิ่ม/ลบแบรนด์ได้ที่นี่ แล้วทั้งหน้าเว็บและสคริปต์อัปเดตจะใช้รายการเดียวกัน queries = คำค้นที่ใช้ดึงข่าวจาก Google News RSS (lang: en หรือ th)",
+  "lookback_days_daily": 3,
+  "lookback_days_first_run": 14,
+  "brands": [
+    {"id":"nike","name":"Nike","origin":"สหรัฐฯ","queries":[{"q":"Nike running shoes","lang":"en"},{"q":"Nike Inc earnings OR strategy OR Alphafly","lang":"en"}]},
+    {"id":"adidas","name":"Adidas","origin":"เยอรมนี","queries":[{"q":"Adidas running shoes OR Adizero","lang":"en"},{"q":"Adidas AG earnings OR strategy","lang":"en"}]},
+    {"id":"asics","name":"ASICS","origin":"ญี่ปุ่น","queries":[{"q":"ASICS running shoes OR Novablast OR Metaspeed","lang":"en"},{"q":"ASICS earnings OR marathon","lang":"en"}]},
+    {"id":"puma","name":"Puma","origin":"เยอรมนี","queries":[{"q":"Puma running shoes OR Deviate","lang":"en"},{"q":"Puma SE Anta OR earnings OR restructuring","lang":"en"}]},
+    {"id":"newbalance","name":"New Balance","origin":"สหรัฐฯ","queries":[{"q":"New Balance running shoes","lang":"en"},{"q":"New Balance marathon OR collection OR lawsuit","lang":"en"}]},
+    {"id":"hoka","name":"HOKA","origin":"สหรัฐฯ (Deckers)","queries":[{"q":"HOKA running shoes","lang":"en"},{"q":"Deckers HOKA earnings","lang":"en"}]},
+    {"id":"saucony","name":"Saucony","origin":"สหรัฐฯ (Wolverine)","queries":[{"q":"Saucony running shoes","lang":"en"}]},
+    {"id":"brooks","name":"Brooks","origin":"สหรัฐฯ","queries":[{"q":"Brooks Running shoes","lang":"en"},{"q":"Brooks Running growth OR store OR event","lang":"en"}]},
+    {"id":"on","name":"On Running","origin":"สวิตเซอร์แลนด์","queries":[{"q":"On Running shoes Cloudmonster OR Cloudboom","lang":"en"},{"q":"On Holding earnings OR guidance","lang":"en"}]},
+    {"id":"altra","name":"Altra","origin":"สหรัฐฯ (VF Corp)","queries":[{"q":"Altra Running shoes","lang":"en"}]},
+    {"id":"xtep","name":"Xtep","origin":"จีน","queries":[{"q":"Xtep running shoes OR 160X","lang":"en"},{"q":"特步 跑鞋","lang":"zh"}]},
+    {"id":"onke","name":"Onke","origin":"ยังยืนยันไม่ได้","queries":[{"q":"ONKE running shoes","lang":"en"},{"q":"欧克 跑鞋 ONKE","lang":"zh"}]},
+    {"id":"ving","name":"VING","origin":"ไทย","queries":[{"q":"VING รองเท้าแตะวิ่ง","lang":"th"},{"q":"VING NIRUN","lang":"en"}]},
+    {"id":"pan","name":"PAN","origin":"ไทย","queries":[{"q":"PAN รองเท้ากีฬา แพน","lang":"th"}]},
+    {"id":"reebok","name":"Reebok","origin":"สหรัฐฯ (Authentic Brands)","queries":[{"q":"Reebok running OR collection OR collab","lang":"en"}]}
+  ],
+  "market_queries": [
+    {"q":"running shoe market OR sneaker industry trends","lang":"en"},
+    {"q":"sportswear industry demand OR tariffs OR discounting","lang":"en"},
+    {"q":"super shoe marathon carbon plate","lang":"en"},
+    {"q":"ตลาดรองเท้าวิ่ง OR งานวิ่ง OR วิ่งมาราธอน","lang":"th"},
+    {"q":"รองเท้าวิ่ง แบรนด์ไทย","lang":"th"}
+  ]
+}
