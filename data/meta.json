@@ -1,6 +1,96 @@
 {
- "updatedAt": "2026-11-22T03:25:00Z",
+ "updatedAt": "2026-11-22T13:43:11Z",
  "mode": "headlines",
  "note": "ข้อมูลตั้งต้นจากเวอร์ชัน claude.ai ก่อนเปิดระบบอัปเดตอัตโนมัติ",
- "newHeadlines": 144
+ "newHeadlines": 104,
+ "sources": [
+  {
+   "id": "sneakernews",
+   "name": "Sneaker News",
+   "stype": "media",
+   "ok": true,
+   "total": 7,
+   "fresh": 7,
+   "kept": 7,
+   "newest": "2026-11-22"
+  },
+  {
+   "id": "adidas-running",
+   "name": "adidas News · Running",
+   "stype": "official",
+   "ok": false,
+   "total": 0,
+   "fresh": 0,
+   "kept": 0,
+   "newest": null,
+   "error": "no element found: line 1, column 0"
+  },
+  {
+   "id": "adidas-sports",
+   "name": "adidas News · Sports",
+   "stype": "official",
+   "ok": false,
+   "total": 0,
+   "fresh": 0,
+   "kept": 0,
+   "newest": null,
+   "error": "no element found: line 1, column 0"
+  },
+  {
+   "id": "adidas-brands",
+   "name": "adidas News · Brands",
+   "stype": "official",
+   "ok": false,
+   "total": 0,
+   "fresh": 0,
+   "kept": 0,
+   "newest": null,
+   "error": "no element found: line 1, column 0"
+  },
+  {
+   "id": "sanook-economic",
+   "name": "Sanook ข่าวเศรษฐกิจ",
+   "stype": "media",
+   "ok": true,
+   "total": 10,
+   "fresh": 0,
+   "kept": 0,
+   "newest": "2026-11-10"
+  },
+  {
+   "id": "believeintherun",
+   "name": "Believe in the Run",
+   "stype": "review",
+   "ok": true,
+   "total": 12,
+   "fresh": 12,
+   "kept": 12,
+   "newest": "2026-11-20"
+  },
+  {
+   "id": "runningshoesguru",
+   "name": "Running Shoes Guru",
+   "stype": "review",
+   "ok": true,
+   "total": 20,
+   "fresh": 0,
+   "kept": 0,
+   "newest": "2026-06-28"
+  },
+  {
+   "id": "gearjunkie",
+   "name": "GearJunkie",
+   "stype": "media",
+   "ok": true,
+   "total": 8,
+   "fresh": 8,
+   "kept": 0,
+   "newest": "2026-11-20"
+  }
+ ],
+ "googleNews": {
+  "queries": 37,
+  "failed": 0,
+  "raw": 512
+ }
 }
