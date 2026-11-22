@@ -1,4 +1,4 @@
-# Steapex Market Pulse
+# Steapex Market Research
 
 แดชบอร์ดติดตามข่าวคู่แข่งและแนวโน้มตลาดรองเท้ากีฬา 15 แบรนด์ สำหรับทีม Steapex
 เป็นเว็บ static (HTML + JSON) โฮสต์ฟรีบน GitHub Pages และมี GitHub Actions ดึงข่าวใหม่ให้ทุกเช้า
