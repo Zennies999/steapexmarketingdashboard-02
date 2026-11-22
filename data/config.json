@@ -276,7 +276,7 @@
     }
    ],
    "domain": null,
-   "logo": null,
+   "logo": "assets/logos/onke.png",
    "aliases": [
     "ONKE",
     "欧克"
@@ -297,7 +297,7 @@
     }
    ],
    "domain": null,
-   "logo": null,
+   "logo": "assets/logos/ving.png",
    "aliases": [
     "VING"
    ]
@@ -313,7 +313,7 @@
     }
    ],
    "domain": null,
-   "logo": null,
+   "logo": "assets/logos/pan.png",
    "aliases": [
     "PAN Footwear",
     "รองเท้าแพน",

@@ -71,6 +71,28 @@ def http(url, data=None, headers=None, timeout=40):
         return r.read()
 
 
+def http_feed(url):
+    """ดึง feed ตรง: บางเว็บ (เช่น newsroom ของ adidas) ตอบ 200 แต่เนื้อหาว่าง ถ้า Accept ไม่ตรงที่เซิร์ฟเวอร์ต้องการ
+    จึงลองหลายแบบ โดยยังใช้ User-Agent เดิมที่ระบุตัวตนตรงๆ (ไม่แกล้งเป็นเบราว์เซอร์)"""
+    variants = [
+        {"Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8"},
+        {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
+        {},
+    ]
+    last = "no response"
+    for hdr in variants:
+        try:
+            raw = http(url, headers=hdr)
+            if raw.strip():
+                return raw
+            last = "empty body (HTTP 200, 0 bytes)"
+        except urllib.error.HTTPError as e:
+            last = f"HTTP {e.code}"
+        except Exception as e:
+            last = str(e)[:100]
+    raise RuntimeError(last)
+
+
 # ---------------------------------------------------------------- RSS
 def rss_url(q, lang, days):
     hl, gl, ceid = LOCALES.get(lang, LOCALES["en"])
@@ -200,7 +222,7 @@ def fetch_feeds(cfg, days, now):
             if fixture_dir:
                 raw = (Path(fixture_dir) / f"{f['id']}.xml").read_bytes()
             else:
-                raw = http(f["url"], headers={"Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8"})
+                raw = http_feed(f["url"])
             parsed = parse_rss(raw, f["name"])
             st["ok"] = True
             st["total"] = len(parsed)

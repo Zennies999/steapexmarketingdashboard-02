@@ -163,12 +163,13 @@ h2.sec{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0 0 4p
 .src a:hover{border-bottom-color:var(--accent)}
 
 /* Brand logos: ช่องสีขาวเสมอ เพื่อให้โลโก้สีเข้มอ่านออกทั้งโหมดสว่าง/มืด · ถ้าโหลดรูปไม่ได้จะเหลือตัวอักษรแรกของแบรนด์ */
-.lg{position:relative;display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid rgba(122,42,5,.14);overflow:hidden;vertical-align:middle}
+.lg{--s:22px;position:relative;display:inline-grid;place-items:center;flex:none;width:var(--s);height:var(--s);border-radius:6px;background:#fff;border:1px solid rgba(122,42,5,.14);overflow:hidden;vertical-align:middle}
 .lg img{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);object-fit:contain}
 .lg i{font-style:normal;font-family:var(--f-display);font-weight:800;font-size:12px;line-height:1;color:#D9480F}
 .lg.has i{visibility:hidden}
-.lg.xs{width:16px;height:16px;border-radius:4px}.lg.xs i{font-size:9px}
-.lg.xl{width:54px;height:54px;border-radius:14px}.lg.xl i{font-size:26px}
+.lg.xs{--s:16px;border-radius:4px}.lg.xs i{font-size:9px}
+.lg.xl{--s:54px;border-radius:14px}.lg.xl i{font-size:26px}
+.lg.wide{width:calc(var(--s)*2.3)}
 .bid{display:flex;align-items:center;gap:14px}
 .st{font-size:11px;font-weight:600;border-radius:5px;padding:0 6px;line-height:18px;border:1px solid var(--line);color:var(--muted)}
 .st-official{background:var(--accent-soft);color:var(--accent);border-color:transparent}
@@ -411,6 +412,8 @@ document.addEventListener('click',e=>{
   if(t.dataset.day){state.day=t.dataset.day;render();return}
 });
 document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'){const lg=t.closest&&t.closest('.lg');if(lg){lg.classList.remove('has');t.remove()}}},true);
+/* โลโก้แนวนอน (กว้างกว่าสูงมาก เช่น VING) ให้ช่องกว้างขึ้น ไม่งั้นตัวอักษรจะเล็กจนอ่านไม่ออก */
+document.addEventListener('load',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&t.naturalHeight&&t.naturalWidth/t.naturalHeight>1.6){const lg=t.closest&&t.closest('.lg');if(lg)lg.classList.add('wide')}},true);
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const r=e.target.closest&&e.target.closest('tr[data-brand]');if(r)r.click()}});
 document.getElementById('themeBtn').addEventListener('click',()=>{
   const cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
