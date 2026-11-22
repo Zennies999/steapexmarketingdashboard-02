@@ -176,6 +176,32 @@ table.tb{width:100%;border-collapse:collapse;font-size:13.5px}
 .board{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(205px,1fr));gap:14px;overflow-x:auto;padding-bottom:6px}
 .col{background:var(--bg2);border:1px solid var(--line2);border-radius:16px;padding:10px;min-height:200px;display:flex;flex-direction:column;gap:9px}
 .col.over{border-color:var(--accent);background:var(--accent-soft)}
+.kgrid{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(220px,1fr);gap:16px;grid-column:span 12}
+.kstack{display:grid;gap:16px}
+.kstack .kpi .v{font-size:30px}
+@media (max-width:900px){.kgrid{grid-template-columns:minmax(0,1fr)}.kstack{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:620px){.kstack{grid-template-columns:minmax(0,1fr)}}
+.pg{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.pg .big{font-family:var(--f-display);font-weight:800;font-size:64px;line-height:1;color:var(--accent2);font-variant-numeric:tabular-nums}
+.sdonut{width:var(--sz,170px);height:var(--sz,170px);border-radius:50%;display:grid;place-items:center;flex:none}
+.sdonut::before{content:"";grid-area:1/1;width:68%;height:68%;border-radius:50%;background:var(--panel)}
+.sdonut .ctr{grid-area:1/1;z-index:1;text-align:center;line-height:1.1}
+.sdonut .ctr b{display:block;font-family:var(--f-display);font-size:30px;font-weight:800}
+.sdonut .ctr small{font-size:11.5px;color:var(--muted)}
+.sleg{display:grid;gap:7px;font-size:13.5px}
+.sleg span{display:flex;align-items:center;gap:8px}
+.sleg i{width:12px;height:12px;border-radius:4px;flex:none}
+.sleg b{margin-left:auto;font-family:var(--f-mono);padding-left:14px}
+.colh{display:flex;align-items:center;gap:8px;background:var(--c);color:var(--ct);border-radius:12px;padding:10px 12px;margin-bottom:2px}
+.colh .th{display:block;font-size:16.5px;font-weight:800;letter-spacing:.01em;line-height:1.25;white-space:nowrap}
+.colh .en{display:block;font-size:11.5px;font-weight:600;opacity:.85}
+.colh .n{margin-left:auto;font-family:var(--f-mono);font-size:12.5px;font-weight:700;background:rgba(255,255,255,.25);border-radius:999px;padding:1px 9px}
+.col[data-st]{border-top:3px solid var(--c)}
+.promo{margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--panel2)}
+.promo table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+.promo th{text-align:left;color:var(--dim);font-weight:700;font-size:11px;padding:4px 6px;border-bottom:1px solid var(--line2)}
+.promo td{padding:5px 6px;border-bottom:1px solid var(--line2)}
+.promo .r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .col h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;padding:4px 4px 2px;font-family:var(--f-body)}
 .col h3 .n{font-family:var(--f-mono);font-size:11px;color:var(--muted);background:var(--panel);border-radius:999px;padding:0 7px}
 .tc{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:11px 12px;cursor:grab;display:grid;gap:7px}
@@ -382,6 +408,11 @@ const MOD=Object.fromEntries(NAV.flatMap(g=>g.items).map(m=>[m.id,m]));
 /* ---------------- Labels ---------------- */
 const TASK_ST=[['todo','Pending','ยังไม่เริ่ม',''],['doing','In Progress','กำลังทำ','info'],['review','In Review','รอตรวจ/อนุมัติ','warn'],['revision','Revision','ต้องแก้ไข','bad'],['done','Completed','เสร็จแล้ว','ok']];
 const TST=Object.fromEntries(TASK_ST.map(s=>[s[0],s]));
+/* สีประจำสถานะ 5 สี (ใช้ทั้งหัวคอลัมน์และกราฟวงกลม) */
+const STC={todo:['#64748B','#fff'],doing:['#2563EB','#fff'],review:['#F59E0B','#2A1608'],revision:['#DC2626','#fff'],done:['#16A34A','#fff']};
+function segDonut(parts,center,sz=170){const tot=parts.reduce((a,p)=>a+p.v,0);let acc=0;
+  const g=tot?parts.filter(p=>p.v).map(p=>{const a=acc/tot*360;acc+=p.v;return `${p.c} ${a}deg ${acc/tot*360}deg`}).join(','):'var(--sunk) 0 360deg';
+  return `<div class="sdonut" style="--sz:${sz}px;background:conic-gradient(${g})" role="img" aria-label="สัดส่วนสถานะงาน">${center}</div>`}
 const PRIO={high:'สูง',med:'กลาง',low:'ต่ำ'};
 const CT_ST=[['idea','ไอเดีย',''],['brief','บรีฟ',''],['production','ถ่ายทำ/ตัดต่อ','info'],['review','รออนุมัติ','warn'],['scheduled','ตั้งเวลาแล้ว','vio'],['published','เผยแพร่แล้ว','ok']];
 const CST=Object.fromEntries(CT_ST.map(s=>[s[0],s]));
@@ -407,8 +438,8 @@ function sample(){
     {id:'g3',level:'month',period:M,title:'แคมเปญ Creator สายวิ่ง (ตัวอย่าง)',kpi:'Affiliate ใหม่',target:'10',actual:'6',parent:'g2'},
     {id:'g4',level:'month',period:M,title:'ยอดขายจาก LIVE เติบโต (ตัวอย่าง)',kpi:'GMV จาก LIVE',target:'300000',actual:'',parent:'g2'}];
   S.campaigns=[
-    {id:'c1',name:'แคมเปญ Double Day (ตัวอย่าง)',status:'active',start:addDays(T,-6),end:addDays(T,14),goal:'g3',audience:'นักวิ่งมือใหม่ อายุ 22–35',channels:['TikTok','Shopee'],budget:40000,spent:16500,brief:'โปรวันเลขเบิ้ล ผลักรุ่นขายดี + ไลฟ์พิเศษ',kpis:[{label:'GMV',target:250000,actual:118000},{label:'ออเดอร์',target:600,actual:290}],owner:'u1'},
-    {id:'c2',name:'Payday ปลายเดือน (ตัวอย่าง)',status:'planning',start:addDays(T,4),end:addDays(T,9),goal:'g4',audience:'ลูกค้าเดิม + ผู้ติดตาม',channels:['TikTok','Facebook'],budget:20000,spent:0,brief:'ส่วนลดช่วงเงินเดือนออก',kpis:[{label:'GMV',target:120000,actual:0}],owner:'u1'},
+    {id:'c1',name:'แคมเปญ Double Day (ตัวอย่าง)',status:'active',start:addDays(T,-6),end:addDays(T,14),goal:'g3',audience:'นักวิ่งมือใหม่ อายุ 22–35',channels:['TikTok','Shopee'],budget:40000,spent:16500,brief:'โปรวันเลขเบิ้ล ผลักรุ่นขายดี + ไลฟ์พิเศษ',liveBudget:25000,promos:[{name:'โค้ดลด 100 บาท (ตัวอย่าง)',type:'discount',qty:120,unit:100},{name:'Flash sale ลด 15% (ตัวอย่าง)',type:'discount',qty:40,unit:180},{name:'ถุงเท้าแถม (ตัวอย่าง)',type:'gift',qty:80,unit:45},{name:'สายคาดเอวแถม (ตัวอย่าง)',type:'gift',qty:20,unit:120}],kpis:[{label:'GMV',target:250000,actual:118000},{label:'ออเดอร์',target:600,actual:290}],owner:'u1'},
+    {id:'c2',name:'Payday ปลายเดือน (ตัวอย่าง)',status:'planning',start:addDays(T,4),end:addDays(T,9),goal:'g4',audience:'ลูกค้าเดิม + ผู้ติดตาม',channels:['TikTok','Facebook'],budget:20000,spent:0,brief:'ส่วนลดช่วงเงินเดือนออก',liveBudget:12000,promos:[],kpis:[{label:'GMV',target:120000,actual:0}],owner:'u1'},
     {id:'c3',name:'เปิดตัวรองเท้ารุ่นใหม่ (ตัวอย่าง)',status:'planning',start:addDays(T,16),end:addDays(T,46),goal:'g2',audience:'สายวิ่งเทรลและถนน',channels:['TikTok','Instagram','Facebook'],budget:80000,spent:0,brief:'ทีเซอร์ → เปิดตัว → รีวิวครีเอเตอร์',kpis:[{label:'ยอดเข้าชมคลิป',target:500000,actual:0}],owner:'u2'},
     {id:'c4',name:'แคมเปญเดือนก่อน (ตัวอย่าง)',status:'done',start:addDays(T,-40),end:addDays(T,-26),goal:'g2',audience:'ผู้ติดตามใหม่',channels:['TikTok'],budget:15000,spent:14200,brief:'',kpis:[{label:'GMV',target:90000,actual:97500}],owner:'u1'}];
   S.events=[
@@ -465,7 +496,8 @@ function sample(){
 
 /* ---------------- State ---------------- */
 let S=load();
-function load(){try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);if(o&&o.v===1&&Array.isArray(o.tasks))return o}}catch(e){}return sample()}
+function load(){try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);if(o&&o.v===1&&Array.isArray(o.tasks))return migrate(o)}}catch(e){}return sample()}
+function migrate(o){if(!o.campaigns.some(c=>'liveBudget' in c)){const c1=o.campaigns.find(c=>c.id==='c1');if(c1){c1.liveBudget=25000;c1.promos=[{name:'โค้ดลด 100 บาท (ตัวอย่าง)',type:'discount',qty:120,unit:100},{name:'Flash sale ลด 15% (ตัวอย่าง)',type:'discount',qty:40,unit:180},{name:'ถุงเท้าแถม (ตัวอย่าง)',type:'gift',qty:80,unit:45},{name:'สายคาดเอวแถม (ตัวอย่าง)',type:'gift',qty:20,unit:120}]}}o.campaigns.forEach(c=>{if(!('liveBudget' in c))c.liveBudget=0;if(!c.promos)c.promos=[]});return o}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('บันทึกในเบราว์เซอร์ไม่ได้ (พื้นที่เก็บข้อมูลถูกปิด)')}}
 let ME=(()=>{try{return localStorage.getItem('sos-me')||'u1'}catch(e){return 'u1'}})();
 if(!S.users.some(u=>u.id===ME))ME=S.users[0].id;
@@ -533,8 +565,8 @@ function fieldHtml(f,v){
   const req=f.req?'required':'',lab=`<span>${esc(f.label)}${f.req?' *':''}</span>`,hint=f.hint?`<span class="hint">${esc(f.hint)}</span>`:'',w=f.wide?' w':'';
   if(f.type==='select')return `<label class="f${w}">${lab}<select name="${f.k}" ${req}>${f.options.map(([val,l])=>`<option value="${esc(val)}" ${String(v??'')===String(val)?'selected':''}>${esc(l)}</option>`).join('')}</select>${hint}</label>`;
   if(f.type==='multi'){const vs=v||[];return `<div class="f${w}">${lab}<div class="chk">${f.options.map(([val,l])=>`<label><input type="checkbox" name="${f.k}" value="${esc(val)}" ${vs.includes(val)?'checked':''}> ${esc(l)}</label>`).join('')||'<span class="dim">ไม่มีตัวเลือก</span>'}</div>${hint}</div>`}
-  if(['textarea','lines','kpis','checklist'].includes(f.type)){let val=v;
-    if(f.type==='lines')val=(v||[]).join('\n');if(f.type==='kpis')val=(v||[]).map(k=>`${k.label} | ${k.target} | ${k.actual}`).join('\n');if(f.type==='checklist')val=(v||[]).map(c=>(c.done?'[x] ':'')+c.t).join('\n');
+  if(['textarea','lines','kpis','checklist','promos'].includes(f.type)){let val=v;
+    if(f.type==='lines')val=(v||[]).join('\n');if(f.type==='kpis')val=(v||[]).map(k=>`${k.label} | ${k.target} | ${k.actual}`).join('\n');if(f.type==='checklist')val=(v||[]).map(c=>(c.done?'[x] ':'')+c.t).join('\n');if(f.type==='promos')val=(v||[]).map(p=>`${p.name} | ${p.type==='gift'?'ของแถม':'ส่วนลด'} | ${p.qty} | ${p.unit}`).join('\n');
     return `<label class="f w">${lab}<textarea name="${f.k}" ${req} rows="${f.rows||4}">${esc(val??'')}</textarea>${hint}</label>`}
   return `<label class="f${w}">${lab}<input name="${f.k}" type="${f.type||'text'}" value="${esc(v??'')}" ${req} ${f.type==='number'?'step="any" min="0"':''}>${hint}</label>`;
 }
@@ -546,6 +578,7 @@ function collect(fields,form){
     else if(f.type==='lines')v=v.split('\n').map(s=>s.trim()).filter(Boolean);
     else if(f.type==='kpis')v=v.split('\n').map(s=>s.split('|').map(x=>x.trim())).filter(a=>a[0]).map(a=>({label:a[0],target:Number(a[1])||0,actual:Number(a[2])||0}));
     else if(f.type==='checklist')v=v.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>({t:s.replace(/^\[(x|X| )\]\s*/,''),done:/^\[(x|X)\]/.test(s)}));
+    else if(f.type==='promos')v=v.split('\n').map(x=>x.split('|').map(y=>y.trim())).filter(a=>a[0]).map(a=>({name:a[0],type:/แถม|gift/i.test(a[1]||'')?'gift':'discount',qty:Number(String(a[2]||'').replace(/,/g,''))||0,unit:Number(String(a[3]||'').replace(/,/g,''))||0}));
     else v=String(v).trim();
     o[f.k]=v}
   return o;
@@ -616,8 +649,8 @@ function schForm(x,preset={}){const isNew=!x;x=x||Object.assign({date:today(),st
   openForm({title:isNew?'เพิ่มกำหนดการ':'แก้ไขกำหนดการ',value:x,fields:[{k:'title',label:'หัวข้อ',req:true,wide:true},{k:'date',label:'วันที่',type:'date',req:true},{k:'type',label:'ประเภท',type:'select',options:Object.entries(SCH_TYPES)},{k:'start',label:'เริ่ม',type:'time'},{k:'end',label:'สิ้นสุด',type:'time'},{k:'who',label:'ผู้เกี่ยวข้อง',type:'multi',options:userOpts(),wide:true},{k:'note',label:'หมายเหตุ',type:'textarea',rows:2}],
     onSave:v=>{if(isNew){S.schedule.push(Object.assign({id:uid()},v));commit(`เพิ่มกำหนดการ “${v.title}”`)}else{Object.assign(x,v);commit(`แก้ไขกำหนดการ “${v.title}”`)}},
     onDelete:isNew?null:()=>{trash('schedule','schedule',x.id);commit(`ลบกำหนดการ “${x.title}”`)}})}
-function campForm(c){const isNew=!c;c=c||{status:'planning',start:today(),end:addDays(today(),14),channels:[],budget:0,spent:0,kpis:[],owner:ME,goal:''};
-  openForm({title:isNew?'สร้างแคมเปญ':'แก้ไขแคมเปญ',value:c,fields:[{k:'name',label:'ชื่อแคมเปญ',req:true,wide:true},{k:'status',label:'สถานะ',type:'select',options:Object.entries(CAMP_ST).map(([k,v])=>[k,v[0]])},{k:'owner',label:'ผู้ดูแล',type:'select',options:userOpts()},{k:'start',label:'เริ่ม',type:'date'},{k:'end',label:'สิ้นสุด',type:'date'},{k:'budget',label:'งบประมาณ (บาท)',type:'number'},{k:'spent',label:'ใช้ไปแล้ว (บาท)',type:'number'},{k:'goal',label:'เป้าหมายที่รองรับ',type:'select',options:goalOpts(),wide:true},{k:'audience',label:'กลุ่มเป้าหมาย',wide:true},{k:'channels',label:'ช่องทาง',type:'multi',options:PLATFORMS.map(p=>[p,p]),wide:true},{k:'brief',label:'Campaign Brief',type:'textarea',rows:3},{k:'kpis',label:'KPI และผลลัพธ์',type:'kpis',hint:'บรรทัดละตัว: ชื่อ | เป้า | ทำได้ เช่น GMV | 250000 | 118000'}],
+function campForm(c){const isNew=!c;c=c||{status:'planning',start:today(),end:addDays(today(),14),channels:[],budget:0,spent:0,kpis:[],owner:ME,goal:'',liveBudget:0,promos:[]};
+  openForm({title:isNew?'สร้างแคมเปญ':'แก้ไขแคมเปญ',value:c,fields:[{k:'name',label:'ชื่อแคมเปญ',req:true,wide:true},{k:'status',label:'สถานะ',type:'select',options:Object.entries(CAMP_ST).map(([k,v])=>[k,v[0]])},{k:'owner',label:'ผู้ดูแล',type:'select',options:userOpts()},{k:'start',label:'เริ่ม',type:'date'},{k:'end',label:'สิ้นสุด',type:'date'},{k:'budget',label:'งบประมาณ (บาท)',type:'number'},{k:'spent',label:'ใช้ไปแล้ว (บาท)',type:'number'},{k:'goal',label:'เป้าหมายที่รองรับ',type:'select',options:goalOpts(),wide:true},{k:'audience',label:'กลุ่มเป้าหมาย',wide:true},{k:'channels',label:'ช่องทาง',type:'multi',options:PLATFORMS.map(p=>[p,p]),wide:true},{k:'brief',label:'Campaign Brief',type:'textarea',rows:3},{k:'liveBudget',label:'งบ LIVE Room Promotion (บาท)',type:'number',hint:'งบสำหรับส่วนลดและของแถมที่แจกใน LIVE'},{k:'promos',label:'รายการส่วนลด/ของแถมที่แจกใน LIVE',type:'promos',rows:5,hint:'บรรทัดละรายการ: ชื่อ | ส่วนลด หรือ ของแถม | จำนวนที่แจก | ต้นทุนต่อหน่วย  เช่น โค้ดลด 100 บาท | ส่วนลด | 120 | 100'},{k:'kpis',label:'KPI และผลลัพธ์',type:'kpis',hint:'บรรทัดละตัว: ชื่อ | เป้า | ทำได้ เช่น GMV | 250000 | 118000'}],
     onSave:v=>{if(isNew){S.campaigns.unshift(Object.assign({id:uid()},v));commit(`สร้างแคมเปญ “${v.name}”`)}else{Object.assign(c,v);commit(`แก้ไขแคมเปญ “${v.name}”`)}},
     onDelete:isNew?null:()=>{trash('campaign','campaigns',c.id);commit(`ลบแคมเปญ “${c.name}”`)}})}
 function goalForm(g){const isNew=!g;g=g||{level:'month',period:today().slice(0,7),parent:'',kpi:'',target:'',actual:''};
@@ -690,11 +723,14 @@ function pOverview(){
   const up7=[...S.schedule.filter(s=>s.date>=T&&s.date<=addDays(T,7)),...S.events.filter(e=>e.date>=T&&e.date<=addDays(T,7))];
   const q=quotaStats();
   const W={
-   kpis:()=>`<section class="s12" data-w="kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
-     <div class="card hot kpi"><span class="k">งานของฉัน · วันนี้</span><span class="v ac">${String(myOpen.length).padStart(2,'0')}</span><span class="d">รวมงานค้างที่เลยกำหนด</span></div>
-     <div class="card kpi"><span class="k">Team Progress · ${RANGE_L[UI.range]}</span><span class="v">${prog}%</span><span class="d">เสร็จ ${inR.filter(t=>t.status==='done').length} จาก ${inR.length} งานที่ครบกำหนดในช่วงนี้</span></div>
+   kpis:()=>{const done=inR.filter(t=>t.status==='done').length;const parts=TASK_ST.map(st=>({k:st[0],l:st[2],c:STC[st[0]][0],v:inR.filter(t=>t.status===st[0]).length}));
+     return `<section class="kgrid" data-w="kpis">
+     <div class="card hot pg"><div style="min-width:170px;flex:1"><span class="muted small">ความคืบหน้างาน${UI.scope==='team'?'ทั้งทีม':'ของฉัน'} · ${RANGE_L[UI.range]}</span><div class="big">${prog}%</div><div class="small muted" style="margin:6px 0 10px">เสร็จ <b style="color:var(--ink)">${done}</b> จาก <b style="color:var(--ink)">${inR.length}</b> งานที่ครบกำหนดช่วง ${fd(a)}${a!==b?'–'+fd(b):''}</div><div class="bar ok" style="height:12px"><i style="width:${prog}%"></i></div></div>
+       ${segDonut(parts,`<div class="ctr"><b>${prog}%</b><small>เสร็จแล้ว</small></div>`)}
+       <div class="sleg">${parts.map(p=>`<span><i style="background:${p.c}"></i>${esc(p.l)}<b>${p.v}</b></span>`).join('')}</div></div>
+     <div class="kstack"><div class="card kpi"><span class="k">งานของฉัน · วันนี้</span><span class="v ac">${String(myOpen.length).padStart(2,'0')}</span><span class="d">รวมงานค้างที่เลยกำหนด</span></div>
      <div class="card kpi click" data-go="notify"><span class="k">Pending Review</span><span class="v">${String(pend.length).padStart(2,'0')}</span><span class="d">รออนุมัติ</span></div>
-     <div class="card kpi click" data-go="calendar"><span class="k">Upcoming Events</span><span class="v">${String(up7.length).padStart(2,'0')}</span><span class="d">ใน 7 วันข้างหน้า</span></div></section>`,
+     <div class="card kpi click" data-go="calendar"><span class="k">Upcoming Events</span><span class="v">${String(up7.length).padStart(2,'0')}</span><span class="d">ใน 7 วันข้างหน้า</span></div></div></section>`},
    today:()=>card('today',"Today's Work",S.users.map(u=>{const ts=S.tasks.filter(t=>t.assignees.includes(u.id)&&t.status!=='done'&&t.due<=addDays(T,1)).sort((x,y)=>x.due.localeCompare(y.due)).slice(0,4);
       return `<div style="margin-bottom:12px"><div class="row" style="margin-bottom:2px">${av(u.id)}<b>${esc(u.name)}</b><span class="pill">${esc(ROLES[u.role]||u.role)}</span></div>${ts.length?`<ul class="list">${ts.map(taskRow).join('')}</ul>`:'<p class="muted small" style="margin:6px 0 0 34px">ไม่มีงานที่ครบกำหนดวันนี้/พรุ่งนี้</p>'}</div>`}).join(''),{span:'s7',sub:'งานที่ครบกำหนดวันนี้และพรุ่งนี้ แยกตามคน'}),
    briefing:()=>card('briefing',`${ic('spark',16)} Daily Briefing`,briefing(),{span:'s5',sub:'สรุปอัตโนมัติจากข้อมูลในระบบด้วยกฎตายตัว (ยังไม่ได้ใช้ AI จริง)',hot:true}),
@@ -741,7 +777,7 @@ function pTasks(){
     const row=(t,lv)=>`<tr class="click" data-act="task-open" data-id="${t.id}"><td>${lv?'<span class="sub-l" style="display:inline">↳ </span>':''}${blockedBy(t).length?'🔒 ':''}<b>${esc(t.title)}</b>${t.campaign?`<div class="small muted">${esc(campName(t.campaign))}</div>`:''}</td><td><span class="avs">${t.assignees.map(av).join('')}</span></td><td>${stPill(t.status)}</td><td><i class="prio p-${t.priority}" style="display:inline-block"></i> ${PRIO[t.priority]}</td><td class="r" style="${t.due<today()&&t.status!=='done'?'color:var(--bad)':''}">${fd(t.due)}</td></tr>`;
     return head+`<div class="card tw"><table class="tb"><thead><tr><th>งาน</th><th>ผู้รับผิดชอบ</th><th>สถานะ</th><th>ความสำคัญ</th><th class="r">กำหนดส่ง</th></tr></thead><tbody>${rows.map(t=>row(t,0)+list.filter(k=>k.parent===t.id).map(k=>row(k,1)).join('')).join('')||'<tr><td colspan="5" class="muted">ไม่มีงาน</td></tr>'}</tbody></table></div>`}
   return head+`<p class="small muted" style="margin:-4px 0 12px">ลากการ์ดเพื่อเปลี่ยนสถานะ (บนมือถือ: แตะการ์ดแล้วกดปุ่มในหน้ารายละเอียด) · ย้ายเข้า “รอตรวจ” = ส่งขออนุมัติอัตโนมัติ</p><div class="board" style="--cols:5">${TASK_ST.map(s=>{const cs=list.filter(t=>t.status===s[0]).sort((a,b)=>a.due.localeCompare(b.due));
-    return `<div class="col" data-drop="task" data-st="${s[0]}"><h3><span class="pill ${s[3]}">${esc(s[2])}</span><span class="dim small">${s[1]}</span><span class="n">${cs.length}</span></h3>${cs.map(tCard).join('')||'<p class="dim small" style="margin:6px">ว่าง</p>'}</div>`}).join('')}</div>`;
+    return `<div class="col" data-drop="task" data-st="${s[0]}" style="--c:${STC[s[0]][0]};--ct:${STC[s[0]][1]}"><div class="colh"><div><span class="th">${esc(s[2])}</span><span class="en">${s[1]}</span></div><span class="n">${cs.length}</span></div>${cs.map(tCard).join('')||'<p class="dim small" style="margin:6px">ว่าง</p>'}</div>`}).join('')}</div>`;
 }
 function tCard(t){const kids=S.tasks.filter(k=>k.parent===t.id),par=taskById(t.parent),od=t.due<today()&&t.status!=='done',bl=blockedBy(t);
   return `<article class="tc" draggable="true" data-drag="task" data-id="${t.id}" data-act="task-open" tabindex="0"><div class="row" style="gap:7px;flex-wrap:nowrap"><i class="prio p-${t.priority}"></i><span class="t" style="flex:1">${esc(t.title)}</span></div>
@@ -774,11 +810,20 @@ function pCalendar(){
 }
 
 /* ---------------- 04 Campaign & Event ---------------- */
+function promoStats(c){const ps=c.promos||[];const disc=ps.filter(p=>p.type!=='gift').reduce((a,p)=>a+p.qty*p.unit,0),gift=ps.filter(p=>p.type==='gift').reduce((a,p)=>a+p.qty*p.unit,0);
+  const lv=S.lives.filter(l=>l.campaign===c.id),gmv=lv.reduce((a,l)=>a+(+l.gmv||0),0),orders=lv.reduce((a,l)=>a+(+l.orders||0),0);return {disc,gift,used:disc+gift,budget:+c.liveBudget||0,gmv,orders,lives:lv.length}}
+function promoBox(c){const p=promoStats(c);if(!p.budget&&!(c.promos||[]).length)return `<div class="promo small muted">ยังไม่ได้ตั้งงบ LIVE Room Promotion · กดแก้ไขแคมเปญเพื่อใส่งบและรายการส่วนลด/ของแถม</div>`;
+  const over=p.budget&&p.used>p.budget;
+  return `<div class="promo"><div class="row"><b class="small" style="flex:1">${ic('live',15)} งบ LIVE Room Promotion</b><span class="mono small ${over?'':'muted'}" style="${over?'color:var(--bad)':''}">${baht(p.used)} / ${baht(p.budget)}${p.budget?` (${pct(p.used,p.budget)}%)`:''}</span></div>
+   <div class="bar" style="margin:6px 0"><i style="width:${clamp(pct(p.used,p.budget||p.used||1),0,100)}%;${over?'background:var(--bad)':''}"></i></div>
+   <div class="row small" style="gap:6px 14px"><span>ส่วนลด <b>${baht(p.disc)}</b></span><span>ของแถม <b>${baht(p.gift)}</b></span><span class="muted">เหลือ ${baht(Math.max(0,p.budget-p.used))}</span></div>
+   <div class="row small" style="gap:6px 14px;margin-top:4px"><span class="muted">GMV จาก LIVE ในแคมเปญ ${baht(p.gmv)} (${p.lives} ครั้ง)</span><span>ต้นทุนโปร = <b>${p.gmv?(p.used/p.gmv*100).toFixed(1)+'%':'–'}</b> ของ GMV</span><span>ต่อออเดอร์ <b>${p.orders?baht(p.used/p.orders):'–'}</b></span></div>
+   ${(c.promos||[]).length?`<div class="tw"><table><thead><tr><th>รายการ</th><th>ประเภท</th><th class="r">จำนวน</th><th class="r">ต้นทุน/หน่วย</th><th class="r">รวม</th></tr></thead><tbody>${c.promos.map(x=>`<tr><td>${esc(x.name)}</td><td><span class="pill ${x.type==='gift'?'vio':'ac'}">${x.type==='gift'?'ของแถม':'ส่วนลด'}</span></td><td class="r">${num(x.qty)}</td><td class="r">${baht(x.unit)}</td><td class="r"><b>${baht(x.qty*x.unit)}</b></td></tr>`).join('')}</tbody></table></div>`:''}</div>`}
 function pCampaigns(){
   const tab=UI.campTab,T=today();
   const tabs=`<div class="tabs" role="tablist">${[['campaigns','Campaign Management'],['planning','Strategic Planning'],['events','Event Management']].map(([k,l])=>`<button role="tab" aria-selected="${tab===k}" data-act="ctab" data-id="${k}">${l}</button>`).join('')}</div>`;
   const tot=S.campaigns.reduce((a,c)=>a+(+c.budget||0),0),sp=S.campaigns.reduce((a,c)=>a+(+c.spent||0),0);
-  const sum=`<div class="grid" style="margin-bottom:16px"><div class="card s3 kpi hot"><span class="k">แคมเปญทั้งหมด</span><span class="v ac">${S.campaigns.length}</span><span class="d">${Object.entries(CAMP_ST).map(([k,v])=>`${v[0]} ${S.campaigns.filter(c=>c.status===k).length}`).join(' · ')}</span></div><div class="card s3 kpi"><span class="k">งบประมาณรวม</span><span class="v">${baht(tot)}</span><span class="d">ใช้ไป ${baht(sp)} (${pct(sp,tot)}%)</span></div><div class="card s3 kpi"><span class="k">อีเวนต์ที่จะมาถึง</span><span class="v">${S.events.filter(e=>e.date>=T).length}</span><span class="d">ถัดไป ${esc((S.events.filter(e=>e.date>=T).sort((a,b)=>a.date.localeCompare(b.date))[0]||{}).name||'–')}</span></div><div class="card s3 kpi"><span class="k">เป้าหมายที่ยังไม่มีแผน</span><span class="v" style="color:var(--warn)">${S.goals.filter(g=>!S.tasks.some(t=>t.goal===g.id)&&!S.campaigns.some(c=>c.goal===g.id)&&!S.goals.some(k=>k.parent===g.id)).length}</span><span class="d">ดูในแท็บ Strategic Planning</span></div></div>`;
+  const sum=`<div class="grid" style="margin-bottom:16px"><div class="card s3 kpi hot"><span class="k">แคมเปญทั้งหมด</span><span class="v ac">${S.campaigns.length}</span><span class="d">${Object.entries(CAMP_ST).map(([k,v])=>`${v[0]} ${S.campaigns.filter(c=>c.status===k).length}`).join(' · ')}</span></div><div class="card s3 kpi"><span class="k">งบประมาณรวม</span><span class="v">${baht(tot)}</span><span class="d">ใช้ไป ${baht(sp)} (${pct(sp,tot)}%) · โปร LIVE ${baht(S.campaigns.reduce((a,c)=>a+promoStats(c).used,0))} / ${baht(S.campaigns.reduce((a,c)=>a+(+c.liveBudget||0),0))}</span></div><div class="card s3 kpi"><span class="k">อีเวนต์ที่จะมาถึง</span><span class="v">${S.events.filter(e=>e.date>=T).length}</span><span class="d">ถัดไป ${esc((S.events.filter(e=>e.date>=T).sort((a,b)=>a.date.localeCompare(b.date))[0]||{}).name||'–')}</span></div><div class="card s3 kpi"><span class="k">เป้าหมายที่ยังไม่มีแผน</span><span class="v" style="color:var(--warn)">${S.goals.filter(g=>!S.tasks.some(t=>t.goal===g.id)&&!S.campaigns.some(c=>c.goal===g.id)&&!S.goals.some(k=>k.parent===g.id)).length}</span><span class="d">ดูในแท็บ Strategic Planning</span></div></div>`;
   if(tab==='planning'){
     const node=g=>{const kids=S.goals.filter(k=>k.parent===g.id),camps=S.campaigns.filter(c=>c.goal===g.id),tks=S.tasks.filter(t=>t.goal===g.id);const noPlan=!kids.length&&!camps.length&&!tks.length;
       return `<div class="goal"><div class="row"><span class="lv">${g.level==='year'?'Annual Objective':g.level==='quarter'?'Quarterly Objective':'Monthly Objective'} · ${esc(g.period)}</span><span class="sp"></span>${noPlan?'<span class="pill warn">ยังไม่มีแผนปฏิบัติ</span>':''}<button class="btn sm" data-act="goal-edit" data-id="${g.id}">${ic('edit',13)}</button></div><div class="t">${esc(g.title)}</div>${g.kpi?`<div class="small muted">KPI: ${esc(g.kpi)}${g.target?` · เป้า ${esc(g.target)}`:''}${g.actual?` · ทำได้ ${esc(g.actual)}`:''}</div>`:''}${g.target&&g.actual&&!isNaN(g.target)&&!isNaN(g.actual)?`<div class="bar" style="margin-top:6px;max-width:320px"><i style="width:${clamp(pct(+g.actual,+g.target),0,100)}%"></i></div>`:''}
@@ -797,6 +842,7 @@ function pCampaigns(){
      <div class="small muted">ระยะเวลาผ่านไป ${c.status==='planning'&&c.start>T?0:tp}%</div><div class="bar" style="margin:4px 0 10px"><i style="width:${c.status==='planning'&&c.start>T?0:tp}%"></i></div>
      ${c.brief?`<p class="small" style="margin:0 0 8px">${esc(c.brief)}</p>`:''}<dl class="kv small"><dt>กลุ่มเป้าหมาย</dt><dd>${esc(c.audience||'–')}</dd><dt>ช่องทาง</dt><dd>${(c.channels||[]).map(x=>`<span class="pill">${esc(x)}</span>`).join(' ')||'–'}</dd><dt>งบประมาณ</dt><dd>${baht(c.spent)} / ${baht(c.budget)} <span class="muted">(${pct(c.spent,c.budget)}%)</span></dd>${c.goal?`<dt>เป้าหมาย</dt><dd>${esc((S.goals.find(g=>g.id===c.goal)||{}).title||'')}</dd>`:''}</dl>
      ${(c.kpis||[]).length?`<div style="margin-top:10px">${c.kpis.map(k=>`<div style="margin:6px 0"><div class="row small"><span>${esc(k.label)}</span><span class="sp"></span><span class="mono">${num(k.actual)} / ${num(k.target)}</span></div><div class="bar ${k.actual>=k.target&&k.target?'ok':''}" style="margin-top:3px"><i style="width:${clamp(pct(k.actual,k.target),0,100)}%"></i></div></div>`).join('')}</div>`:''}
+     ${promoBox(c)}
      <div class="row small" style="margin-top:12px;gap:6px"><span class="pill click" data-go="tasks">งาน ${tks.filter(t=>t.status==='done').length}/${tks.length}</span><span class="pill click" data-go="content">คอนเทนต์ ${cts.length}</span><span class="pill click" data-go="live">LIVE ${lvs.length} ครั้ง · ${baht(lvs.reduce((a,l)=>a+l.gmv,0))}</span><span class="pill click" data-go="affiliate">Affiliate ${afs.length} คน · ${baht(afs.reduce((a,x)=>a+x.gmv,0))}</span></div>
      <div class="row" style="margin-top:10px"><button class="btn sm" data-act="task-new" data-camp="${c.id}">${ic('plus',13)} งาน</button><button class="btn sm" data-act="content-new" data-camp="${c.id}">${ic('plus',13)} คอนเทนต์</button></div></section>`}).join('')||'<div class="empty s12">ยังไม่มีแคมเปญ</div>'}</div>`;
 }
