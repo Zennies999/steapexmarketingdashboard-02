@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Steapex Marketing OS</title>
+<meta name="description" content="Marketing OS ของทีม Steapex: งาน แคมเปญ คอนเทนต์ LIVE Affiliate ประชุม และข่าวตลาด ในที่เดียว">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<script>
+/* ค่าเริ่มต้น = โหมดมืด (ตามที่เลือกใน Blueprint) */
+try{var t=localStorage.getItem('sos-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}
+</script>
+<style>
+:root{
+  --f-body:"IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-display:"Archivo","IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:18px; --side:264px;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0A0807; --bg2:#100B08; --panel:#15100C; --panel2:#1D1611; --sunk:#0E0A08;
+  --line:rgba(255,140,70,.15); --line2:rgba(255,255,255,.07);
+  --ink:#F7EFE9; --muted:#A8968A; --dim:#78685E;
+  --accent:#F26B1D; --accent2:#FF9A4D; --accent-ink:#FFB27A; --accent-soft:rgba(242,107,29,.14);
+  --ok:#3DD68C; --warn:#FFB547; --bad:#FF6464; --info:#64AEFF; --vio:#B48CFF;
+  --glow:0 0 0 1px rgba(242,107,29,.6),0 14px 44px -14px rgba(242,107,29,.55);
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#FFF8F2; --bg2:#FFF3EA; --panel:#FFFFFF; --panel2:#FFF5EE; --sunk:#FFEDE0;
+  --line:#F3D8C4; --line2:#F2E6DC;
+  --ink:#24140A; --muted:#7B5B45; --dim:#A58A76;
+  --accent:#D9480F; --accent2:#F26B1D; --accent-ink:#B23A0A; --accent-soft:#FFE6D3;
+  --ok:#1F9D62; --warn:#B7791F; --bad:#C53030; --info:#2B6CB0; --vio:#6B46C1;
+  --glow:0 0 0 1px rgba(217,72,15,.45),0 12px 34px -14px rgba(217,72,15,.45);
+  --shadow:0 1px 2px rgba(122,42,5,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;border-radius:8px}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.25}
+
+/* ---------- Shell ---------- */
+.app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100vh}
+.app.collapsed{--side:76px}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg2);border-right:1px solid var(--line2);padding:16px 12px 24px;display:flex;flex-direction:column;gap:6px;z-index:30}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 6px 14px;border-bottom:1px solid var(--line2);margin-bottom:6px}
+.brand img{width:36px;height:36px;border-radius:10px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.brand .bt{min-width:0;flex:1}
+.brand b{display:block;font-family:var(--f-display);font-weight:800;letter-spacing:.06em;font-size:15px}
+.brand small{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.ver{font-family:var(--f-mono);font-size:11px;color:var(--ok);background:rgba(61,214,140,.12);border-radius:999px;padding:1px 8px}
+.collapse-btn{margin-left:auto}
+.ng{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--dim);padding:14px 10px 6px;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:0;background:transparent;border-radius:12px;padding:9px 10px;color:var(--muted);font-size:14px;font-weight:500;text-decoration:none}
+.ni:hover{background:var(--panel2);color:var(--ink)}
+.ni[aria-current="page"]{background:var(--accent-soft);color:var(--ink);box-shadow:inset 3px 0 0 var(--accent)}
+.ni svg{flex:none;opacity:.9}
+.ni .num{font-family:var(--f-mono);font-size:11px;color:var(--dim);width:18px;flex:none}
+.ni .nb{margin-left:auto;font-family:var(--f-mono);font-size:11px;background:var(--accent);color:#fff;border-radius:999px;padding:0 7px;line-height:18px}
+.app.collapsed .ni .lbl,.app.collapsed .ni .num,.app.collapsed .ng,.app.collapsed .brand .bt,.app.collapsed .ver{display:none}
+.app.collapsed .ni{justify-content:center}
+.app.collapsed .brand{flex-direction:column}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line2)}
+.top-in{display:flex;align-items:center;gap:12px;padding:12px 24px;flex-wrap:wrap}
+.ttl{min-width:0;flex:1 1 220px}
+.eyebrow{margin:0;font-size:12px;color:var(--muted);letter-spacing:.04em}
+.ttl h1{font-size:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search{position:relative;flex:0 1 340px;min-width:180px}
+.search input{width:100%;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px 9px 38px;outline:none}
+.search input:focus{border-color:var(--accent)}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.qres{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.35);max-height:380px;overflow:auto;padding:6px;z-index:40}
+.qres button{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:8px 10px}
+.qres button:hover{background:var(--panel2)}
+.qres small{color:var(--muted)}
+.icon-btn{position:relative;width:38px;height:38px;border-radius:50%;border:1px solid var(--line2);background:var(--panel);display:grid;place-items:center;padding:0;color:var(--ink)}
+.icon-btn:hover{border-color:var(--accent)}
+.badge{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;font-family:var(--f-mono);display:grid;place-items:center;padding:0 5px}
+.who{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:4px 6px 4px 12px;font-size:12.5px;color:var(--muted)}
+.who select{background:transparent;border:0;color:var(--ink);font-weight:600;outline:none;max-width:170px}
+.who select option{background:var(--panel)}
+.menu-btn{display:none}
+.demo{margin:14px 24px 0;font-size:12.5px;color:var(--muted);background:var(--accent-soft);border:1px dashed color-mix(in srgb,var(--accent) 45%,transparent);border-radius:12px;padding:8px 12px}
+.demo b{color:var(--ink)}
+#view{padding:20px 24px 64px;min-width:0}
+#view:focus{outline:none}
+.bellpanel{position:absolute;right:0;top:calc(100% + 8px);width:min(360px,86vw);background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.4);padding:8px;z-index:40;max-height:70vh;overflow:auto;text-align:left}
+.bellwrap{position:relative}
+
+/* ---------- Building blocks ---------- */
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;grid-auto-flow:dense}
+.s12{grid-column:span 12}.s8{grid-column:span 8}.s7{grid-column:span 7}.s6{grid-column:span 6}.s5{grid-column:span 5}.s4{grid-column:span 4}.s3{grid-column:span 3}
+@media (max-width:1100px){.s3{grid-column:span 6}.s4,.s5,.s6,.s7,.s8{grid-column:span 12}}
+@media (max-width:620px){.s3{grid-column:span 12}}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel) 60%,var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);min-width:0}
+.card.hot{box-shadow:var(--glow)}
+.card h2{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card .sub{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
+.ch{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.ch .sp{flex:1}
+.kpi{display:flex;flex-direction:column;gap:2px}
+.kpi .k{font-size:12.5px;color:var(--muted)}
+.kpi .v{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12px;color:var(--dim)}
+.kpi .v.ac{color:var(--accent2)}
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 13px;font-weight:600;font-size:13.5px;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:linear-gradient(135deg,var(--accent2),var(--accent));border-color:transparent;color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent);background:transparent}
+.btn.sm{padding:4px 10px;font-size:12.5px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;border-radius:999px;padding:1px 9px;line-height:20px;white-space:nowrap;background:var(--panel2);color:var(--muted);border:1px solid var(--line2)}
+.pill.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent);border-color:transparent}
+.pill.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent);border-color:transparent}
+.pill.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 13%,transparent);border-color:transparent}
+.pill.info{color:var(--info);background:color-mix(in srgb,var(--info) 13%,transparent);border-color:transparent}
+.pill.ac{color:var(--accent-ink);background:var(--accent-soft);border-color:transparent}
+.pill.vio{color:var(--vio);background:color-mix(in srgb,var(--vio) 14%,transparent);border-color:transparent}
+.ndot{width:9px;height:9px;border-radius:50%;flex:none;margin-top:7px}
+.av{width:26px;height:26px;border-radius:50%;display:inline-grid;place-items:center;font-size:11px;font-weight:700;color:#1a0d05;flex:none;border:2px solid var(--panel)}
+.avs{display:inline-flex}.avs .av+.av{margin-left:-8px}
+.bar{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden;border:1px solid var(--line2)}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.bar.ok i{background:var(--ok)}
+.muted{color:var(--muted)}.dim{color:var(--dim)}
+.mono{font-family:var(--f-mono)}
+.small{font-size:12.5px}
+.empty{color:var(--muted);text-align:center;padding:22px;border:1px dashed var(--line);border-radius:14px;font-size:13.5px}
+.list{list-style:none;margin:0;padding:0}
+.list>li{padding:10px 0;border-top:1px solid var(--line2);display:flex;gap:10px;align-items:flex-start}
+.list>li:first-child{border-top:0}
+.list .t{font-weight:600}
+.list .m{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.click{cursor:pointer}
+.click:hover .t{color:var(--accent-ink)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line2);margin-bottom:16px;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;padding:9px 14px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.note{font-size:12.5px;color:var(--muted);background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:10px 12px}
+.note b{color:var(--ink)}
+table.tb{width:100%;border-collapse:collapse;font-size:13.5px}
+.tb th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tb td{padding:10px;border-bottom:1px solid var(--line2);vertical-align:top}
+.tb tr.click:hover td{background:var(--panel2)}
+.tb .r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tw{overflow-x:auto}
+
+/* Donut */
+.donut{--p:0;width:132px;height:132px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--sunk) 0);display:grid;place-items:center;flex:none}
+.donut::before{content:"";grid-area:1/1;width:96px;height:96px;border-radius:50%;background:var(--panel)}
+.donut b{grid-area:1/1;font-family:var(--f-display);font-size:26px;font-weight:800;z-index:1}
+.legend{display:grid;gap:6px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+/* Kanban */
+.board{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(205px,1fr));gap:14px;overflow-x:auto;padding-bottom:6px}
+.col{background:var(--bg2);border:1px solid var(--line2);border-radius:16px;padding:10px;min-height:200px;display:flex;flex-direction:column;gap:9px}
+.col.over{border-color:var(--accent);background:var(--accent-soft)}
+.col h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;padding:4px 4px 2px;font-family:var(--f-body)}
+.col h3 .n{font-family:var(--f-mono);font-size:11px;color:var(--muted);background:var(--panel);border-radius:999px;padding:0 7px}
+.tc{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:11px 12px;cursor:grab;display:grid;gap:7px}
+.tc:hover{border-color:var(--accent)}
+.tc .t{font-weight:600;font-size:14px;line-height:1.4}
+.tc .m{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:12px;color:var(--muted)}
+.tc .ft{display:flex;align-items:center;gap:8px}
+.prio{width:8px;height:8px;border-radius:50%;flex:none}
+.p-high{background:var(--bad)}.p-med{background:var(--warn)}.p-low{background:var(--info)}
+.sub-l{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+/* Calendar */
+.mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--line2);border-radius:14px;overflow:hidden}
+.mgrid .dh{font-size:11.5px;font-weight:700;color:var(--dim);padding:8px;text-align:center;background:var(--bg2);border-bottom:1px solid var(--line2)}
+.mgrid .dc{min-height:112px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:6px;display:flex;flex-direction:column;gap:3px;background:var(--panel);min-width:0}
+.mgrid .dc:nth-child(7n){border-right:0}
+.mgrid .dc.out{background:var(--bg2);opacity:.6}
+.mgrid .dc.today{box-shadow:inset 0 0 0 2px var(--accent)}
+.mgrid .dn{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.ev{font-size:11.5px;border-radius:6px;padding:2px 6px;background:var(--panel2);border-left:3px solid var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;color:var(--ink);text-align:left;border-top:0;border-right:0;border-bottom:0;width:100%}
+.ev.t-task{border-left-color:var(--info)}.ev.t-content{border-left-color:var(--vio)}.ev.t-live{border-left-color:var(--bad)}.ev.t-event{border-left-color:var(--ok)}.ev.t-campaign{border-left-color:var(--warn)}
+.wgrid{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:10px;overflow-x:auto}
+.wday{background:var(--panel);border:1px solid var(--line2);border-radius:14px;padding:10px;min-height:260px;display:flex;flex-direction:column;gap:6px}
+.wday.today{border-color:var(--accent);box-shadow:var(--glow)}
+.wday h4{margin:0 0 4px;font-size:12.5px;color:var(--muted);font-weight:600}
+.wday h4 b{display:block;font-family:var(--f-display);font-size:20px;color:var(--ink)}
+.ev .tm{font-family:var(--f-mono);color:var(--muted);margin-right:4px}
+.lg-row{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted)}
+.lg-row i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+/* Goals tree */
+.goal{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--panel)}
+.goal .lv{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);font-weight:700}
+.goal .t{font-weight:700;margin:2px 0}
+.goal-kids{margin:10px 0 0 18px;padding-left:14px;border-left:2px solid var(--line);display:grid;gap:10px}
+
+/* Charts */
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--f-mono)}
+.chart .gl{stroke:var(--line2)}
+.chart .br{fill:url(#gBar)}
+.chart .br:hover{fill:var(--accent2)}
+.hb{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;min-width:0}
+.hb-plot{display:flex;align-items:flex-end;gap:6px;border-bottom:1px solid var(--line);background:repeating-linear-gradient(to top,transparent 0,transparent calc(25% - 1px),var(--line2) calc(25% - 1px),var(--line2) 25%)}
+.hb-c{flex:1;min-width:0;height:100%;display:flex;align-items:flex-end;justify-content:center;cursor:default}
+.hb-b{width:min(30px,72%);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--accent2),color-mix(in srgb,var(--accent) 60%,transparent))}
+.hb-c:hover .hb-b{background:var(--accent2)}
+.hb-x{display:flex;gap:6px}
+.hb-x span{flex:1;min-width:0;text-align:center;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:clip}
+
+/* Overview widget customise */
+.wbar{display:none;gap:4px;margin-left:auto}
+.customizing .wbar{display:inline-flex}
+.customizing .card[data-w]{outline:1px dashed var(--accent);outline-offset:3px}
+.card.whidden{opacity:.4}
+
+/* Dialog form */
+dialog{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:20px;padding:0;width:min(680px,94vw);max-height:90vh;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(5,3,2,.6);backdrop-filter:blur(3px)}
+.fm header{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel);z-index:1}
+.fm header h3{font-size:17px;flex:1}
+.fm .x{border:0;background:transparent;font-size:24px;line-height:1;color:var(--muted)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;padding:16px 20px}
+.f{display:grid;gap:5px;font-size:12.5px;color:var(--muted);font-weight:600;min-width:0}
+.f.w{grid-column:1/-1}
+.f input,.f select,.f textarea{width:100%;background:var(--sunk);border:1px solid var(--line2);border-radius:10px;padding:9px 11px;color:var(--ink);font-weight:400;font-size:14px;outline:none}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--accent)}
+.f textarea{min-height:84px;resize:vertical}
+.f .hint{font-weight:400;color:var(--dim);font-size:11.5px}
+.f .chk{display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:400;color:var(--ink);font-size:14px}
+.f .chk label{display:flex;align-items:center;gap:6px}
+.fm footer{display:flex;gap:10px;align-items:center;padding:14px 20px;border-top:1px solid var(--line2);position:sticky;bottom:0;background:var(--panel)}
+@media (max-width:620px){.fgrid{grid-template-columns:1fr}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.2s;z-index:100;max-width:90vw}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Detail drawer */
+.drawer-body{padding:16px 20px;display:grid;gap:14px}
+.kv{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 12px;font-size:13.5px}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.cmt{background:var(--panel2);border-radius:12px;padding:8px 12px;font-size:13.5px}
+.cmt small{color:var(--muted)}
+
+iframe.mr{width:100%;height:calc(100vh - 170px);min-height:560px;border:1px solid var(--line);border-radius:var(--r);background:#fff}
+
+/* Responsive shell */
+@media (max-width:960px){
+  .app,.app.collapsed{grid-template-columns:minmax(0,1fr);--side:264px}
+  .side{position:fixed;left:0;top:0;bottom:0;width:var(--side);transform:translateX(-102%);transition:transform .2s}
+  .app.open .side{transform:none;box-shadow:20px 0 60px rgba(0,0,0,.5)}
+  .app.collapsed .ni .lbl,.app.collapsed .ni .num,.app.collapsed .ng,.app.collapsed .brand .bt,.app.collapsed .ver{display:revert}
+  .collapse-btn{display:none}
+  .menu-btn{display:grid}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:25}
+  .top-in{padding:10px 16px}
+  #view{padding:16px 16px 56px}
+  .demo{margin:12px 16px 0}
+  .search{order:5;flex:1 1 100%}
+  .who span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="side" id="side" aria-label="เมนูหลัก">
+    <div class="brand">
+      <img src="../assets/steapex-logo.png" alt="Steapex">
+      <div class="bt"><b>STEAPEX</b><small>Marketing OS</small></div>
+      <span class="ver">v2.0</span>
+    </div>
+    <nav id="nav"></nav>
+    <span class="sp"></span>
+    <button class="ni collapse-btn" id="collapseBtn" type="button" title="ย่อ/ขยายเมนู" aria-label="ย่อ/ขยายเมนู"></button>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+  <div class="main">
+    <header class="top">
+      <div class="top-in">
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="เปิดเมนู"></button>
+        <div class="ttl"><p class="eyebrow" id="eyebrow"></p><h1 id="pageTitle">Marketing OS</h1></div>
+        <div class="search"><span id="searchIc"></span><input id="q" type="search" placeholder="ค้นหางาน แคมเปญ คอนเทนต์ ประชุม…" autocomplete="off" aria-label="ค้นหา"><div class="qres" id="qres" hidden></div></div>
+        <div class="bellwrap"><button class="icon-btn" id="bellBtn" type="button" aria-label="การแจ้งเตือน"></button><div class="bellpanel" id="bellPanel" hidden></div></div>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="สลับโหมดสว่าง/มืด" title="สลับโหมดสว่าง/มืด"></button>
+        <label class="who"><span>ใช้งานในชื่อ</span><select id="who" aria-label="ใช้งานในชื่อ"></select></label>
+      </div>
+    </header>
+    <div class="demo" id="demo"><b>โหมดตัวอย่าง:</b> ข้อมูลทั้งหมดเป็นตัวอย่าง แก้ไขได้จริงแต่บันทึกอยู่ในเบราว์เซอร์เครื่องนี้เท่านั้น ยังไม่แชร์กับอีกคน และหน้านี้ยังเป็นลิงก์สาธารณะ อย่าใส่ข้อมูลภายในจนกว่าจะย้ายไปหลังระบบล็อกอิน</div>
+    <main id="view" tabindex="-1"></main>
+  </div>
+</div>
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   Steapex Marketing OS · v2.0 (static prototype)
+   - ข้อมูลเก็บใน localStorage ของเบราว์เซอร์ (คีย์ steapex-os-v1)
+   - โครงข้อมูลออกแบบให้ตรงกับ Database Blueprint (workspace, users, roles,
+     tasks, goals, campaigns, events, contents, lives, affiliates, meetings,
+     approvals, files, activity, trash) เพื่อย้ายไปฐานข้อมูลจริงได้ภายหลัง
+   ===================================================================== */
+const KEY='steapex-os-v1';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=u=>/^(https?:\/\/|\.\.?\/)/i.test(u||'')?u:'#';
+const uid=()=>Math.random().toString(36).slice(2,10);
+const iso=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,10)};
+const today=()=>iso(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return iso(d)};
+const weekStart=s=>{const d=new Date(s+'T00:00:00');const k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return iso(d)};
+const daysBetween=(a,b)=>Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5);
+const TH=new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short'});
+const THY=new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short',year:'numeric'});
+const THL=new Intl.DateTimeFormat('th-TH',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const THM=new Intl.DateTimeFormat('th-TH',{month:'long',year:'numeric'});
+const fd=s=>{if(!s)return '–';try{return TH.format(new Date(s+'T00:00:00'))}catch(e){return s}};
+const fdy=s=>{if(!s)return '–';try{return THY.format(new Date(s+'T00:00:00'))}catch(e){return s}};
+const fts=s=>{try{return new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(s))}catch(e){return s}};
+const nf=new Intl.NumberFormat('th-TH');
+const num=n=>nf.format(Math.round(Number(n)||0));
+const baht=n=>'฿'+nf.format(Math.round(Number(n)||0));
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+
+/* ---------------- Icons ---------------- */
+const P={
+ grid:'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z',check:'M4 6l2 2 3-3M12 7h8M4 13l2 2 3-3M12 14h8M5 19h1M12 20h8',
+ cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',mega:'M4 10v4h3l7 4V6L7 10zM18 9a4 4 0 010 6',
+ clap:'M4 10h16v10H4zM4 10l2.5-5h3.5L7.5 10M10 5h4l-2.5 5M15.5 5H19l1 5',live:'M12 13a1 1 0 100-2 1 1 0 000 2zM8.5 8.5a5 5 0 000 7M15.5 8.5a5 5 0 010 7M5.5 5.5a9 9 0 000 13M18.5 5.5a9 9 0 010 13',
+ users:'M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M16 11a3 3 0 100-6M21 20a6 6 0 00-4-5.6',note:'M6 3h12v18H6zM9 8h6M9 12h6M9 16h4',
+ globe:'M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18',spark:'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z',
+ folder:'M3 6h6l2 2h10v11H3z',bell:'M6 16v-5a6 6 0 0112 0v5l2 2H4zM10 20a2 2 0 004 0',
+ gear:'M12 15a3 3 0 100-6 3 3 0 000 6zM12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1',
+ plus:'M12 5v14M5 12h14',search:'M11 18a7 7 0 100-14 7 7 0 000 14zM20 20l-4-4',moon:'M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z',
+ menu:'M4 7h16M4 12h16M4 17h16',side:'M4 4h16v16H4zM9 4v16',left:'M15 6l-6 6 6 6',right:'M9 6l6 6-6 6',up:'M6 15l6-6 6 6',down:'M6 9l6 6 6-6',
+ eye:'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 100-6 3 3 0 000 6z',link:'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+ copy:'M9 9h11v11H9zM5 15V4h11',ext:'M14 4h6v6M20 4l-9 9M18 14v6H4V6h6',trash:'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13',
+ target:'M12 21a9 9 0 100-18 9 9 0 000 18zM12 17a5 5 0 100-10 5 5 0 000 10zM12 13a1 1 0 100-2 1 1 0 000 2z',chart:'M4 20V10M10 20V4M16 20v-7M22 20H2',
+ flow:'M5 3h5v5H5zM14 16h5v5h-5zM7.5 8v4a3 3 0 003 3h3.5',edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4'
+};
+const ic=(n,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${P[n]||''}"/></svg>`;
+
+/* ---------------- Modules (Blueprint v2.0) ---------------- */
+const NAV=[
+ {g:'Workspace',items:[
+  {id:'overview',n:'01',t:'Daily Overview',th:'ภาพรวมงานประจำวันและทีม',ic:'grid',core:true},
+  {id:'tasks',n:'02',t:'Task Management',th:'จัดการงานและมอบหมายงาน',ic:'check'},
+  {id:'calendar',n:'03',t:'Calendar & Schedule',th:'ปฏิทินและกำหนดการ',ic:'cal'},
+  {id:'campaigns',n:'04',t:'Campaign & Event Management',th:'วางแผนกลยุทธ์ แคมเปญ และ Event',ic:'mega'},
+  {id:'content',n:'05',t:'Content Planning',th:'วางแผนและติดตามคอนเทนต์',ic:'clap'},
+  {id:'live',n:'06',t:'LIVE Stream Performance',th:'วิเคราะห์ผลการ LIVE',ic:'live'},
+  {id:'affiliate',n:'07',t:'Affiliate Performance',th:'วิเคราะห์ผลการทำงานของ Affiliate',ic:'users'},
+  {id:'meetings',n:'08',t:'Meeting Summary',th:'สรุปการประชุมและติดตาม Action Items',ic:'note'}]},
+ {g:'Intelligence & Resources',items:[
+  {id:'ai',n:'09',t:'AI Assistant',th:'ผู้ช่วย AI ประจำทีม',ic:'spark'},
+  {id:'files',n:'10',t:'File & Document Center',th:'จัดการเอกสารและไฟล์',ic:'folder'},
+  {id:'notify',n:'11',t:'Notification & Approval',th:'แจ้งเตือนและอนุมัติงาน',ic:'bell'},
+  {id:'settings',n:'12',t:'Settings & Integrations',th:'จัดการสมาชิก ระบบเชื่อมต่อ และปรับแต่ง',ic:'gear',core:true},
+  {id:'research',n:'MR',t:'Market Research',th:'ข่าวคู่แข่งและแนวโน้มตลาด (อัปเดตทุกเช้า)',ic:'globe'}]}
+];
+const MOD=Object.fromEntries(NAV.flatMap(g=>g.items).map(m=>[m.id,m]));
+
+/* ---------------- Labels ---------------- */
+const TASK_ST=[['todo','Pending','ยังไม่เริ่ม',''],['doing','In Progress','กำลังทำ','info'],['review','In Review','รอตรวจ/อนุมัติ','warn'],['revision','Revision','ต้องแก้ไข','bad'],['done','Completed','เสร็จแล้ว','ok']];
+const TST=Object.fromEntries(TASK_ST.map(s=>[s[0],s]));
+const PRIO={high:'สูง',med:'กลาง',low:'ต่ำ'};
+const CT_ST=[['idea','ไอเดีย',''],['brief','บรีฟ',''],['production','ถ่ายทำ/ตัดต่อ','info'],['review','รออนุมัติ','warn'],['scheduled','ตั้งเวลาแล้ว','vio'],['published','เผยแพร่แล้ว','ok']];
+const CST=Object.fromEntries(CT_ST.map(s=>[s[0],s]));
+const CAMP_ST={planning:['วางแผน',''],active:['กำลังดำเนินการ','info'],paused:['พักไว้','warn'],done:['จบแล้ว','ok']};
+const AFF_ST={prospect:['เล็งไว้',''],contacted:['ติดต่อแล้ว','info'],sample:['ส่งสินค้าแล้ว','vio'],active:['กำลังโปรโมต','ok'],inactive:['หยุด','bad']};
+const PLATFORMS=['TikTok','Facebook','Instagram','Shopee','YouTube','LINE'];
+const CT_TYPES=['คลิปสั้น','LIVE','โพสต์ภาพ','Carousel','Story','บทความ'];
+const SCH_TYPES={meeting:'ประชุม',shoot:'ถ่ายทำ',live:'LIVE',deadline:'เดดไลน์',other:'อื่นๆ'};
+const ROLES={exec:'Marketing Executive',sup:'Brand Supervisor',member:'Member'};
+
+/* ---------------- Sample data ---------------- */
+function sample(){
+  const T=today(),W=weekStart(T);let seed=11;const r=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  const S={v:1,workspace:{id:'ws-steapex',name:'Steapex Marketing'},
+    users:[{id:'u1',name:'Marketing Executive',role:'exec',color:'#FF9A4D'},{id:'u2',name:'Brand Supervisor',role:'sup',color:'#FFD3AE'}],
+    modules:{},widgets:{order:['kpis','today','briefing','weekly','schedule','campaigns','quota','live','news','activity'],hidden:[]},
+    goals:[],campaigns:[],events:[],tasks:[],schedule:[],contents:[],quota:null,lives:[],affiliates:[],meetings:[],files:[],approvals:[],activity:[],trash:[],readN:[]};
+  NAV.forEach(g=>g.items.forEach(m=>S.modules[m.id]=true));
+  const Y=T.slice(0,4),M=T.slice(0,7);
+  S.goals=[
+    {id:'g1',level:'year',period:Y,title:'เพิ่มการรู้จักแบรนด์ในกลุ่มนักวิ่งมือใหม่ (ตัวอย่าง)',kpi:'Brand awareness',target:'',actual:'',parent:''},
+    {id:'g2',level:'quarter',period:'ไตรมาสนี้',title:'ขยายฐานผู้ติดตาม Social (ตัวอย่าง)',kpi:'ผู้ติดตามใหม่',target:'5000',actual:'3100',parent:'g1'},
+    {id:'g3',level:'month',period:M,title:'แคมเปญ Creator สายวิ่ง (ตัวอย่าง)',kpi:'Affiliate ใหม่',target:'10',actual:'6',parent:'g2'},
+    {id:'g4',level:'month',period:M,title:'ยอดขายจาก LIVE เติบโต (ตัวอย่าง)',kpi:'GMV จาก LIVE',target:'300000',actual:'',parent:'g2'}];
+  S.campaigns=[
+    {id:'c1',name:'แคมเปญ Double Day (ตัวอย่าง)',status:'active',start:addDays(T,-6),end:addDays(T,14),goal:'g3',audience:'นักวิ่งมือใหม่ อายุ 22–35',channels:['TikTok','Shopee'],budget:40000,spent:16500,brief:'โปรวันเลขเบิ้ล ผลักรุ่นขายดี + ไลฟ์พิเศษ',kpis:[{label:'GMV',target:250000,actual:118000},{label:'ออเดอร์',target:600,actual:290}],owner:'u1'},
+    {id:'c2',name:'Payday ปลายเดือน (ตัวอย่าง)',status:'planning',start:addDays(T,4),end:addDays(T,9),goal:'g4',audience:'ลูกค้าเดิม + ผู้ติดตาม',channels:['TikTok','Facebook'],budget:20000,spent:0,brief:'ส่วนลดช่วงเงินเดือนออก',kpis:[{label:'GMV',target:120000,actual:0}],owner:'u1'},
+    {id:'c3',name:'เปิดตัวรองเท้ารุ่นใหม่ (ตัวอย่าง)',status:'planning',start:addDays(T,16),end:addDays(T,46),goal:'g2',audience:'สายวิ่งเทรลและถนน',channels:['TikTok','Instagram','Facebook'],budget:80000,spent:0,brief:'ทีเซอร์ → เปิดตัว → รีวิวครีเอเตอร์',kpis:[{label:'ยอดเข้าชมคลิป',target:500000,actual:0}],owner:'u2'},
+    {id:'c4',name:'แคมเปญเดือนก่อน (ตัวอย่าง)',status:'done',start:addDays(T,-40),end:addDays(T,-26),goal:'g2',audience:'ผู้ติดตามใหม่',channels:['TikTok'],budget:15000,spent:14200,brief:'',kpis:[{label:'GMV',target:90000,actual:97500}],owner:'u1'}];
+  S.events=[
+    {id:'e1',name:'Run Club ครั้งถัดไป (ตัวอย่าง)',date:addDays(T,6),location:'สวนสาธารณะ (ตัวอย่าง)',budget:8000,staff:'Marketing Executive, ทีมขาย 2 คน',supplier:'ร้านน้ำดื่ม (ตัวอย่าง)',status:'planning',campaign:'c1',checklist:[{t:'จองพื้นที่',done:true},{t:'เตรียมรองเท้าให้ลอง',done:false},{t:'โพสต์ชวนสมัคร',done:true},{t:'ช่างภาพ',done:false}]},
+    {id:'e2',name:'ออกบูธในห้าง (ตัวอย่าง)',date:addDays(T,19),location:'ห้างสรรพสินค้า (ตัวอย่าง)',budget:30000,staff:'',supplier:'ผู้ทำบูธ (ตัวอย่าง)',status:'planning',campaign:'c3',checklist:[{t:'ยืนยันพื้นที่',done:false},{t:'ออกแบบ POSM',done:false}]}];
+  const tk=(o)=>Object.assign({id:uid(),desc:'',status:'todo',priority:'med',assignees:['u1'],reviewer:'u2',due:T,campaign:'',event:'',goal:'',parent:'',dependsOn:[],files:[],comments:[],history:[],created:addDays(T,-7)},o);
+  const p1=tk({id:'t1',title:'วางแผนแคมเปญ Double Day',status:'doing',priority:'high',due:addDays(T,2),campaign:'c1',goal:'g3'});
+  const art=tk({id:'t6',title:'ออกแบบ Artwork โฆษณา',status:'doing',priority:'high',due:T,campaign:'c1',assignees:['u1']});
+  S.tasks=[p1,
+    tk({id:'t2',title:'สำรวจกลุ่มเป้าหมาย',status:'done',parent:'t1',campaign:'c1',due:addDays(T,-3)}),
+    tk({id:'t3',title:'เตรียมบรีฟแคมเปญ',status:'doing',parent:'t1',campaign:'c1',due:T}),
+    tk({id:'t4',title:'ทำงบประมาณการตลาด',status:'todo',parent:'t1',campaign:'c1',due:addDays(T,1)}),
+    tk({id:'t5',title:'ส่งแผนให้ Supervisor อนุมัติ',status:'review',parent:'t1',campaign:'c1',due:T,priority:'high'}),
+    art,
+    tk({id:'t7',title:'โพสต์โฆษณาแคมเปญ',status:'todo',due:addDays(T,3),campaign:'c1',dependsOn:['t6']}),
+    tk({id:'t8',title:'ตรวจแผนการตลาดรายเดือน',status:'review',assignees:['u2'],reviewer:'u2',due:T,priority:'high'}),
+    tk({id:'t9',title:'เตรียมตาราง Content TikTok สัปดาห์หน้า',status:'doing',due:T,assignees:['u1']}),
+    tk({id:'t10',title:'สรุปผล LIVE สัปดาห์ที่แล้ว',status:'todo',due:addDays(T,-1),assignees:['u1'],priority:'high'}),
+    tk({id:'t11',title:'คัดเลือก Affiliate รอบใหม่',status:'todo',due:addDays(T,5),assignees:['u1','u2'],goal:'g3'}),
+    tk({id:'t12',title:'ยืนยันสถานที่ Run Club',status:'done',due:addDays(T,-2),event:'e1'}),
+    tk({id:'t13',title:'อนุมัติงบบูธในห้าง',status:'todo',assignees:['u2'],reviewer:'u2',due:addDays(T,7),event:'e2'})];
+  S.tasks.forEach(t=>t.history.push({who:t.assignees[0],t:new Date(Date.now()-864e5*3).toISOString(),text:'สร้างงาน'}));
+  p1.comments.push({who:'u2',t:new Date(Date.now()-864e5).toISOString(),text:'ขอเน้นรุ่นขายดี 2 รุ่นก่อนนะ (ตัวอย่างความคิดเห็น)'});
+  S.schedule=[
+    {id:uid(),title:'ประชุมวางแผนสัปดาห์',date:W,start:'09:30',end:'10:30',type:'meeting',who:['u1','u2'],note:''},
+    {id:uid(),title:'ถ่ายคลิป Branding',date:addDays(W,1),start:'13:00',end:'16:00',type:'shoot',who:['u1'],note:''},
+    {id:uid(),title:'รีวิวคอนเทนต์กับ Supervisor',date:T,start:'15:00',end:'15:30',type:'meeting',who:['u1','u2'],note:''},
+    {id:uid(),title:'ถ่ายคลิป Education',date:addDays(T,1),start:'10:00',end:'12:00',type:'shoot',who:['u1'],note:''},
+    {id:uid(),title:'ส่งไฟล์ Artwork',date:addDays(T,2),start:'17:00',end:'',type:'deadline',who:['u1'],note:''},
+    {id:uid(),title:'ประชุมสรุปแคมเปญ',date:addDays(W,4),start:'14:00',end:'15:00',type:'meeting',who:['u1','u2'],note:''}];
+  S.quota={month:M,total:35,pillars:[{name:'Branding',role:'Main',pct:50,quota:17},{name:'Education',role:'Support',pct:20,quota:7},{name:'Commercial',role:'Support',pct:22,quota:8},{name:'Others',role:'Special',pct:8,quota:3}]};
+  const cts=[['รีวิวรองเท้าวิ่งมือใหม่','Education','published',-12],['เบื้องหลังการออกแบบ','Branding','published',-9],['5 ท่าวอร์มก่อนวิ่ง','Education','published',-8],['เรื่องเล่าผู้ก่อตั้ง','Branding','scheduled',2],['โปร Double Day','Commercial','review',1],['ลองวิ่ง 10K ด้วยรุ่นใหม่','Branding','production',4],['วิธีเลือกไซซ์','Education','published',-5],['ไลฟ์ Payday','Commercial','brief',6],['ตลกตามเทรนด์','Others','idea',8],['Run Club highlight','Branding','idea',9],['เทียบพื้นรองเท้า','Education','production',3],['ชุดโปรต้นเดือน','Commercial','published',-15]];
+  S.contents=cts.map((c,i)=>({id:uid(),title:c[0]+' (ตัวอย่าง)',pillar:c[1],status:c[2],date:addDays(T,c[3]),platform:PLATFORMS[i%3],type:i===7?'LIVE':'คลิปสั้น',owner:'u1',campaign:c[2]!=='published'&&c[1]==='Commercial'?'c1':'',ref:'',caption:'',link:'',views:c[2]==='published'?Math.round(4000+r()*60000):0}));
+  const hosts=['Host A','Host B'],slots=['12:00','19:00','20:30'];
+  for(let i=0;i<12;i++){const d=addDays(T,-(i*2+1)),dur=Math.round(90+r()*90),avg=Math.round(60+r()*240);const views=Math.round(avg*dur*(0.9+r()*0.6)),clicks=Math.round(views*(0.04+r()*0.05)),orders=Math.round(clicks*(0.05+r()*0.08)),gmv=Math.round(orders*(780+r()*500));
+    S.lives.push({id:uid(),date:d,start:slots[i%3],durationMin:dur,host:hosts[i%2],views,peak:Math.round(avg*(1.8+r())),avgViewers:avg,clicks,orders,gmv,campaign:i<3?'c1':'',products:`รุ่น A (ตัวอย่าง) | ${Math.round(orders*0.5)}\nรุ่น B (ตัวอย่าง) | ${Math.round(orders*0.3)}\nถุงเท้า (ตัวอย่าง) | ${Math.round(orders*0.2)}`});}
+  const tiers=['Micro','Micro','Mid','Micro','Large','Mid','Micro','Micro'],sts=['active','active','active','sample','active','contacted','prospect','inactive'];
+  for(let i=0;i<8;i++){const videos=sts[i]==='active'?Math.round(3+r()*20):0;const views=videos*Math.round(2000+r()*30000),clicks=Math.round(views*(0.01+r()*0.03)),orders=Math.round(clicks*(0.04+r()*0.08));
+    S.affiliates.push({id:uid(),name:'ครีเอเตอร์ตัวอย่าง '+String.fromCharCode(65+i),username:'@creator_'+String.fromCharCode(97+i),contact:'',tier:tiers[i],status:sts[i],category:['วิ่ง','ฟิตเนส','ไลฟ์สไตล์','รีวิว'][i%4],videos,views,clicks,orders,gmv:Math.round(orders*(900+r()*400)),commissionPct:[8,10,12][i%3],campaign:i<4?'c1':''});}
+  S.meetings=[
+    {id:'m1',title:'ประชุมวางแผนแคมเปญ Double Day (ตัวอย่าง)',date:addDays(T,-3),participants:['u1','u2'],agenda:'1) เป้ายอดขาย\n2) คอนเทนต์\n3) LIVE',notes:'ตกลงโฟกัสรุ่นขายดี 2 รุ่น และเพิ่มไลฟ์ช่วงค่ำ (ตัวอย่างบันทึก)',decisions:'ใช้งบโฆษณาไม่เกิน 40,000\nเพิ่มไลฟ์ 20:30 สัปดาห์ละ 2 ครั้ง',actions:[{id:uid(),text:'ทำตารางไลฟ์ช่วงค่ำ',assignee:'u1',due:addDays(T,1),status:'open',taskId:''},{id:uid(),text:'ติดต่อครีเอเตอร์ 5 คน',assignee:'u1',due:addDays(T,4),status:'open',taskId:''},{id:uid(),text:'อนุมัติงบโฆษณา',assignee:'u2',due:addDays(T,-1),status:'done',taskId:''}]},
+    {id:'m2',title:'ประชุมทีมประจำสัปดาห์ (ตัวอย่าง)',date:W,participants:['u1','u2'],agenda:'ทบทวนงานค้าง',notes:'',decisions:'',actions:[{id:uid(),text:'อัปเดต Content Quota',assignee:'u1',due:addDays(W,2),status:'open',taskId:''}]}];
+  S.files=[
+    {id:uid(),name:'Market Research (ข่าวคู่แข่งอัตโนมัติ)',url:'../index.html',category:'Research',campaign:'',added:T,by:'u1'},
+    {id:uid(),name:'GitHub repo ของแดชบอร์ด',url:'https://github.com/Zennies999/steapexmarketingdashboard-02',category:'ระบบ',campaign:'',added:T,by:'u1'},
+    {id:uid(),name:'ตัวอย่าง: โฟลเดอร์ Artwork แคมเปญ',url:'https://example.com/',category:'Artwork',campaign:'c1',added:addDays(T,-4),by:'u1'},
+    {id:uid(),name:'ตัวอย่าง: Brand Guideline',url:'https://example.com/',category:'Brand',campaign:'',added:addDays(T,-20),by:'u2'}];
+  S.tasks.filter(t=>t.status==='review').forEach(t=>S.approvals.push({id:uid(),kind:'task',ref:t.id,title:t.title,requestedBy:t.assignees[0],reviewer:t.reviewer||'u2',status:'pending',date:addDays(T,-1),comment:''}));
+  S.contents.filter(c=>c.status==='review').forEach(c=>S.approvals.push({id:uid(),kind:'content',ref:c.id,title:c.title,requestedBy:c.owner,reviewer:'u2',status:'pending',date:T,comment:''}));
+  S.approvals.push({id:uid(),kind:'campaign',ref:'c2',title:'แผนแคมเปญ Payday (ตัวอย่าง)',requestedBy:'u1',reviewer:'u2',status:'approved',date:addDays(T,-2),comment:'โอเค',decidedAt:new Date(Date.now()-864e5).toISOString(),decidedBy:'u2'});
+  S.activity=[{t:new Date(Date.now()-36e5).toISOString(),who:'u1',text:'ส่งงาน “ส่งแผนให้ Supervisor อนุมัติ” เข้ารอตรวจ'},{t:new Date(Date.now()-72e5).toISOString(),who:'u2',text:'แสดงความคิดเห็นในงาน “วางแผนแคมเปญ Double Day”'},{t:new Date(Date.now()-864e5).toISOString(),who:'u1',text:'เพิ่มคอนเทนต์ 3 ชิ้นใน Content Planning'}];
+  return S;
+}
+
+/* ---------------- State ---------------- */
+let S=load();
+function load(){try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);if(o&&o.v===1&&Array.isArray(o.tasks))return o}}catch(e){}return sample()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('บันทึกในเบราว์เซอร์ไม่ได้ (พื้นที่เก็บข้อมูลถูกปิด)')}}
+let ME=(()=>{try{return localStorage.getItem('sos-me')||'u1'}catch(e){return 'u1'}})();
+if(!S.users.some(u=>u.id===ME))ME=S.users[0].id;
+const user=id=>S.users.find(u=>u.id===id)||{id,name:id||'–',role:'member',color:'#777'};
+const isSup=()=>user(ME).role==='sup';
+const av=id=>{const u=user(id);return `<span class="av" style="background:${esc(u.color)}" title="${esc(u.name)}">${esc((u.name||'?').trim().charAt(0).toUpperCase())}</span>`};
+function act(text){S.activity.unshift({t:new Date().toISOString(),who:ME,text});S.activity=S.activity.slice(0,80)}
+function commit(text){if(text)act(text);save();render()}
+function trash(type,list,id){const i=S[list].findIndex(x=>x.id===id);if(i<0)return;const [it]=S[list].splice(i,1);S.trash.unshift({type,list,item:it,at:new Date().toISOString(),by:ME});S.trash=S.trash.slice(0,50)}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)}
+const campName=id=>(S.campaigns.find(c=>c.id===id)||{}).name||'';
+const taskById=id=>S.tasks.find(t=>t.id===id);
+
+/* ---------------- Router ---------------- */
+let route='overview',sub={};
+const UI={range:'today',scope:'team',customize:false,taskView:'board',taskOwner:'all',calView:'month',calRef:today(),campTab:'campaigns',contentView:'board',liveRange:'30',aiAgent:'daily',setTab:'users',fileCat:'all'};
+function go(id){if(!MOD[id]||(S.modules[id]===false&&!MOD[id].core))id='overview';route=id;try{history.replaceState(null,'','#'+id)}catch(e){}
+  $('#app').classList.remove('open');$('#scrim').hidden=true;render();$('#view').focus({preventScroll:true});window.scrollTo(0,0)}
+
+/* ---------------- Nav ---------------- */
+function renderNav(){
+  const n=notifs().filter(x=>!S.readN.includes(x.id)).length+S.approvals.filter(a=>a.status==='pending').length;
+  $('#nav').innerHTML=NAV.map(g=>{const its=g.items.filter(m=>S.modules[m.id]!==false||m.core);if(!its.length)return '';
+    return `<div class="ng">${esc(g.g)}</div>`+its.map(m=>`<a class="ni" href="#${m.id}" data-go="${m.id}" ${route===m.id?'aria-current="page"':''} title="${esc(m.t)}">${ic(m.ic)}<span class="num">${m.n}</span><span class="lbl">${esc(m.t)}</span>${m.id==='notify'&&n?`<span class="nb">${n}</span>`:''}</a>`).join('')}).join('');
+  $('#who').innerHTML=S.users.map(u=>`<option value="${esc(u.id)}" ${u.id===ME?'selected':''}>${esc(u.name)}</option>`).join('');
+  $('#bellBtn').innerHTML=ic('bell')+(n?`<span class="badge">${n}</span>`:'');
+}
+
+/* ---------------- Notifications ---------------- */
+function notifs(){
+  const T=today(),out=[];
+  S.tasks.filter(t=>t.status!=='done'&&t.due&&t.due<T).forEach(t=>out.push({id:'od-'+t.id+t.due,lv:'bad',text:`งานเลยกำหนด: ${t.title}`,sub:`กำหนด ${fd(t.due)} · ${t.assignees.map(a=>user(a).name).join(', ')}`,go:'tasks',ref:t.id}));
+  S.tasks.filter(t=>t.status!=='done'&&t.due===T).forEach(t=>out.push({id:'td-'+t.id+T,lv:'warn',text:`ครบกำหนดวันนี้: ${t.title}`,sub:t.assignees.map(a=>user(a).name).join(', '),go:'tasks',ref:t.id}));
+  S.tasks.filter(t=>t.status==='revision').forEach(t=>out.push({id:'rv-'+t.id,lv:'bad',text:`ต้องแก้ไข: ${t.title}`,sub:'Supervisor ขอให้แก้ไข',go:'tasks',ref:t.id}));
+  S.campaigns.filter(c=>c.status!=='done'&&c.start>=T&&daysBetween(T,c.start)<=7).forEach(c=>out.push({id:'cs-'+c.id+c.start,lv:'info',text:`แคมเปญเริ่มใน ${daysBetween(T,c.start)} วัน: ${c.name}`,sub:fd(c.start),go:'campaigns'}));
+  S.events.filter(e=>e.date>=T&&daysBetween(T,e.date)<=7).forEach(e=>out.push({id:'ev-'+e.id+e.date,lv:'info',text:`อีเวนต์ใน ${daysBetween(T,e.date)} วัน: ${e.name}`,sub:`เช็กลิสต์เสร็จ ${e.checklist.filter(c=>c.done).length}/${e.checklist.length}`,go:'campaigns'}));
+  const q=quotaStats();if(q){const mp=monthProgress();if(q.done/q.total*100+15<mp)out.push({id:'q-'+T,lv:'warn',text:`Content Quota ช้ากว่ากำหนด: ผลิตแล้ว ${q.done}/${q.total}`,sub:`ผ่านไป ${mp}% ของเดือน`,go:'content'})}
+  S.meetings.forEach(m=>m.actions.filter(a=>a.status!=='done'&&a.due&&a.due<T).forEach(a=>out.push({id:'ma-'+a.id,lv:'warn',text:`Action Item ค้าง: ${a.text}`,sub:`จากประชุม ${m.title}`,go:'meetings'})));
+  return out;
+}
+function monthProgress(){const T=today();const d=new Date(T+'T00:00:00');const dim=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();return Math.round(d.getDate()/dim*100)}
+
+/* ---------------- Workflow (Task ↔ Approval) ---------------- */
+function logTask(t,text){t.history.unshift({who:ME,t:new Date().toISOString(),text})}
+function blockedBy(t){return (t.dependsOn||[]).map(taskById).filter(d=>d&&d.status!=='done')}
+function setTaskStatus(t,st){
+  if(!t||t.status===st)return;
+  if((st==='doing'||st==='review'||st==='done')&&blockedBy(t).length){toast('ยังเริ่มไม่ได้: รอ “'+blockedBy(t)[0].title+'” เสร็จก่อน');return}
+  const old=t.status;t.status=st;logTask(t,`เปลี่ยนสถานะ ${TST[old][2]} → ${TST[st][2]}`);
+  if(st==='review'){S.approvals.unshift({id:uid(),kind:'task',ref:t.id,title:t.title,requestedBy:ME,reviewer:t.reviewer||S.users.find(u=>u.role==='sup')?.id||'',status:'pending',date:today(),comment:''});commit(`ส่งงาน “${t.title}” เข้ารอตรวจ`);return}
+  if(old==='review')S.approvals.filter(a=>a.kind==='task'&&a.ref===t.id&&a.status==='pending').forEach(a=>{a.status='withdrawn'});
+  commit(`ย้ายงาน “${t.title}” ไป ${TST[st][2]}`);
+}
+function decide(apId,decision,comment){
+  const a=S.approvals.find(x=>x.id===apId);if(!a)return;
+  if(!isSup()&&a.reviewer!==ME){toast('เฉพาะผู้ตรวจหรือ Supervisor เท่านั้นที่อนุมัติได้');return}
+  a.status=decision;a.comment=comment||'';a.decidedAt=new Date().toISOString();a.decidedBy=ME;
+  if(a.kind==='task'){const t=taskById(a.ref);if(t){t.status=decision==='approved'?'done':'revision';logTask(t,decision==='approved'?'อนุมัติแล้ว':'ขอให้แก้ไข'+(comment?': '+comment:''));if(comment)t.comments.push({who:ME,t:new Date().toISOString(),text:comment})}}
+  if(a.kind==='content'){const c=S.contents.find(x=>x.id===a.ref);if(c)c.status=decision==='approved'?'scheduled':'production'}
+  commit(`${decision==='approved'?'อนุมัติ':'ขอให้แก้ไข'} “${a.title}”`);
+}
+
+/* ---------------- Forms ---------------- */
+function fieldHtml(f,v){
+  const req=f.req?'required':'',lab=`<span>${esc(f.label)}${f.req?' *':''}</span>`,hint=f.hint?`<span class="hint">${esc(f.hint)}</span>`:'',w=f.wide?' w':'';
+  if(f.type==='select')return `<label class="f${w}">${lab}<select name="${f.k}" ${req}>${f.options.map(([val,l])=>`<option value="${esc(val)}" ${String(v??'')===String(val)?'selected':''}>${esc(l)}</option>`).join('')}</select>${hint}</label>`;
+  if(f.type==='multi'){const vs=v||[];return `<div class="f${w}">${lab}<div class="chk">${f.options.map(([val,l])=>`<label><input type="checkbox" name="${f.k}" value="${esc(val)}" ${vs.includes(val)?'checked':''}> ${esc(l)}</label>`).join('')||'<span class="dim">ไม่มีตัวเลือก</span>'}</div>${hint}</div>`}
+  if(['textarea','lines','kpis','checklist'].includes(f.type)){let val=v;
+    if(f.type==='lines')val=(v||[]).join('\n');if(f.type==='kpis')val=(v||[]).map(k=>`${k.label} | ${k.target} | ${k.actual}`).join('\n');if(f.type==='checklist')val=(v||[]).map(c=>(c.done?'[x] ':'')+c.t).join('\n');
+    return `<label class="f w">${lab}<textarea name="${f.k}" ${req} rows="${f.rows||4}">${esc(val??'')}</textarea>${hint}</label>`}
+  return `<label class="f${w}">${lab}<input name="${f.k}" type="${f.type||'text'}" value="${esc(v??'')}" ${req} ${f.type==='number'?'step="any" min="0"':''}>${hint}</label>`;
+}
+function collect(fields,form){
+  const o={};for(const f of fields){
+    if(f.type==='multi'){o[f.k]=[...form.querySelectorAll(`[name="${f.k}"]:checked`)].map(x=>x.value);continue}
+    const el=form.elements[f.k];let v=el?el.value:'';
+    if(f.type==='number')v=v===''?0:Number(v);
+    else if(f.type==='lines')v=v.split('\n').map(s=>s.trim()).filter(Boolean);
+    else if(f.type==='kpis')v=v.split('\n').map(s=>s.split('|').map(x=>x.trim())).filter(a=>a[0]).map(a=>({label:a[0],target:Number(a[1])||0,actual:Number(a[2])||0}));
+    else if(f.type==='checklist')v=v.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>({t:s.replace(/^\[(x|X| )\]\s*/,''),done:/^\[(x|X)\]/.test(s)}));
+    else v=String(v).trim();
+    o[f.k]=v}
+  return o;
+}
+function openForm({title,fields,value={},onSave,onDelete,saveLabel='บันทึก'}){
+  const d=$('#dlg');
+  d.innerHTML=`<form class="fm" novalidate><header><h3>${esc(title)}</h3><button type="button" class="x" data-close aria-label="ปิด">×</button></header><div class="fgrid">${fields.map(f=>fieldHtml(f,value[f.k])).join('')}</div><footer>${onDelete?'<button type="button" class="btn danger" data-del>'+ic('trash',15)+' ลบ</button>':''}<span class="sp"></span><button type="button" class="btn ghost" data-close>ยกเลิก</button><button type="submit" class="btn primary">${esc(saveLabel)}</button></footer></form>`;
+  const form=d.querySelector('form');
+  form.addEventListener('submit',e=>{e.preventDefault();
+    const miss=fields.filter(f=>f.req&&!String(form.elements[f.k]?.value||'').trim());
+    if(miss.length){toast('กรุณากรอก: '+miss.map(f=>f.label).join(', '));form.elements[miss[0].k]?.focus();return}
+    const v=collect(fields,form);d.close();onSave(v)});
+  d.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>d.close());
+  if(onDelete)form.querySelector('[data-del]').onclick=()=>{if(confirm('ลบรายการนี้? (กู้คืนได้ที่ Settings → ข้อมูลและถังขยะ)')){d.close();onDelete()}};
+  d.showModal();
+}
+function openView(title,html,actions=''){
+  const d=$('#dlg');d.innerHTML=`<div class="fm"><header><h3>${esc(title)}</h3><button type="button" class="x" data-close aria-label="ปิด">×</button></header><div class="drawer-body">${html}</div><footer><span class="sp"></span>${actions}<button type="button" class="btn ghost" data-close>ปิด</button></footer></div>`;
+  d.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>d.close());d.showModal();
+}
+const userOpts=()=>S.users.map(u=>[u.id,u.name]);
+const campOpts=()=>[['','— ไม่ผูก —'],...S.campaigns.map(c=>[c.id,c.name])];
+const goalOpts=()=>[['','— ไม่ผูก —'],...S.goals.map(g=>[g.id,`[${g.level==='year'?'ปี':g.level==='quarter'?'ไตรมาส':'เดือน'}] ${g.title}`])];
+
+/* ---------------- Entity forms ---------------- */
+function taskForm(t,preset={}){
+  const isNew=!t;t=t||Object.assign({status:'todo',priority:'med',assignees:[ME],reviewer:S.users.find(u=>u.role==='sup')?.id||'',due:today(),campaign:'',event:'',goal:'',parent:'',dependsOn:[],files:[]},preset);
+  const others=S.tasks.filter(x=>x.id!==t.id);
+  openForm({title:isNew?'สร้างงานใหม่':'แก้ไขงาน',value:{...t,files:t.files||[]},fields:[
+    {k:'title',label:'ชื่องาน',req:true,wide:true},
+    {k:'desc',label:'รายละเอียด',type:'textarea',rows:3},
+    {k:'status',label:'สถานะ',type:'select',options:TASK_ST.map(s=>[s[0],`${s[2]} (${s[1]})`])},
+    {k:'priority',label:'ความสำคัญ',type:'select',options:Object.entries(PRIO)},
+    {k:'due',label:'กำหนดส่ง',type:'date'},
+    {k:'reviewer',label:'ผู้ตรวจ',type:'select',options:[['','— ไม่มี —'],...userOpts()]},
+    {k:'assignees',label:'ผู้รับผิดชอบ (เลือกได้หลายคน)',type:'multi',options:userOpts(),wide:true},
+    {k:'campaign',label:'แคมเปญ',type:'select',options:campOpts()},
+    {k:'event',label:'อีเวนต์',type:'select',options:[['','— ไม่ผูก —'],...S.events.map(e=>[e.id,e.name])]},
+    {k:'goal',label:'เป้าหมาย (Strategic Planning)',type:'select',options:goalOpts()},
+    {k:'parent',label:'เป็นงานย่อยของ',type:'select',options:[['','— งานหลัก —'],...others.filter(x=>!x.parent).map(x=>[x.id,x.title])]},
+    {k:'dependsOn',label:'ต้องรอให้งานเหล่านี้เสร็จก่อน (Dependency)',type:'multi',options:others.map(x=>[x.id,x.title]),wide:true},
+    {k:'files',label:'ลิงก์ไฟล์ที่เกี่ยวข้อง (บรรทัดละลิงก์)',type:'lines',hint:'เช่นลิงก์ Google Drive'}],
+    onSave:v=>{if(!v.assignees.length)v.assignees=[ME];
+      if(isNew){const nt=Object.assign({id:uid(),comments:[],history:[],created:today()},v,{status:'todo'});logTask(nt,'สร้างงาน');S.tasks.unshift(nt);act(`สร้างงาน “${nt.title}”`);if(v.status!=='todo'){setTaskStatus(nt,v.status);return}commit()}
+      else{const st=v.status;delete v.status;Object.assign(t,v);logTask(t,'แก้ไขรายละเอียด');if(st!==t.status){setTaskStatus(t,st);return}commit(`แก้ไขงาน “${t.title}”`)}},
+    onDelete:isNew?null:()=>{trash('task','tasks',t.id);S.tasks.forEach(x=>{if(x.parent===t.id)x.parent='';x.dependsOn=(x.dependsOn||[]).filter(d=>d!==t.id)});commit(`ลบงาน “${t.title}”`)}});
+}
+function taskView(t){
+  const kids=S.tasks.filter(x=>x.parent===t.id),deps=(t.dependsOn||[]).map(taskById).filter(Boolean),par=taskById(t.parent);
+  const html=`<div class="row">${stPill(t.status)}<span class="pill"><i class="prio p-${t.priority}"></i>ความสำคัญ${PRIO[t.priority]}</span>${t.due&&t.due<today()&&t.status!=='done'?'<span class="pill bad">เลยกำหนด</span>':''}${blockedBy(t).length?'<span class="pill bad">รองานอื่นอยู่</span>':''}</div>
+   ${t.desc?`<p style="margin:0">${esc(t.desc)}</p>`:''}
+   <dl class="kv"><dt>ผู้รับผิดชอบ</dt><dd>${t.assignees.map(a=>esc(user(a).name)).join(', ')}</dd><dt>ผู้ตรวจ</dt><dd>${esc(t.reviewer?user(t.reviewer).name:'–')}</dd><dt>กำหนดส่ง</dt><dd>${fdy(t.due)}</dd>
+   ${t.campaign?`<dt>แคมเปญ</dt><dd>${esc(campName(t.campaign))}</dd>`:''}${t.event?`<dt>อีเวนต์</dt><dd>${esc((S.events.find(e=>e.id===t.event)||{}).name||'')}</dd>`:''}${t.goal?`<dt>เป้าหมาย</dt><dd>${esc((S.goals.find(g=>g.id===t.goal)||{}).title||'')}</dd>`:''}${par?`<dt>งานหลัก</dt><dd>${esc(par.title)}</dd>`:''}
+   ${deps.length?`<dt>ต้องรอ</dt><dd>${deps.map(d=>`${esc(d.title)} ${stPill(d.status)}`).join('<br>')}</dd>`:''}
+   ${(t.files||[]).length?`<dt>ไฟล์</dt><dd>${t.files.map(u=>`<a href="${esc(safeUrl(u))}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>`).join('<br>')}</dd>`:''}</dl>
+   ${kids.length?`<div><b>งานย่อย (${kids.filter(k=>k.status==='done').length}/${kids.length})</b><ul class="list">${kids.map(k=>`<li class="click" data-act="task-open" data-id="${k.id}"><span class="sub-l">↳</span><span class="t" style="flex:1">${esc(k.title)}</span>${stPill(k.status)}</li>`).join('')}</ul></div>`:''}
+   <div><b>ความคิดเห็น</b>${t.comments.length?t.comments.map(c=>`<div class="cmt" style="margin-top:6px"><small>${esc(user(c.who).name)} · ${fts(c.t)}</small><br>${esc(c.text)}</div>`).join(''):'<p class="muted small">ยังไม่มี</p>'}
+   <form id="cmtForm" class="row" style="margin-top:8px"><input name="c" placeholder="พิมพ์ความคิดเห็น…" style="flex:1;background:var(--sunk);border:1px solid var(--line2);border-radius:10px;padding:8px 10px;color:var(--ink)"><button class="btn sm">ส่ง</button></form></div>
+   <details><summary class="muted small" style="cursor:pointer">ประวัติการเปลี่ยนแปลง (${t.history.length})</summary><ul class="list small">${t.history.map(h=>`<li><span class="muted">${fts(h.t)}</span> ${esc(user(h.who).name)}: ${esc(h.text)}</li>`).join('')}</ul></details>`;
+  const next=t.status==='todo'?['doing','เริ่มทำ']:t.status==='doing'||t.status==='revision'?['review','ส่งตรวจ']:null;
+  openView(t.title,html,`<button class="btn" data-act="task-edit" data-id="${t.id}">${ic('edit',15)} แก้ไข</button><button class="btn" data-act="task-sub" data-id="${t.id}">${ic('plus',15)} งานย่อย</button>${next?`<button class="btn primary" data-act="task-move" data-id="${t.id}" data-st="${next[0]}">${next[1]}</button>`:''}`);
+  $('#cmtForm').onsubmit=e=>{e.preventDefault();const v=e.target.c.value.trim();if(!v)return;t.comments.push({who:ME,t:new Date().toISOString(),text:v});logTask(t,'แสดงความคิดเห็น');save();act(`แสดงความคิดเห็นในงาน “${t.title}”`);save();taskView(t);renderNav()};
+}
+const stPill=st=>{const s=TST[st]||['',st,st,''];return `<span class="pill ${s[3]}">${esc(s[2])}</span>`};
+const ctPill=st=>{const s=CST[st]||[st,st,''];return `<span class="pill ${s[2]}">${esc(s[1])}</span>`};
+
+function schForm(x,preset={}){const isNew=!x;x=x||Object.assign({date:today(),start:'',end:'',type:'meeting',who:[ME],note:''},preset);
+  openForm({title:isNew?'เพิ่มกำหนดการ':'แก้ไขกำหนดการ',value:x,fields:[{k:'title',label:'หัวข้อ',req:true,wide:true},{k:'date',label:'วันที่',type:'date',req:true},{k:'type',label:'ประเภท',type:'select',options:Object.entries(SCH_TYPES)},{k:'start',label:'เริ่ม',type:'time'},{k:'end',label:'สิ้นสุด',type:'time'},{k:'who',label:'ผู้เกี่ยวข้อง',type:'multi',options:userOpts(),wide:true},{k:'note',label:'หมายเหตุ',type:'textarea',rows:2}],
+    onSave:v=>{if(isNew){S.schedule.push(Object.assign({id:uid()},v));commit(`เพิ่มกำหนดการ “${v.title}”`)}else{Object.assign(x,v);commit(`แก้ไขกำหนดการ “${v.title}”`)}},
+    onDelete:isNew?null:()=>{trash('schedule','schedule',x.id);commit(`ลบกำหนดการ “${x.title}”`)}})}
+function campForm(c){const isNew=!c;c=c||{status:'planning',start:today(),end:addDays(today(),14),channels:[],budget:0,spent:0,kpis:[],owner:ME,goal:''};
+  openForm({title:isNew?'สร้างแคมเปญ':'แก้ไขแคมเปญ',value:c,fields:[{k:'name',label:'ชื่อแคมเปญ',req:true,wide:true},{k:'status',label:'สถานะ',type:'select',options:Object.entries(CAMP_ST).map(([k,v])=>[k,v[0]])},{k:'owner',label:'ผู้ดูแล',type:'select',options:userOpts()},{k:'start',label:'เริ่ม',type:'date'},{k:'end',label:'สิ้นสุด',type:'date'},{k:'budget',label:'งบประมาณ (บาท)',type:'number'},{k:'spent',label:'ใช้ไปแล้ว (บาท)',type:'number'},{k:'goal',label:'เป้าหมายที่รองรับ',type:'select',options:goalOpts(),wide:true},{k:'audience',label:'กลุ่มเป้าหมาย',wide:true},{k:'channels',label:'ช่องทาง',type:'multi',options:PLATFORMS.map(p=>[p,p]),wide:true},{k:'brief',label:'Campaign Brief',type:'textarea',rows:3},{k:'kpis',label:'KPI และผลลัพธ์',type:'kpis',hint:'บรรทัดละตัว: ชื่อ | เป้า | ทำได้ เช่น GMV | 250000 | 118000'}],
+    onSave:v=>{if(isNew){S.campaigns.unshift(Object.assign({id:uid()},v));commit(`สร้างแคมเปญ “${v.name}”`)}else{Object.assign(c,v);commit(`แก้ไขแคมเปญ “${v.name}”`)}},
+    onDelete:isNew?null:()=>{trash('campaign','campaigns',c.id);commit(`ลบแคมเปญ “${c.name}”`)}})}
+function goalForm(g){const isNew=!g;g=g||{level:'month',period:today().slice(0,7),parent:'',kpi:'',target:'',actual:''};
+  openForm({title:isNew?'เพิ่มเป้าหมาย':'แก้ไขเป้าหมาย',value:g,fields:[{k:'title',label:'เป้าหมาย',req:true,wide:true},{k:'level',label:'ระดับ',type:'select',options:[['year','รายปี (Annual)'],['quarter','รายไตรมาส (Quarterly)'],['month','รายเดือน (Monthly)']]},{k:'period',label:'ช่วงเวลา',hint:'เช่น 2027 / Q1 / 2026-12'},{k:'parent',label:'อยู่ภายใต้เป้าหมาย',type:'select',options:[['','— ระดับบนสุด —'],...S.goals.filter(x=>x.id!==g.id).map(x=>[x.id,x.title])],wide:true},{k:'kpi',label:'ตัวชี้วัด (KPI)'},{k:'target',label:'เป้า'},{k:'actual',label:'ทำได้'}],
+    onSave:v=>{if(isNew){S.goals.push(Object.assign({id:uid()},v));commit(`เพิ่มเป้าหมาย “${v.title}”`)}else{Object.assign(g,v);commit(`แก้ไขเป้าหมาย “${v.title}”`)}},
+    onDelete:isNew?null:()=>{trash('goal','goals',g.id);S.goals.forEach(x=>{if(x.parent===g.id)x.parent=''});commit(`ลบเป้าหมาย “${g.title}”`)}})}
+function eventForm(e){const isNew=!e;e=e||{date:addDays(today(),7),status:'planning',checklist:[],budget:0,campaign:''};
+  openForm({title:isNew?'สร้างอีเวนต์':'แก้ไขอีเวนต์',value:e,fields:[{k:'name',label:'ชื่ออีเวนต์',req:true,wide:true},{k:'date',label:'วันที่',type:'date',req:true},{k:'location',label:'สถานที่'},{k:'budget',label:'งบประมาณ (บาท)',type:'number'},{k:'campaign',label:'แคมเปญ',type:'select',options:campOpts()},{k:'staff',label:'ทีมงาน (Staff)',wide:true},{k:'supplier',label:'ซัพพลายเออร์',wide:true},{k:'checklist',label:'เช็กลิสต์',type:'checklist',hint:'บรรทัดละข้อ ใส่ [x] นำหน้าข้อที่เสร็จแล้ว'}],
+    onSave:v=>{if(isNew){S.events.push(Object.assign({id:uid(),status:'planning'},v));commit(`สร้างอีเวนต์ “${v.name}”`)}else{Object.assign(e,v);commit(`แก้ไขอีเวนต์ “${v.name}”`)}},
+    onDelete:isNew?null:()=>{trash('event','events',e.id);commit(`ลบอีเวนต์ “${e.name}”`)}})}
+function contentForm(c,preset={}){const isNew=!c;c=c||Object.assign({status:'idea',platform:'TikTok',type:'คลิปสั้น',pillar:S.quota.pillars[0]?.name||'',owner:ME,date:today(),campaign:'',views:0},preset);
+  openForm({title:isNew?'เพิ่มคอนเทนต์':'แก้ไขคอนเทนต์',value:c,fields:[{k:'title',label:'ชื่อคอนเทนต์',req:true,wide:true},{k:'platform',label:'แพลตฟอร์ม',type:'select',options:PLATFORMS.map(p=>[p,p])},{k:'type',label:'ประเภท',type:'select',options:CT_TYPES.map(p=>[p,p])},{k:'pillar',label:'Content Pillar',type:'select',options:S.quota.pillars.map(p=>[p.name,p.name])},{k:'status',label:'สถานะ',type:'select',options:CT_ST.map(s=>[s[0],s[1]])},{k:'owner',label:'ผู้รับผิดชอบ',type:'select',options:userOpts()},{k:'date',label:'วันเผยแพร่',type:'date'},{k:'campaign',label:'แคมเปญ',type:'select',options:campOpts(),wide:true},{k:'ref',label:'Reference / Artwork / Video (ลิงก์)',type:'url',wide:true},{k:'caption',label:'Caption',type:'textarea',rows:3},{k:'link',label:'ลิงก์โพสต์ที่เผยแพร่แล้ว',type:'url',wide:true},{k:'views',label:'ยอดวิว (เบื้องต้น)',type:'number'}],
+    onSave:v=>{const toReview=v.status==='review'&&(isNew||c.status!=='review');if(isNew){c=Object.assign({id:uid()},v);S.contents.unshift(c)}else Object.assign(c,v);
+      if(toReview)S.approvals.unshift({id:uid(),kind:'content',ref:c.id,title:c.title,requestedBy:ME,reviewer:S.users.find(u=>u.role==='sup')?.id||'',status:'pending',date:today(),comment:''});
+      commit(`${isNew?'เพิ่ม':'แก้ไข'}คอนเทนต์ “${v.title}”${toReview?' และส่งขออนุมัติ':''}`)},
+    onDelete:isNew?null:()=>{trash('content','contents',c.id);commit(`ลบคอนเทนต์ “${c.title}”`)}})}
+function quotaForm(){const q=S.quota;const fields=[{k:'month',label:'เดือน',type:'month'},{k:'total',label:'จำนวนคลิปทั้งเดือน',type:'number'}];const val={month:q.month,total:q.total};
+  q.pillars.forEach((p,i)=>{fields.push({k:'n'+i,label:`Pillar ${i+1}: ชื่อ`},{k:'r'+i,label:'บทบาท'},{k:'p'+i,label:'สัดส่วน (%)',type:'number'},{k:'q'+i,label:'Quota (คลิป)',type:'number',hint:'เว้น 0 = คำนวณจาก %'});val['n'+i]=p.name;val['r'+i]=p.role;val['p'+i]=p.pct;val['q'+i]=p.quota});
+  openForm({title:'ตั้งค่า Content Quota',value:val,fields,onSave:v=>{q.month=v.month||q.month;q.total=v.total||0;q.pillars=q.pillars.map((p,i)=>({name:v['n'+i]||p.name,role:v['r'+i],pct:v['p'+i],quota:v['q'+i]||Math.round(v['p'+i]*q.total/100)}));commit('ปรับ Content Quota')}})}
+function liveForm(l){const isNew=!l;l=l||{date:today(),start:'20:00',durationMin:120,host:'',views:0,peak:0,avgViewers:0,clicks:0,orders:0,gmv:0,campaign:'',products:''};
+  openForm({title:isNew?'บันทึกผล LIVE':'แก้ไขผล LIVE',value:l,fields:[{k:'date',label:'วันที่',type:'date',req:true},{k:'start',label:'เวลาเริ่ม',type:'time'},{k:'durationMin',label:'ระยะเวลา (นาที)',type:'number'},{k:'host',label:'Host'},{k:'views',label:'LIVE Views',type:'number'},{k:'peak',label:'Peak Concurrent Viewers',type:'number'},{k:'avgViewers',label:'Average Viewers',type:'number'},{k:'clicks',label:'Product Clicks',type:'number'},{k:'orders',label:'Orders',type:'number'},{k:'gmv',label:'GMV (บาท)',type:'number'},{k:'campaign',label:'แคมเปญ',type:'select',options:campOpts(),wide:true},{k:'products',label:'สินค้าที่ขายได้',type:'textarea',rows:3,hint:'บรรทัดละรายการ: ชื่อสินค้า | จำนวนออเดอร์'}],
+    onSave:v=>{if(isNew){S.lives.unshift(Object.assign({id:uid()},v));commit(`บันทึกผล LIVE วันที่ ${fd(v.date)}`)}else{Object.assign(l,v);commit('แก้ไขผล LIVE')}},
+    onDelete:isNew?null:()=>{trash('live','lives',l.id);commit('ลบผล LIVE')}})}
+function affForm(a){const isNew=!a;a=a||{tier:'Micro',status:'prospect',videos:0,views:0,clicks:0,orders:0,gmv:0,commissionPct:10,campaign:'',category:'วิ่ง'};
+  openForm({title:isNew?'เพิ่ม Affiliate':'แก้ไข Affiliate',value:a,fields:[{k:'name',label:'ชื่อ Affiliate',req:true},{k:'username',label:'TikTok Username'},{k:'contact',label:'ช่องทางติดต่อ',wide:true},{k:'tier',label:'ระดับ',type:'select',options:['Micro','Mid','Large'].map(x=>[x,x])},{k:'category',label:'สายคอนเทนต์',type:'select',options:['วิ่ง','ฟิตเนส','ไลฟ์สไตล์','แฟชั่น','รีวิว','ดีล/ช้อปปิ้ง'].map(x=>[x,x])},{k:'status',label:'สถานะ (Recruitment)',type:'select',options:Object.entries(AFF_ST).map(([k,v])=>[k,v[0]])},{k:'campaign',label:'แคมเปญ',type:'select',options:campOpts()},{k:'videos',label:'จำนวนวิดีโอ',type:'number'},{k:'views',label:'ยอดวิวคอนเทนต์',type:'number'},{k:'clicks',label:'Product Clicks',type:'number'},{k:'orders',label:'Orders',type:'number'},{k:'gmv',label:'GMV (บาท)',type:'number'},{k:'commissionPct',label:'ค่าคอมมิชชัน (%)',type:'number'}],
+    onSave:v=>{if(isNew){S.affiliates.unshift(Object.assign({id:uid()},v));commit(`เพิ่ม Affiliate “${v.name}”`)}else{Object.assign(a,v);commit(`แก้ไข Affiliate “${v.name}”`)}},
+    onDelete:isNew?null:()=>{trash('affiliate','affiliates',a.id);commit(`ลบ Affiliate “${a.name}”`)}})}
+function meetingForm(m){const isNew=!m;m=m||{date:today(),participants:[ME],agenda:'',notes:'',decisions:'',actions:[]};
+  const actText=(m.actions||[]).map(a=>`${a.status==='done'?'[x] ':''}${a.text} | ${user(a.assignee).name} | ${a.due||''}`).join('\n');
+  openForm({title:isNew?'บันทึกการประชุม':'แก้ไขการประชุม',value:{...m,actText},fields:[{k:'title',label:'หัวข้อประชุม',req:true,wide:true},{k:'date',label:'วันที่',type:'date',req:true},{k:'participants',label:'ผู้เข้าร่วม',type:'multi',options:userOpts()},{k:'agenda',label:'วาระการประชุม (Agenda)',type:'textarea',rows:3},{k:'notes',label:'บันทึกการประชุม (Notes)',type:'textarea',rows:4},{k:'decisions',label:'ข้อสรุปที่ตกลงร่วมกัน (บรรทัดละข้อ)',type:'textarea',rows:3},{k:'actText',label:'Action Items',type:'textarea',rows:4,hint:'บรรทัดละข้อ: งาน | ผู้รับผิดชอบ | YYYY-MM-DD  (ใส่ [x] นำหน้าถ้าเสร็จแล้ว)'}],
+    onSave:v=>{const old=m.actions||[];const acts=v.actText.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>{const done=/^\[(x|X)\]/.test(s);const p=s.replace(/^\[(x|X| )\]\s*/,'').split('|').map(x=>x.trim());const who=S.users.find(u=>u.name===p[1])?.id||ME;const prev=old.find(o=>o.text===p[0]);return {id:prev?.id||uid(),text:p[0],assignee:who,due:/^\d{4}-\d{2}-\d{2}$/.test(p[2]||'')?p[2]:'',status:done?'done':'open',taskId:prev?.taskId||''}});
+      delete v.actText;v.actions=acts;if(isNew){S.meetings.unshift(Object.assign({id:uid()},v));commit(`บันทึกการประชุม “${v.title}”`)}else{Object.assign(m,v);commit(`แก้ไขการประชุม “${v.title}”`)}},
+    onDelete:isNew?null:()=>{trash('meeting','meetings',m.id);commit(`ลบการประชุม “${m.title}”`)}})}
+function fileForm(f){const isNew=!f;f=f||{category:'เอกสาร',campaign:''};
+  openForm({title:isNew?'เพิ่มไฟล์/ลิงก์เอกสาร':'แก้ไขไฟล์',value:f,fields:[{k:'name',label:'ชื่อไฟล์',req:true,wide:true},{k:'url',label:'ลิงก์ (Google Drive ฯลฯ)',type:'url',req:true,wide:true},{k:'category',label:'หมวด',hint:'เช่น Brand, Artwork, รายงาน'},{k:'campaign',label:'แคมเปญ',type:'select',options:campOpts()}],
+    onSave:v=>{if(!/^https?:\/\//i.test(v.url)&&!/^\.\.?\//.test(v.url)){toast('ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://');return}if(isNew){S.files.unshift(Object.assign({id:uid(),added:today(),by:ME},v));commit(`เพิ่มไฟล์ “${v.name}”`)}else{Object.assign(f,v);commit(`แก้ไขไฟล์ “${v.name}”`)}},
+    onDelete:isNew?null:()=>{trash('file','files',f.id);commit(`ลบไฟล์ “${f.name}”`)}})}
+function userForm(u){const isNew=!u;u=u||{role:'member',color:'#FFB06B'};
+  openForm({title:isNew?'เพิ่มสมาชิก':'แก้ไขสมาชิก',value:u,fields:[{k:'name',label:'ชื่อที่แสดง',req:true},{k:'role',label:'บทบาท (Role)',type:'select',options:Object.entries(ROLES)},{k:'color',label:'สีประจำตัว',type:'color'}],
+    onSave:v=>{if(isNew){S.users.push(Object.assign({id:'u'+uid()},v));commit(`เพิ่มสมาชิก “${v.name}”`)}else{Object.assign(u,v);commit(`แก้ไขสมาชิก “${v.name}”`)}},
+    onDelete:isNew||S.users.length<=1?null:()=>{if(u.id===ME){toast('ลบผู้ใช้ที่กำลังใช้งานอยู่ไม่ได้');return}trash('user','users',u.id);commit(`ลบสมาชิก “${u.name}”`)}})}
+
+/* ---------------- Helpers for views ---------------- */
+function rangeBounds(r){const T=today();if(r==='today')return [T,T];if(r==='week'){const w=weekStart(T);return [w,addDays(w,6)]}
+  const d=new Date(T+'T00:00:00');if(r==='month'){return [iso(new Date(d.getFullYear(),d.getMonth(),1)),iso(new Date(d.getFullYear(),d.getMonth()+1,0))]}
+  const q=Math.floor(d.getMonth()/3)*3;return [iso(new Date(d.getFullYear(),q,1)),iso(new Date(d.getFullYear(),q+3,0))]}
+const RANGE_L={today:'วันนี้',week:'สัปดาห์นี้',month:'เดือนนี้',quarter:'ไตรมาสนี้'};
+function quotaStats(){const q=S.quota;if(!q)return null;const items=S.contents.filter(c=>(c.date||'').slice(0,7)===q.month);const done=items.filter(c=>['review','scheduled','published'].includes(c.status));
+  const rows=q.pillars.map(p=>{const d=done.filter(c=>c.pillar===p.name).length;return {...p,done:d,left:Math.max(0,p.quota-d)}});return {rows,done:done.length,total:q.total||rows.reduce((a,b)=>a+b.quota,0)}}
+function bars(data,{h=180,fmt=num}={}){
+  if(!data.length)return '<div class="empty">ยังไม่มีข้อมูล</div>';
+  const max=Math.max(...data.map(d=>d.v),1),every=Math.ceil(data.length/10);
+  return `<div class="hb"><div class="hb-max small muted">สูงสุด ${esc(fmt(max))}</div><div class="hb-plot" style="height:${h}px">${data.map(d=>`<div class="hb-c" title="${esc(d.l)}: ${esc(fmt(d.v))}"><div class="hb-b" style="height:${Math.max(1.5,d.v/max*100)}%"></div></div>`).join('')}</div><div class="hb-x">${data.map((d,i)=>`<span>${i%every===0?esc(d.s||d.l):''}</span>`).join('')}</div></div>`;
+}
+function donut(p,label){return `<div class="donut" style="--p:${clamp(p,0,100)}" role="img" aria-label="${esc(label)} ${p}%"><b>${p}%</b></div>`}
+const card=(id,title,body,{span='s6',sub='',hot=false,head=''}={})=>{const hidden=S.widgets.hidden.includes(id);if(hidden&&!UI.customize)return '';
+  return `<section class="card ${span} ${hot?'hot':''} ${hidden?'whidden':''}" data-w="${id}"><div class="ch"><div><h2>${title}</h2>${sub?`<p class="sub" style="margin:2px 0 0">${sub}</p>`:''}</div><span class="sp"></span>${head}<span class="wbar"><button class="btn sm" data-act="w-up" data-id="${id}" aria-label="เลื่อนขึ้น">${ic('up',14)}</button><button class="btn sm" data-act="w-down" data-id="${id}" aria-label="เลื่อนลง">${ic('down',14)}</button><button class="btn sm" data-act="w-hide" data-id="${id}">${hidden?'แสดง':'ซ่อน'}</button></span></div>${body}</section>`};
+function taskRow(t){const od=t.due&&t.due<today()&&t.status!=='done';return `<li class="click" data-act="task-open" data-id="${t.id}"><i class="prio p-${t.priority}" style="margin-top:8px"></i><div style="flex:1;min-width:0"><div class="t">${esc(t.title)}</div><div class="m"><span class="${od?'':'muted'}" style="${od?'color:var(--bad)':''}">${od?'เลยกำหนด ':'กำหนด '}${fd(t.due)}</span>${t.campaign?`<span>· ${esc(campName(t.campaign))}</span>`:''}</div></div>${stPill(t.status)}</li>`}
+
+/* ---------------- 01 Overview ---------------- */
+let NEWS=null;
+function loadNews(){if(NEWS!==null)return;NEWS='loading';fetch('../data/headlines.json?v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{NEWS=j&&j.items?j.items.slice().sort((a,b)=>String(b.published).localeCompare(String(a.published))).slice(0,6):[];if(route==='overview')render()}).catch(()=>{NEWS=[];if(route==='overview')render()})}
+function pOverview(){
+  loadNews();
+  const T=today(),[a,b]=rangeBounds(UI.range),mine=t=>UI.scope==='team'||t.assignees.includes(ME);
+  const tasks=S.tasks.filter(mine);const inR=tasks.filter(t=>t.due>=a&&t.due<=b);
+  const myOpen=S.tasks.filter(t=>t.assignees.includes(ME)&&t.status!=='done'&&t.due<=T);
+  const prog=pct(inR.filter(t=>t.status==='done').length,inR.length);
+  const pend=S.approvals.filter(x=>x.status==='pending'&&(UI.scope==='team'||x.reviewer===ME||x.requestedBy===ME));
+  const up7=[...S.schedule.filter(s=>s.date>=T&&s.date<=addDays(T,7)),...S.events.filter(e=>e.date>=T&&e.date<=addDays(T,7))];
+  const q=quotaStats();
+  const W={
+   kpis:()=>`<section class="s12" data-w="kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
+     <div class="card hot kpi"><span class="k">งานของฉัน · วันนี้</span><span class="v ac">${String(myOpen.length).padStart(2,'0')}</span><span class="d">รวมงานค้างที่เลยกำหนด</span></div>
+     <div class="card kpi"><span class="k">Team Progress · ${RANGE_L[UI.range]}</span><span class="v">${prog}%</span><span class="d">เสร็จ ${inR.filter(t=>t.status==='done').length} จาก ${inR.length} งานที่ครบกำหนดในช่วงนี้</span></div>
+     <div class="card kpi click" data-go="notify"><span class="k">Pending Review</span><span class="v">${String(pend.length).padStart(2,'0')}</span><span class="d">รออนุมัติ</span></div>
+     <div class="card kpi click" data-go="calendar"><span class="k">Upcoming Events</span><span class="v">${String(up7.length).padStart(2,'0')}</span><span class="d">ใน 7 วันข้างหน้า</span></div></section>`,
+   today:()=>card('today',"Today's Work",S.users.map(u=>{const ts=S.tasks.filter(t=>t.assignees.includes(u.id)&&t.status!=='done'&&t.due<=addDays(T,1)).sort((x,y)=>x.due.localeCompare(y.due)).slice(0,4);
+      return `<div style="margin-bottom:12px"><div class="row" style="margin-bottom:2px">${av(u.id)}<b>${esc(u.name)}</b><span class="pill">${esc(ROLES[u.role]||u.role)}</span></div>${ts.length?`<ul class="list">${ts.map(taskRow).join('')}</ul>`:'<p class="muted small" style="margin:6px 0 0 34px">ไม่มีงานที่ครบกำหนดวันนี้/พรุ่งนี้</p>'}</div>`}).join(''),{span:'s7',sub:'งานที่ครบกำหนดวันนี้และพรุ่งนี้ แยกตามคน'}),
+   briefing:()=>card('briefing',`${ic('spark',16)} Daily Briefing`,briefing(),{span:'s5',sub:'สรุปอัตโนมัติจากข้อมูลในระบบด้วยกฎตายตัว (ยังไม่ได้ใช้ AI จริง)',hot:true}),
+   weekly:()=>{const done=inR.filter(t=>t.status==='done').length;const st=TASK_ST.map(s=>[s,inR.filter(t=>t.status===s[0]).length]);
+      return card('weekly',`ภาพรวมงาน · ${RANGE_L[UI.range]}`,`<div class="row" style="gap:22px;align-items:center">${donut(prog,'ความคืบหน้า')}<div class="legend">${st.map(([s,n])=>`<span><i style="background:var(--${s[3]||'dim'})"></i>${esc(s[2])}: <b style="color:var(--ink)">${n}</b></span>`).join('')}</div><div style="flex:1;min-width:200px"><div class="row small"><span class="muted">Tasks completed</span><span class="sp"></span><b>${done} / ${inR.length}</b></div><div class="bar ok" style="margin-top:6px"><i style="width:${prog}%"></i></div><p class="small muted" style="margin:10px 0 0">${UI.scope==='team'?'มุมมองทั้งทีม':'เฉพาะงานของฉัน'} · งานที่ครบกำหนดในช่วง ${fd(a)}–${fd(b)}</p></div></div>`,{span:'s7'})},
+   schedule:()=>{const items=[...S.schedule.filter(s=>s.date===T).map(s=>({t:s.start||'',l:s.title,k:SCH_TYPES[s.type]})),...S.lives.filter(l=>l.date===T).map(l=>({t:l.start,l:'LIVE · '+(l.host||''),k:'LIVE'})),...S.events.filter(e=>e.date===T).map(e=>({t:'',l:e.name,k:'อีเวนต์'})),...S.contents.filter(c=>c.date===T&&c.status!=='published').map(c=>({t:'',l:c.title,k:'โพสต์ '+c.platform}))].sort((x,y)=>x.t.localeCompare(y.t));
+      return card('schedule','ตารางวันนี้',items.length?`<ul class="list">${items.map(i=>`<li><span class="mono small muted" style="width:44px;flex:none">${esc(i.t||'—')}</span><div style="flex:1"><div class="t">${esc(i.l)}</div><div class="m">${esc(i.k)}</div></div></li>`).join('')}</ul>`:'<div class="empty">วันนี้ยังไม่มีกำหนดการ</div>',{span:'s5',head:`<button class="btn sm" data-act="sch-new">${ic('plus',14)}</button>`})},
+   campaigns:()=>{const act=S.campaigns.filter(c=>c.status==='active'||c.status==='planning').slice(0,4);return card('campaigns','แคมเปญที่กำลังเดินหน้า',act.length?`<ul class="list">${act.map(c=>{const tp=clamp(pct(daysBetween(c.start,T),daysBetween(c.start,c.end)||1),0,100);return `<li class="click" data-go="campaigns" style="display:block"><div class="row"><span class="t" style="flex:1">${esc(c.name)}</span><span class="pill ${CAMP_ST[c.status][1]}">${CAMP_ST[c.status][0]}</span></div><div class="m" style="margin:4px 0">${fd(c.start)} – ${fd(c.end)} · ใช้งบ ${pct(c.spent,c.budget)}%</div><div class="bar"><i style="width:${c.status==='planning'?0:tp}%"></i></div></li>`}).join('')}</ul>`:'<div class="empty">ไม่มีแคมเปญที่กำลังดำเนินการ</div>',{span:'s6'})},
+   quota:()=>card('quota','Content Quota เดือนนี้',q?`<div class="row small" style="margin-bottom:8px"><span class="muted">ผลิตเสร็จแล้ว</span><span class="sp"></span><b>${q.done} / ${q.total}</b></div>${q.rows.map(r=>`<div style="margin:8px 0"><div class="row small"><span>${esc(r.name)} <span class="dim">${esc(r.role)} · ${r.pct}%</span></span><span class="sp"></span><span class="mono">${r.done}/${r.quota}</span></div><div class="bar ${r.done>=r.quota?'ok':''}" style="margin-top:4px"><i style="width:${pct(Math.min(r.done,r.quota),r.quota)}%"></i></div></div>`).join('')}`:'',{span:'s6',head:`<button class="btn sm" data-go="content">เปิด</button>`}),
+   live:()=>{const ls=S.lives.slice().sort((x,y)=>x.date.localeCompare(y.date)).slice(-8);return card('live','GMV จาก LIVE (8 ครั้งล่าสุด)',bars(ls.map(l=>({l:fd(l.date)+' '+l.start,s:fd(l.date),v:l.gmv})),{h:170,fmt:baht}),{span:'s6',sub:`รวม ${baht(ls.reduce((s,l)=>s+l.gmv,0))} · ${num(ls.reduce((s,l)=>s+l.orders,0))} ออเดอร์`})},
+   news:()=>card('news',`${ic('globe',16)} Market Research ล่าสุด`,NEWS==='loading'||NEWS===null?'<div class="empty">กำลังโหลดข่าว…</div>':NEWS.length?`<ul class="list">${NEWS.map(h=>`<li><div style="flex:1;min-width:0"><a class="t" href="${esc(safeUrl(h.url))}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:var(--ink)">${esc(h.title)} ↗</a><div class="m">${esc(h.source)} · ${fd(String(h.published).slice(0,10))}</div></div></li>`).join('')}</ul>`:'<div class="empty">โหลดข่าวไม่ได้</div>',{span:'s6',sub:'ข่าวจริงจากระบบดึงข่าวอัตโนมัติ',head:`<button class="btn sm" data-go="research">ทั้งหมด</button>`}),
+   activity:()=>card('activity','Activities',`<ul class="list">${S.activity.slice(0,7).map(x=>`<li>${av(x.who)}<div style="flex:1"><div><b>${esc(user(x.who).name)}</b> <span class="muted small">${fts(x.t)}</span></div><div class="small">${esc(x.text)}</div></div></li>`).join('')}</ul>`,{span:'s6'})};
+  const order=S.widgets.order.filter(k=>W[k]).concat(Object.keys(W).filter(k=>!S.widgets.order.includes(k)));
+  const hello=(()=>{const h=new Date().getHours();return h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening'})();
+  return `<div class="toolbar"><div><h2 style="font-size:20px">${hello}, ${esc(UI.scope==='team'?S.workspace.name:user(ME).name)}</h2><p class="muted small" style="margin:2px 0 0">${esc(THL.format(new Date()))}</p></div><span class="sp"></span>
+    <div class="seg" role="group" aria-label="มุมมอง">${[['mine','My Dashboard'],['team','Team Dashboard']].map(([k,l])=>`<button aria-pressed="${UI.scope===k}" data-act="scope" data-id="${k}">${l}</button>`).join('')}</div>
+    <div class="seg" role="group" aria-label="ช่วงเวลา">${[['today','Today'],['week','Week'],['month','Month'],['quarter','Quarter']].map(([k,l])=>`<button aria-pressed="${UI.range===k}" data-act="range" data-id="${k}">${l}</button>`).join('')}</div>
+    <button class="btn ${UI.customize?'primary':''}" data-act="customize">${ic('grid',15)} ${UI.customize?'เสร็จสิ้น':'ปรับแต่ง Widget'}</button></div>
+    ${UI.customize?'<p class="note">โหมดปรับแต่ง: ใช้ปุ่ม ↑ ↓ จัดลำดับ และปุ่ม ซ่อน/แสดง ในแต่ละกล่อง การตั้งค่านี้บันทึกในเบราว์เซอร์ของแต่ละคน จึงจัดหน้าไม่เหมือนกันได้</p>':''}
+    <div class="grid ${UI.customize?'customizing':''}">${order.map(k=>W[k]()).join('')}</div>`;
+}
+function briefing(){
+  const T=today(),od=S.tasks.filter(t=>t.status!=='done'&&t.due<T),dt=S.tasks.filter(t=>t.status!=='done'&&t.due===T),pend=S.approvals.filter(a=>a.status==='pending'),blocked=S.tasks.filter(t=>t.status!=='done'&&blockedBy(t).length);
+  const next=[...S.events.map(e=>({d:e.date,l:e.name})),...S.campaigns.filter(c=>c.status!=='done').map(c=>({d:c.start,l:'เริ่มแคมเปญ '+c.name}))].filter(x=>x.d>=T).sort((a,b)=>a.d.localeCompare(b.d))[0];
+  const q=quotaStats(),mp=monthProgress(),lines=[];
+  lines.push(`มีงานเลยกำหนด <b>${od.length}</b> งาน และครบกำหนดวันนี้ <b>${dt.length}</b> งาน${od.length?` ควรเคลียร์ “${esc(od.sort((a,b)=>a.due.localeCompare(b.due))[0].title)}” ก่อน`:''}`);
+  lines.push(`รออนุมัติ <b>${pend.length}</b> รายการ${pend.length?` (${pend.slice(0,2).map(p=>'“'+esc(p.title)+'”').join(', ')}${pend.length>2?' …':''})`:''}`);
+  if(blocked.length)lines.push(`งานที่ติดรองานอื่น <b>${blocked.length}</b> งาน เช่น “${esc(blocked[0].title)}” รอ “${esc(blockedBy(blocked[0])[0].title)}”`);
+  if(q)lines.push(`Content Quota ผลิตแล้ว <b>${q.done}/${q.total}</b> (${pct(q.done,q.total)}%) ขณะที่เดือนผ่านไป ${mp}%${pct(q.done,q.total)+15<mp?' <span style="color:var(--warn)">ช้ากว่าแผน</span>':''}`);
+  if(next)lines.push(`ถัดไป: ${esc(next.l)} ใน <b>${daysBetween(T,next.d)}</b> วัน (${fd(next.d)})`);
+  const goalsNoPlan=S.goals.filter(g=>g.level==='month'&&!S.tasks.some(t=>t.goal===g.id)&&!S.campaigns.some(c=>c.goal===g.id));
+  if(goalsNoPlan.length)lines.push(`เป้าหมายที่ยังไม่มีงานรองรับ: ${goalsNoPlan.map(g=>'“'+esc(g.title)+'”').join(', ')}`);
+  return `<ul class="list">${lines.map(l=>`<li><span style="color:var(--accent2)">•</span><span class="small">${l}</span></li>`).join('')}</ul><button class="btn sm" data-act="ai-go" data-id="daily" style="margin-top:8px">${ic('spark',14)} ให้ AI ช่วยจัดลำดับงาน</button>`;
+}
+
+/* ---------------- 02 Tasks ---------------- */
+function pTasks(){
+  const own=UI.taskOwner;const list=S.tasks.filter(t=>own==='all'||t.assignees.includes(own));
+  const head=`<div class="toolbar"><div class="seg">${[['board','Board'],['list','List'],['workload','Workload']].map(([k,l])=>`<button aria-pressed="${UI.taskView===k}" data-act="tview" data-id="${k}">${l}</button>`).join('')}</div>
+   <div class="seg">${[['all','ทุกคน'],...S.users.map(u=>[u.id,u.name])].map(([k,l])=>`<button aria-pressed="${own===k}" data-act="towner" data-id="${k}">${esc(l)}</button>`).join('')}</div><span class="sp"></span><button class="btn primary" data-act="task-new">${ic('plus',15)} สร้างงาน</button></div>`;
+  if(UI.taskView==='workload'){const T=today();
+    return head+`<div class="grid">${S.users.map(u=>{const ts=S.tasks.filter(t=>t.assignees.includes(u.id));const open=ts.filter(t=>t.status!=='done');return card('wl-'+u.id,`${av(u.id)} ${esc(u.name)}`,`<div class="row" style="gap:18px;margin-bottom:10px"><div class="kpi"><span class="k">งานค้าง</span><span class="v">${open.length}</span></div><div class="kpi"><span class="k">เลยกำหนด</span><span class="v" style="color:var(--bad)">${open.filter(t=>t.due<T).length}</span></div><div class="kpi"><span class="k">รอตรวจ</span><span class="v">${open.filter(t=>t.status==='review').length}</span></div><div class="kpi"><span class="k">เสร็จแล้ว</span><span class="v" style="color:var(--ok)">${ts.length-open.length}</span></div></div><ul class="list">${open.sort((a,b)=>a.due.localeCompare(b.due)).slice(0,8).map(taskRow).join('')||'<li class="muted">ไม่มีงานค้าง</li>'}</ul>`,{span:'s6',sub:ROLES[u.role]})}).join('')}</div>`}
+  if(UI.taskView==='list'){const rows=list.filter(t=>!t.parent).sort((a,b)=>a.due.localeCompare(b.due));
+    const row=(t,lv)=>`<tr class="click" data-act="task-open" data-id="${t.id}"><td>${lv?'<span class="sub-l" style="display:inline">↳ </span>':''}${blockedBy(t).length?'🔒 ':''}<b>${esc(t.title)}</b>${t.campaign?`<div class="small muted">${esc(campName(t.campaign))}</div>`:''}</td><td><span class="avs">${t.assignees.map(av).join('')}</span></td><td>${stPill(t.status)}</td><td><i class="prio p-${t.priority}" style="display:inline-block"></i> ${PRIO[t.priority]}</td><td class="r" style="${t.due<today()&&t.status!=='done'?'color:var(--bad)':''}">${fd(t.due)}</td></tr>`;
+    return head+`<div class="card tw"><table class="tb"><thead><tr><th>งาน</th><th>ผู้รับผิดชอบ</th><th>สถานะ</th><th>ความสำคัญ</th><th class="r">กำหนดส่ง</th></tr></thead><tbody>${rows.map(t=>row(t,0)+list.filter(k=>k.parent===t.id).map(k=>row(k,1)).join('')).join('')||'<tr><td colspan="5" class="muted">ไม่มีงาน</td></tr>'}</tbody></table></div>`}
+  return head+`<p class="small muted" style="margin:-4px 0 12px">ลากการ์ดเพื่อเปลี่ยนสถานะ (บนมือถือ: แตะการ์ดแล้วกดปุ่มในหน้ารายละเอียด) · ย้ายเข้า “รอตรวจ” = ส่งขออนุมัติอัตโนมัติ</p><div class="board" style="--cols:5">${TASK_ST.map(s=>{const cs=list.filter(t=>t.status===s[0]).sort((a,b)=>a.due.localeCompare(b.due));
+    return `<div class="col" data-drop="task" data-st="${s[0]}"><h3><span class="pill ${s[3]}">${esc(s[2])}</span><span class="dim small">${s[1]}</span><span class="n">${cs.length}</span></h3>${cs.map(tCard).join('')||'<p class="dim small" style="margin:6px">ว่าง</p>'}</div>`}).join('')}</div>`;
+}
+function tCard(t){const kids=S.tasks.filter(k=>k.parent===t.id),par=taskById(t.parent),od=t.due<today()&&t.status!=='done',bl=blockedBy(t);
+  return `<article class="tc" draggable="true" data-drag="task" data-id="${t.id}" data-act="task-open" tabindex="0"><div class="row" style="gap:7px;flex-wrap:nowrap"><i class="prio p-${t.priority}"></i><span class="t" style="flex:1">${esc(t.title)}</span></div>
+   ${par?`<span class="sub-l">↳ ${esc(par.title)}</span>`:''}<div class="m">${t.campaign?`<span class="pill ac">${esc(campName(t.campaign))}</span>`:''}${kids.length?`<span class="pill">งานย่อย ${kids.filter(k=>k.status==='done').length}/${kids.length}</span>`:''}${bl.length?'<span class="pill bad">🔒 รองานอื่น</span>':''}${t.comments.length?`<span>💬 ${t.comments.length}</span>`:''}</div>
+   <div class="ft"><span class="avs">${t.assignees.map(av).join('')}</span><span class="sp"></span><span class="small" style="color:${od?'var(--bad)':'var(--muted)'}">${od?'เลย ':''}${fd(t.due)}</span></div></article>`}
+
+/* ---------------- 03 Calendar ---------------- */
+function calItems(from,to){const out=[];const inr=d=>d>=from&&d<=to;
+  S.schedule.filter(s=>inr(s.date)).forEach(s=>out.push({d:s.date,tm:s.start,l:s.title,k:'schedule',cls:'',act:'sch-edit',id:s.id}));
+  S.tasks.filter(t=>t.due&&inr(t.due)&&t.status!=='done').forEach(t=>out.push({d:t.due,tm:'',l:'ส่ง: '+t.title,k:'task',cls:'t-task',act:'task-open',id:t.id}));
+  S.contents.filter(c=>c.date&&inr(c.date)).forEach(c=>out.push({d:c.date,tm:'',l:c.platform+': '+c.title,k:'content',cls:'t-content',act:'content-edit',id:c.id}));
+  S.lives.filter(l=>inr(l.date)).forEach(l=>out.push({d:l.date,tm:l.start,l:'LIVE '+(l.host||''),k:'live',cls:'t-live',act:'live-edit',id:l.id}));
+  S.events.filter(e=>inr(e.date)).forEach(e=>out.push({d:e.date,tm:'',l:e.name,k:'event',cls:'t-event',act:'event-edit',id:e.id}));
+  S.campaigns.forEach(c=>{if(inr(c.start))out.push({d:c.start,tm:'',l:'เริ่ม: '+c.name,k:'campaign',cls:'t-campaign',act:'camp-edit',id:c.id});if(inr(c.end))out.push({d:c.end,tm:'',l:'จบ: '+c.name,k:'campaign',cls:'t-campaign',act:'camp-edit',id:c.id})});
+  return out.sort((a,b)=>(a.d+a.tm).localeCompare(b.d+b.tm));}
+const evBtn=i=>`<button class="ev ${i.cls}" data-act="${i.act}" data-id="${i.id}" title="${esc(i.l)}">${i.tm?`<span class="tm">${esc(i.tm)}</span>`:''}${esc(i.l)}</button>`;
+function pCalendar(){
+  const ref=UI.calRef,T=today(),v=UI.calView;let body='',label='';
+  if(v==='month'){const d=new Date(ref+'T00:00:00');const first=iso(new Date(d.getFullYear(),d.getMonth(),1)),last=iso(new Date(d.getFullYear(),d.getMonth()+1,0));const s=weekStart(first);const e=addDays(weekStart(last),6);const items=calItems(s,e);label=THM.format(d);
+    let cells='';for(let x=s;x<=e;x=addDays(x,1)){const its=items.filter(i=>i.d===x);cells+=`<div class="dc ${x.slice(0,7)!==first.slice(0,7)?'out':''} ${x===T?'today':''}"><span class="dn">${Number(x.slice(8))}</span>${its.slice(0,4).map(evBtn).join('')}${its.length>4?`<button class="ev" data-act="cal-day" data-id="${x}">+${its.length-4} รายการ</button>`:''}</div>`}
+    body=`<div class="tw"><div class="mgrid" style="min-width:720px">${['จ.','อ.','พ.','พฤ.','ศ.','ส.','อา.'].map(x=>`<div class="dh">${x}</div>`).join('')}${cells}</div></div>`}
+  else if(v==='week'){const s=weekStart(ref);const items=calItems(s,addDays(s,6));label=`${fd(s)} – ${fdy(addDays(s,6))}`;
+    body=`<div class="wgrid">${[0,1,2,3,4,5,6].map(i=>{const x=addDays(s,i),its=items.filter(it=>it.d===x);return `<div class="wday ${x===T?'today':''}"><h4>${new Intl.DateTimeFormat('th-TH',{weekday:'short'}).format(new Date(x+'T00:00:00'))}<b>${Number(x.slice(8))}</b></h4>${its.map(evBtn).join('')||'<span class="dim small">ว่าง</span>'}<button class="btn sm ghost" data-act="sch-new" data-id="${x}" style="margin-top:auto">${ic('plus',13)} เพิ่ม</button></div>`}).join('')}</div>`}
+  else{const its=calItems(ref,ref);label=THL.format(new Date(ref+'T00:00:00'));
+    body=`<div class="card"><ul class="list">${its.map(i=>`<li class="click" data-act="${i.act}" data-id="${i.id}"><span class="mono small muted" style="width:48px;flex:none">${esc(i.tm||'—')}</span><span class="t" style="flex:1">${esc(i.l)}</span><span class="pill">${{schedule:'กำหนดการ',task:'งาน',content:'คอนเทนต์',live:'LIVE',event:'อีเวนต์',campaign:'แคมเปญ'}[i.k]}</span></li>`).join('')||'<li class="muted">ไม่มีรายการ</li>'}</ul></div>`}
+  return `<div class="toolbar"><div class="seg">${[['day','Daily'],['week','Weekly'],['month','Monthly']].map(([k,l])=>`<button aria-pressed="${v===k}" data-act="cview" data-id="${k}">${l}</button>`).join('')}</div>
+   <button class="btn sm" data-act="cnav" data-id="-1" aria-label="ก่อนหน้า">${ic('left',15)}</button><button class="btn sm" data-act="cnav" data-id="0">วันนี้</button><button class="btn sm" data-act="cnav" data-id="1" aria-label="ถัดไป">${ic('right',15)}</button><b>${esc(label)}</b><span class="sp"></span><button class="btn primary" data-act="sch-new">${ic('plus',15)} เพิ่มกำหนดการ</button></div>
+   <div class="lg-row" style="margin-bottom:12px"><span><i style="background:var(--accent)"></i>กำหนดการ/ประชุม</span><span><i style="background:var(--info)"></i>เดดไลน์งาน</span><span><i style="background:var(--vio)"></i>คอนเทนต์</span><span><i style="background:var(--bad)"></i>LIVE</span><span><i style="background:var(--ok)"></i>อีเวนต์</span><span><i style="background:var(--warn)"></i>แคมเปญ</span></div>${body}
+   <p class="small muted" style="margin-top:12px">ยังไม่ได้ซิงก์กับ Google Calendar (อยู่ใน Phase 3 · Integrations) ตอนนี้แสดงรายการที่บันทึกในระบบนี้</p>`;
+}
+
+/* ---------------- 04 Campaign & Event ---------------- */
+function pCampaigns(){
+  const tab=UI.campTab,T=today();
+  const tabs=`<div class="tabs" role="tablist">${[['campaigns','Campaign Management'],['planning','Strategic Planning'],['events','Event Management']].map(([k,l])=>`<button role="tab" aria-selected="${tab===k}" data-act="ctab" data-id="${k}">${l}</button>`).join('')}</div>`;
+  const tot=S.campaigns.reduce((a,c)=>a+(+c.budget||0),0),sp=S.campaigns.reduce((a,c)=>a+(+c.spent||0),0);
+  const sum=`<div class="grid" style="margin-bottom:16px"><div class="card s3 kpi hot"><span class="k">แคมเปญทั้งหมด</span><span class="v ac">${S.campaigns.length}</span><span class="d">${Object.entries(CAMP_ST).map(([k,v])=>`${v[0]} ${S.campaigns.filter(c=>c.status===k).length}`).join(' · ')}</span></div><div class="card s3 kpi"><span class="k">งบประมาณรวม</span><span class="v">${baht(tot)}</span><span class="d">ใช้ไป ${baht(sp)} (${pct(sp,tot)}%)</span></div><div class="card s3 kpi"><span class="k">อีเวนต์ที่จะมาถึง</span><span class="v">${S.events.filter(e=>e.date>=T).length}</span><span class="d">ถัดไป ${esc((S.events.filter(e=>e.date>=T).sort((a,b)=>a.date.localeCompare(b.date))[0]||{}).name||'–')}</span></div><div class="card s3 kpi"><span class="k">เป้าหมายที่ยังไม่มีแผน</span><span class="v" style="color:var(--warn)">${S.goals.filter(g=>!S.tasks.some(t=>t.goal===g.id)&&!S.campaigns.some(c=>c.goal===g.id)&&!S.goals.some(k=>k.parent===g.id)).length}</span><span class="d">ดูในแท็บ Strategic Planning</span></div></div>`;
+  if(tab==='planning'){
+    const node=g=>{const kids=S.goals.filter(k=>k.parent===g.id),camps=S.campaigns.filter(c=>c.goal===g.id),tks=S.tasks.filter(t=>t.goal===g.id);const noPlan=!kids.length&&!camps.length&&!tks.length;
+      return `<div class="goal"><div class="row"><span class="lv">${g.level==='year'?'Annual Objective':g.level==='quarter'?'Quarterly Objective':'Monthly Objective'} · ${esc(g.period)}</span><span class="sp"></span>${noPlan?'<span class="pill warn">ยังไม่มีแผนปฏิบัติ</span>':''}<button class="btn sm" data-act="goal-edit" data-id="${g.id}">${ic('edit',13)}</button></div><div class="t">${esc(g.title)}</div>${g.kpi?`<div class="small muted">KPI: ${esc(g.kpi)}${g.target?` · เป้า ${esc(g.target)}`:''}${g.actual?` · ทำได้ ${esc(g.actual)}`:''}</div>`:''}${g.target&&g.actual&&!isNaN(g.target)&&!isNaN(g.actual)?`<div class="bar" style="margin-top:6px;max-width:320px"><i style="width:${clamp(pct(+g.actual,+g.target),0,100)}%"></i></div>`:''}
+        ${camps.length||tks.length?`<div class="small" style="margin-top:8px">${camps.map(c=>`<span class="pill ac" style="margin:2px">แคมเปญ: ${esc(c.name)}</span>`).join('')}${tks.map(t=>`<span class="pill click" data-act="task-open" data-id="${t.id}" style="margin:2px">งาน: ${esc(t.title)} · ${esc(TST[t.status][2])}</span>`).join('')}</div>`:''}
+        ${kids.length?`<div class="goal-kids">${kids.map(node).join('')}</div>`:''}</div>`};
+    return tabs+sum+`<div class="toolbar"><p class="muted small" style="margin:0">เป้าหมายรายปี → ไตรมาส → เดือน → แคมเปญ/งาน ระบบเตือนเป้าหมายที่ยังไม่มีงานรองรับ</p><span class="sp"></span><button class="btn primary" data-act="goal-new">${ic('plus',15)} เพิ่มเป้าหมาย</button></div><div style="display:grid;gap:12px">${S.goals.filter(g=>!g.parent||!S.goals.some(x=>x.id===g.parent)).map(node).join('')||'<div class="empty">ยังไม่มีเป้าหมาย</div>'}</div>`}
+  if(tab==='events'){
+    return tabs+sum+`<div class="toolbar"><span class="sp"></span><button class="btn primary" data-act="event-new">${ic('plus',15)} สร้างอีเวนต์</button></div><div class="grid">${S.events.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{const done=e.checklist.filter(c=>c.done).length;const tks=S.tasks.filter(t=>t.event===e.id);
+      return `<section class="card s6"><div class="ch"><div><h2>${esc(e.name)}</h2><p class="sub" style="margin:2px 0 0">${fdy(e.date)} · ${esc(e.location||'ยังไม่ระบุสถานที่')}${e.date>=T?` · อีก ${daysBetween(T,e.date)} วัน`:' · ผ่านไปแล้ว'}</p></div><span class="sp"></span><button class="btn sm" data-act="event-edit" data-id="${e.id}">${ic('edit',13)} แก้ไข</button></div>
+       <dl class="kv"><dt>งบประมาณ</dt><dd>${baht(e.budget)}</dd><dt>ทีมงาน</dt><dd>${esc(e.staff||'–')}</dd><dt>ซัพพลายเออร์</dt><dd>${esc(e.supplier||'–')}</dd>${e.campaign?`<dt>แคมเปญ</dt><dd>${esc(campName(e.campaign))}</dd>`:''}</dl>
+       <div style="margin-top:12px"><div class="row small"><b>Checklist</b><span class="sp"></span><span class="mono">${done}/${e.checklist.length}</span></div><div class="bar ${done===e.checklist.length&&done?'ok':''}" style="margin:6px 0 8px"><i style="width:${pct(done,e.checklist.length)}%"></i></div>${e.checklist.map((c,i)=>`<label class="row small" style="padding:3px 0;cursor:pointer"><input type="checkbox" data-act="chk" data-id="${e.id}" data-i="${i}" ${c.done?'checked':''}> <span style="${c.done?'text-decoration:line-through;color:var(--muted)':''}">${esc(c.t)}</span></label>`).join('')}</div>
+       ${tks.length?`<div style="margin-top:10px"><b class="small">งานที่เกี่ยวข้อง</b><ul class="list">${tks.map(taskRow).join('')}</ul></div>`:''}<button class="btn sm" data-act="task-new" data-event="${e.id}" style="margin-top:10px">${ic('plus',13)} เพิ่มงานให้อีเวนต์นี้</button></section>`}).join('')||'<div class="empty s12">ยังไม่มีอีเวนต์</div>'}</div>`}
+  return tabs+sum+`<div class="toolbar"><span class="sp"></span><button class="btn primary" data-act="camp-new">${ic('plus',15)} สร้างแคมเปญ</button></div><div class="grid">${S.campaigns.map(c=>{
+    const tks=S.tasks.filter(t=>t.campaign===c.id),cts=S.contents.filter(x=>x.campaign===c.id),lvs=S.lives.filter(l=>l.campaign===c.id),afs=S.affiliates.filter(a=>a.campaign===c.id);const tp=clamp(pct(daysBetween(c.start,T),daysBetween(c.start,c.end)||1),0,100);
+    return `<section class="card s6 ${c.status==='active'?'hot':''}"><div class="ch"><div><h2>${esc(c.name)}</h2><p class="sub" style="margin:2px 0 0">${fd(c.start)} – ${fdy(c.end)} · ดูแลโดย ${esc(user(c.owner).name)}</p></div><span class="sp"></span><span class="pill ${CAMP_ST[c.status][1]}">${CAMP_ST[c.status][0]}</span><button class="btn sm" data-act="camp-edit" data-id="${c.id}">${ic('edit',13)}</button></div>
+     <div class="small muted">ระยะเวลาผ่านไป ${c.status==='planning'&&c.start>T?0:tp}%</div><div class="bar" style="margin:4px 0 10px"><i style="width:${c.status==='planning'&&c.start>T?0:tp}%"></i></div>
+     ${c.brief?`<p class="small" style="margin:0 0 8px">${esc(c.brief)}</p>`:''}<dl class="kv small"><dt>กลุ่มเป้าหมาย</dt><dd>${esc(c.audience||'–')}</dd><dt>ช่องทาง</dt><dd>${(c.channels||[]).map(x=>`<span class="pill">${esc(x)}</span>`).join(' ')||'–'}</dd><dt>งบประมาณ</dt><dd>${baht(c.spent)} / ${baht(c.budget)} <span class="muted">(${pct(c.spent,c.budget)}%)</span></dd>${c.goal?`<dt>เป้าหมาย</dt><dd>${esc((S.goals.find(g=>g.id===c.goal)||{}).title||'')}</dd>`:''}</dl>
+     ${(c.kpis||[]).length?`<div style="margin-top:10px">${c.kpis.map(k=>`<div style="margin:6px 0"><div class="row small"><span>${esc(k.label)}</span><span class="sp"></span><span class="mono">${num(k.actual)} / ${num(k.target)}</span></div><div class="bar ${k.actual>=k.target&&k.target?'ok':''}" style="margin-top:3px"><i style="width:${clamp(pct(k.actual,k.target),0,100)}%"></i></div></div>`).join('')}</div>`:''}
+     <div class="row small" style="margin-top:12px;gap:6px"><span class="pill click" data-go="tasks">งาน ${tks.filter(t=>t.status==='done').length}/${tks.length}</span><span class="pill click" data-go="content">คอนเทนต์ ${cts.length}</span><span class="pill click" data-go="live">LIVE ${lvs.length} ครั้ง · ${baht(lvs.reduce((a,l)=>a+l.gmv,0))}</span><span class="pill click" data-go="affiliate">Affiliate ${afs.length} คน · ${baht(afs.reduce((a,x)=>a+x.gmv,0))}</span></div>
+     <div class="row" style="margin-top:10px"><button class="btn sm" data-act="task-new" data-camp="${c.id}">${ic('plus',13)} งาน</button><button class="btn sm" data-act="content-new" data-camp="${c.id}">${ic('plus',13)} คอนเทนต์</button></div></section>`}).join('')||'<div class="empty s12">ยังไม่มีแคมเปญ</div>'}</div>`;
+}
+
+/* ---------------- 05 Content ---------------- */
+function pContent(){
+  const q=quotaStats();
+  const quota=`<section class="card" style="margin-bottom:16px"><div class="ch"><div><h2>Content Quota · ${esc(THM.format(new Date(S.quota.month+'-01T00:00:00')))}</h2><p class="sub" style="margin:2px 0 0">นับ “ผลิตเสร็จแล้ว” = สถานะรออนุมัติ / ตั้งเวลาแล้ว / เผยแพร่แล้ว ของเดือนนี้ · เดือนผ่านไป ${monthProgress()}%</p></div><span class="sp"></span><button class="btn sm" data-act="quota-edit">${ic('edit',13)} ตั้งค่า Quota</button></div>
+   <div class="tw"><table class="tb"><thead><tr><th>Pillar</th><th>บทบาท</th><th class="r">สัดส่วน</th><th class="r">Quota</th><th class="r">ผลิตแล้ว</th><th class="r">เหลือ</th><th style="min-width:160px">ความคืบหน้า</th></tr></thead><tbody>${q.rows.map(r=>`<tr><td><b>${esc(r.name)}</b></td><td>${esc(r.role)}</td><td class="r">${r.pct}%</td><td class="r">${r.quota}</td><td class="r">${r.done}</td><td class="r">${r.left||'<span style="color:var(--ok)">ครบ</span>'}</td><td><div class="bar ${r.done>=r.quota?'ok':''}"><i style="width:${pct(Math.min(r.done,r.quota),r.quota)}%"></i></div></td></tr>`).join('')}<tr><td><b>รวม</b></td><td></td><td class="r">${q.rows.reduce((a,r)=>a+(+r.pct||0),0)}%</td><td class="r"><b>${q.total}</b></td><td class="r"><b>${q.done}</b></td><td class="r"><b>${Math.max(0,q.total-q.done)}</b></td><td><div class="bar"><i style="width:${pct(Math.min(q.done,q.total),q.total)}%"></i></div></td></tr></tbody></table></div></section>`;
+  const head=`<div class="toolbar"><div class="seg">${[['board','Production Board'],['calendar','Publishing Schedule'],['list','รายการ + Performance']].map(([k,l])=>`<button aria-pressed="${UI.contentView===k}" data-act="ctview" data-id="${k}">${l}</button>`).join('')}</div><span class="sp"></span><button class="btn primary" data-act="content-new">${ic('plus',15)} เพิ่มคอนเทนต์</button></div>`;
+  const cc=c=>`<article class="tc" draggable="true" data-drag="content" data-id="${c.id}" data-act="content-edit" tabindex="0"><span class="t">${esc(c.title)}</span><div class="m"><span class="pill ac">${esc(c.pillar)}</span><span class="pill">${esc(c.platform)}</span><span>${esc(c.type)}</span></div><div class="ft">${av(c.owner)}<span class="sp"></span><span class="small muted">${fd(c.date)}</span></div></article>`;
+  let body;
+  if(UI.contentView==='calendar'){const s=weekStart(today());body=`<div class="wgrid">${[...Array(14).keys()].map(i=>{const x=addDays(s,i),its=S.contents.filter(c=>c.date===x);return `<div class="wday ${x===today()?'today':''}" style="min-height:180px"><h4>${new Intl.DateTimeFormat('th-TH',{weekday:'short'}).format(new Date(x+'T00:00:00'))}<b>${Number(x.slice(8))}</b></h4>${its.map(c=>`<button class="ev t-content" data-act="content-edit" data-id="${c.id}" title="${esc(c.title)}">${esc(c.platform)} · ${esc(c.title)}</button>`).join('')||'<span class="dim small">—</span>'}<button class="btn sm ghost" data-act="content-new" data-date="${x}" style="margin-top:auto">${ic('plus',13)}</button></div>`}).join('')}</div><p class="small muted">แสดง 2 สัปดาห์ (สัปดาห์นี้ + สัปดาห์หน้า)</p>`}
+  else if(UI.contentView==='list'){const rows=S.contents.slice().sort((a,b)=>b.date.localeCompare(a.date));body=`<div class="card tw"><table class="tb"><thead><tr><th>คอนเทนต์</th><th>Pillar</th><th>แพลตฟอร์ม</th><th>สถานะ</th><th>ผู้รับผิดชอบ</th><th class="r">วันเผยแพร่</th><th class="r">ยอดวิว</th><th>ลิงก์</th></tr></thead><tbody>${rows.map(c=>`<tr class="click" data-act="content-edit" data-id="${c.id}"><td><b>${esc(c.title)}</b>${c.campaign?`<div class="small muted">${esc(campName(c.campaign))}</div>`:''}</td><td>${esc(c.pillar)}</td><td>${esc(c.platform)} · ${esc(c.type)}</td><td>${ctPill(c.status)}</td><td>${esc(user(c.owner).name)}</td><td class="r">${fd(c.date)}</td><td class="r">${c.views?num(c.views):'–'}</td><td>${c.link?`<a href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener noreferrer" data-stop>เปิด ↗</a>`:'–'}</td></tr>`).join('')}</tbody></table></div><p class="small muted">ยอดวิวกรอกเองไปก่อน การดึงอัตโนมัติจาก TikTok ขึ้นกับสิทธิ์ API (Phase 3)</p>`}
+  else body=`<p class="small muted" style="margin:-4px 0 12px">ลากการ์ดข้ามคอลัมน์เพื่อเปลี่ยนสถานะ · ย้ายเข้า “รออนุมัติ” = ส่งขออนุมัติให้ Supervisor</p><div class="board" style="--cols:6">${CT_ST.map(s=>{const cs=S.contents.filter(c=>c.status===s[0]).sort((a,b)=>a.date.localeCompare(b.date));return `<div class="col" data-drop="content" data-st="${s[0]}"><h3><span class="pill ${s[2]}">${esc(s[1])}</span><span class="n">${cs.length}</span></h3>${cs.map(cc).join('')||'<p class="dim small" style="margin:6px">ว่าง</p>'}</div>`}).join('')}</div>`;
+  return quota+head+body;
+}
+
+/* ---------------- 06 LIVE ---------------- */
+function pLive(){
+  const T=today(),days=UI.liveRange==='all'?99999:+UI.liveRange;const L=S.lives.filter(l=>daysBetween(l.date,T)<=days).sort((a,b)=>a.date.localeCompare(b.date));
+  const sum=k=>L.reduce((a,l)=>a+(+l[k]||0),0);const mins=sum('durationMin'),gmv=sum('gmv'),orders=sum('orders'),clicks=sum('clicks'),views=sum('views');
+  const by=(keyFn)=>{const m={};L.forEach(l=>{const k=keyFn(l);m[k]=m[k]||{k,n:0,gmv:0,orders:0,mins:0,views:0};m[k].n++;m[k].gmv+=+l.gmv||0;m[k].orders+=+l.orders||0;m[k].mins+=+l.durationMin||0;m[k].views+=+l.views||0});return Object.values(m).sort((a,b)=>b.gmv/(b.mins||1)-a.gmv/(a.mins||1))};
+  const prod={};L.forEach(l=>String(l.products||'').split('\n').forEach(s=>{const p=s.split('|').map(x=>x.trim());if(p[0])prod[p[0]]=(prod[p[0]]||0)+(Number(p[1])||0)}));const topP=Object.entries(prod).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const kp=(k,v,d,hot)=>`<div class="card kpi ${hot?'hot':''}"><span class="k">${k}</span><span class="v ${hot?'ac':''}" style="font-size:26px">${v}</span><span class="d">${d}</span></div>`;
+  const grp=(rows,label)=>`<div class="tw"><table class="tb"><thead><tr><th>${label}</th><th class="r">ครั้ง</th><th class="r">GMV</th><th class="r">GMV/ชั่วโมง</th><th class="r">ออเดอร์</th></tr></thead><tbody>${rows.map(r=>`<tr><td><b>${esc(r.k)}</b></td><td class="r">${r.n}</td><td class="r">${baht(r.gmv)}</td><td class="r">${baht(r.gmv/((r.mins||1)/60))}</td><td class="r">${num(r.orders)}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">ไม่มีข้อมูล</td></tr>'}</tbody></table></div>`;
+  return `<div class="toolbar"><div class="seg">${[['7','7 วัน'],['30','30 วัน'],['90','90 วัน'],['all','ทั้งหมด']].map(([k,l])=>`<button aria-pressed="${UI.liveRange===k}" data-act="lrange" data-id="${k}">${l}</button>`).join('')}</div><span class="sp"></span><button class="btn" data-act="ai-go" data-id="analyst">${ic('spark',15)} ให้ AI วิเคราะห์</button><button class="btn primary" data-act="live-new">${ic('plus',15)} บันทึกผล LIVE</button></div>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px">${kp('GMV',baht(gmv),`${L.length} ครั้ง`,1)}${kp('Orders',num(orders),`เฉลี่ย ${num(orders/(L.length||1))}/ครั้ง`)}${kp('LIVE Duration',num(mins/60)+' ชม.',`เฉลี่ย ${num(mins/(L.length||1))} นาที`)}${kp('LIVE Views',num(views),`Peak สูงสุด ${num(Math.max(0,...L.map(l=>l.peak||0)))}`)}${kp('Average Viewers',num(L.reduce((a,l)=>a+(+l.avgViewers||0),0)/(L.length||1)),'เฉลี่ยต่อครั้ง')}${kp('CTR',(views?(clicks/views*100).toFixed(1):0)+'%','Product clicks ÷ views')}${kp('Conversion',(clicks?(orders/clicks*100).toFixed(1):0)+'%','Orders ÷ product clicks')}</div>
+   <div class="grid">
+    ${card('l-trend','GMV รายครั้ง (เปรียบเทียบ LIVE แต่ละครั้ง)',bars(L.slice(-16).map(l=>({l:`${fd(l.date)} ${l.start} · ${l.host}`,s:fd(l.date),v:l.gmv})),{h:200,fmt:baht}),{span:'s8'})}
+    ${card('l-prod','สินค้าขายดี',topP.length?`<ul class="list">${topP.map(([n,v],i)=>`<li><span class="mono muted" style="width:18px">${i+1}</span><span style="flex:1">${esc(n)}</span><b class="mono">${num(v)}</b></li>`).join('')}</ul>`:'<div class="empty">กรอกช่อง “สินค้าที่ขายได้” ในผล LIVE</div>',{span:'s4',sub:'รวมจำนวนออเดอร์ตามสินค้า'})}
+    ${card('l-slot','ช่วงเวลาที่ขายดีที่สุด',grp(by(l=>(l.start||'??').slice(0,2)+':00 น.'),'ช่วงเวลาเริ่ม'),{span:'s6',sub:'เรียงตาม GMV ต่อชั่วโมง'})}
+    ${card('l-host','เปรียบเทียบ Host',grp(by(l=>l.host||'ไม่ระบุ'),'Host'),{span:'s6',sub:'เรียงตาม GMV ต่อชั่วโมง'})}
+    ${card('l-tbl','รายงานรายครั้ง',`<div class="tw"><table class="tb"><thead><tr><th>วันที่</th><th>Host</th><th class="r">นาที</th><th class="r">Views</th><th class="r">Peak</th><th class="r">Avg</th><th class="r">Clicks</th><th class="r">CTR</th><th class="r">Orders</th><th class="r">CVR</th><th class="r">GMV</th></tr></thead><tbody>${L.slice().reverse().map(l=>`<tr class="click" data-act="live-edit" data-id="${l.id}"><td>${fd(l.date)} <span class="muted mono small">${esc(l.start)}</span>${l.campaign?`<div class="small muted">${esc(campName(l.campaign))}</div>`:''}</td><td>${esc(l.host)}</td><td class="r">${num(l.durationMin)}</td><td class="r">${num(l.views)}</td><td class="r">${num(l.peak)}</td><td class="r">${num(l.avgViewers)}</td><td class="r">${num(l.clicks)}</td><td class="r">${l.views?(l.clicks/l.views*100).toFixed(1):0}%</td><td class="r">${num(l.orders)}</td><td class="r">${l.clicks?(l.orders/l.clicks*100).toFixed(1):0}%</td><td class="r"><b>${baht(l.gmv)}</b></td></tr>`).join('')||'<tr><td colspan="11" class="muted">ไม่มีข้อมูลในช่วงนี้</td></tr>'}</tbody></table></div>`,{span:'s12',sub:'คลิกแถวเพื่อแก้ไข · ข้อมูลตัวอย่าง ไม่ใช่ผลจริง'})}
+   </div><p class="small muted">ตอนนี้กรอกผลเองหรือนำเข้าทีหลัง การดึงจาก TikTok Shop อัตโนมัติขึ้นกับสิทธิ์ API ของบัญชี (Phase 3)</p>`;
+}
+
+/* ---------------- 07 Affiliate ---------------- */
+function pAffiliate(){
+  const A=S.affiliates.slice().sort((a,b)=>b.gmv-a.gmv);const act=A.filter(a=>a.status==='active');const sum=k=>A.reduce((s,a)=>s+(+a[k]||0),0);
+  const gmv=sum('gmv'),orders=sum('orders'),clicks=sum('clicks'),comm=A.reduce((s,a)=>s+(+a.gmv||0)*(+a.commissionPct||0)/100,0);
+  const kp=(k,v,d,hot)=>`<div class="card kpi ${hot?'hot':''}"><span class="k">${k}</span><span class="v ${hot?'ac':''}" style="font-size:26px">${v}</span><span class="d">${d}</span></div>`;
+  const funnel=Object.entries(AFF_ST).map(([k,v])=>[v[0],A.filter(a=>a.status===k).length,v[1]]);
+  return `<div class="toolbar"><span class="sp"></span><button class="btn" data-act="ai-go" data-id="strategist">${ic('spark',15)} ให้ AI ช่วยวางแผน Affiliate</button><button class="btn primary" data-act="aff-new">${ic('plus',15)} เพิ่ม Affiliate</button></div>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px">${kp('Total Revenue (GMV)',baht(gmv),`${act.length} คนที่กำลังโปรโมต`,1)}${kp('Orders',num(orders),'รวมทุกคน')}${kp('Product Clicks',num(clicks),'')}${kp('Conversion',(clicks?(orders/clicks*100).toFixed(1):0)+'%','Orders ÷ clicks')}${kp('AOV',baht(gmv/(orders||1)),'มูลค่าต่อออเดอร์')}${kp('Commission',baht(comm),'ประมาณการจาก % ที่ตั้งไว้')}</div>
+   <div class="grid">
+    ${card('a-rank','Creator Performance Ranking',bars(A.filter(a=>a.gmv>0).slice(0,8).map(a=>({l:a.name,s:a.username||a.name.slice(-1),v:a.gmv})),{h:190,fmt:baht}),{span:'s8',sub:'เรียงตาม GMV'})}
+    ${card('a-rec','Recruitment Tracking',`<ul class="list">${funnel.map(([l,n,c])=>`<li><span class="pill ${c}" style="min-width:110px;justify-content:center">${esc(l)}</span><div class="bar" style="flex:1;margin-top:7px"><i style="width:${pct(n,A.length)}%"></i></div><b class="mono">${n}</b></li>`).join('')}</ul>`,{span:'s4',sub:'สถานะการดึง Creator เข้าร่วม'})}
+    ${card('a-tbl','Affiliate Database',`<div class="tw"><table class="tb"><thead><tr><th>#</th><th>Affiliate</th><th>ระดับ/สาย</th><th>สถานะ</th><th class="r">วิดีโอ</th><th class="r">Views</th><th class="r">Clicks</th><th class="r">Orders</th><th class="r">CVR</th><th class="r">GMV</th><th class="r">Commission</th></tr></thead><tbody>${A.map((a,i)=>`<tr class="click" data-act="aff-edit" data-id="${a.id}"><td class="mono muted">${i+1}</td><td><b>${esc(a.name)}</b><div class="small muted">${esc(a.username||'')}${a.campaign?' · '+esc(campName(a.campaign)):''}</div></td><td>${esc(a.tier)} · ${esc(a.category||'')}</td><td><span class="pill ${AFF_ST[a.status][1]}">${AFF_ST[a.status][0]}</span></td><td class="r">${num(a.videos)}</td><td class="r">${num(a.views)}</td><td class="r">${num(a.clicks)}</td><td class="r">${num(a.orders)}</td><td class="r">${a.clicks?(a.orders/a.clicks*100).toFixed(1):0}%</td><td class="r"><b>${baht(a.gmv)}</b></td><td class="r">${baht(a.gmv*a.commissionPct/100)} <span class="muted small">(${a.commissionPct}%)</span></td></tr>`).join('')}</tbody></table></div>`,{span:'s12',sub:'คลิกแถวเพื่อแก้ไข · ข้อมูลตัวอย่าง'})}
+   </div>`;
+}
+
+/* ---------------- 08 Meetings ---------------- */
+function pMeetings(){
+  const M=S.meetings.slice().sort((a,b)=>b.date.localeCompare(a.date));
+  return `<div class="toolbar"><p class="muted small" style="margin:0">Action Items กด “สร้างเป็นงาน” แล้วจะเข้า Task Management พร้อมผู้รับผิดชอบและกำหนดส่ง</p><span class="sp"></span><button class="btn" data-act="ai-go" data-id="meeting">${ic('spark',15)} ให้ AI สรุปจาก Transcript</button><button class="btn primary" data-act="meet-new">${ic('plus',15)} บันทึกการประชุม</button></div>
+   <div style="display:grid;gap:16px">${M.map(m=>{const open=m.actions.filter(a=>a.status!=='done').length;return `<section class="card"><div class="ch"><div><h2>${esc(m.title)}</h2><p class="sub" style="margin:2px 0 0">${fdy(m.date)} · ผู้เข้าร่วม ${m.participants.map(p=>esc(user(p).name)).join(', ')}</p></div><span class="sp"></span><span class="pill ${open?'warn':'ok'}">Follow-up ${open?`ค้าง ${open}`:'ครบแล้ว'}</span><button class="btn sm" data-act="meet-edit" data-id="${m.id}">${ic('edit',13)} แก้ไข</button></div>
+     <div class="grid"><div class="s7" style="display:grid;gap:10px">${m.agenda?`<div><b class="small">วาระ</b><p class="small" style="margin:2px 0;white-space:pre-line">${esc(m.agenda)}</p></div>`:''}${m.notes?`<div><b class="small">บันทึก</b><p class="small" style="margin:2px 0;white-space:pre-line">${esc(m.notes)}</p></div>`:''}${m.decisions?`<div><b class="small">ข้อสรุปที่ตกลงร่วมกัน</b><ul class="small" style="margin:4px 0;padding-left:18px">${m.decisions.split('\n').filter(Boolean).map(d=>`<li>${esc(d)}</li>`).join('')}</ul></div>`:''}</div>
+     <div class="s5"><b class="small">Action Items</b><ul class="list">${m.actions.map(a=>{const t=taskById(a.taskId);return `<li><input type="checkbox" data-act="ma-done" data-id="${m.id}" data-i="${a.id}" ${a.status==='done'?'checked':''} aria-label="เสร็จแล้ว" style="margin-top:4px"><div style="flex:1"><div class="small" style="${a.status==='done'?'text-decoration:line-through;color:var(--muted)':''}">${esc(a.text)}</div><div class="m">${esc(user(a.assignee).name)}${a.due?` · ${fd(a.due)}`:''}${t?` · <span class="click" data-act="task-open" data-id="${t.id}" style="color:var(--accent-ink)">งาน: ${esc(TST[t.status][2])}</span>`:''}</div></div>${!t&&a.status!=='done'?`<button class="btn sm" data-act="ma-task" data-id="${m.id}" data-i="${a.id}">สร้างเป็นงาน</button>`:''}</li>`}).join('')||'<li class="muted small">ไม่มี</li>'}</ul></div></div></section>`}).join('')||'<div class="empty">ยังไม่มีบันทึกการประชุม</div>'}</div>`;
+}
+
+/* ---------------- 09 AI Assistant ---------------- */
+const AGENTS={
+ daily:{t:'Daily Work Agent',th:'ผู้ช่วยจัดการงานประจำวัน',ic:'cal',asks:['สรุปงานวันนี้และจัดลำดับความสำคัญให้หน่อย','งานไหนเกินกำหนดหรือเสี่ยงไม่ทัน','ช่วยสรุปงานที่ต้องทำในสัปดาห์นี้ พร้อมดูว่างานไหนรอ Supervisor อนุมัติ']},
+ strategist:{t:'Marketing Strategist',th:'ผู้ช่วยวางแผนการตลาด',ic:'target',asks:['วางแผนการตลาดเดือนหน้าโดยเชื่อมกับเป้าหมายที่มี','เสนอไอเดียแคมเปญที่เหมาะกับกลุ่มนักวิ่งมือใหม่','ช่วยกำหนด KPI ให้แคมเปญที่กำลังวางแผน','เป้าหมายไหนยังไม่มีแผนปฏิบัติรองรับ']},
+ analyst:{t:'Data Analyst',th:'ผู้ช่วยวิเคราะห์ข้อมูล',ic:'chart',asks:['วิเคราะห์ผล LIVE: ช่วงเวลา Host และสินค้าที่ขายดี','วิเคราะห์ผล Affiliate และควรโฟกัส Creator คนไหน','สรุปรายงานการตลาดประจำเดือน','มีความผิดปกติหรือแนวโน้มอะไรที่ควรระวัง']},
+ meeting:{t:'Meeting Assistant',th:'ผู้ช่วยการประชุม',ic:'note',asks:['สรุปประชุมจาก Transcript ที่วางไว้ด้านล่าง แยกข้อสรุป Action Items ผู้รับผิดชอบ และ Deadline','ติดตามผลการประชุมครั้งก่อน: Action Item ไหนยังค้าง']},
+ workflow:{t:'Workflow Assistant',th:'ผู้ช่วยจัดการระบบ',ic:'flow',asks:['แตกงานจากคำสั่งนี้เป็น Task ย่อยพร้อมกำหนดส่ง','ร่างอีเมลติดตามซัพพลายเออร์/พาร์ทเนอร์','สร้างตารางนัดหมายจากงานที่ต้องทำสัปดาห์นี้']}};
+function aiContext(agent){const T=today(),brief=t=>`- [${TST[t.status][2]}] ${t.title} | ผู้รับผิดชอบ: ${t.assignees.map(a=>user(a).name).join(', ')} | กำหนด ${t.due}${t.campaign?' | แคมเปญ: '+campName(t.campaign):''}${blockedBy(t).length?' | รอ: '+blockedBy(t).map(x=>x.title).join(', '):''}`;
+  const parts=[`วันนี้: ${T} · ทีม: ${S.workspace.name} · สมาชิก: ${S.users.map(u=>`${u.name} (${ROLES[u.role]||u.role})`).join(', ')}`];
+  if(['daily','workflow','strategist'].includes(agent))parts.push('งานที่ยังไม่เสร็จ:\n'+S.tasks.filter(t=>t.status!=='done').map(brief).join('\n'),'รออนุมัติ:\n'+(S.approvals.filter(a=>a.status==='pending').map(a=>`- ${a.title} (ขอโดย ${user(a.requestedBy).name})`).join('\n')||'- ไม่มี'));
+  if(['strategist','analyst'].includes(agent))parts.push('เป้าหมาย:\n'+S.goals.map(g=>`- [${g.level}] ${g.title}${g.kpi?' | KPI '+g.kpi+' เป้า '+g.target+' ทำได้ '+g.actual:''}`).join('\n'),'แคมเปญ:\n'+S.campaigns.map(c=>`- ${c.name} | ${CAMP_ST[c.status][0]} | ${c.start}–${c.end} | งบ ${c.budget} ใช้ ${c.spent} | KPI: ${(c.kpis||[]).map(k=>`${k.label} ${k.actual}/${k.target}`).join(', ')}`).join('\n'));
+  if(agent==='analyst')parts.push('ผล LIVE (วันที่, เวลา, host, นาที, views, avg, clicks, orders, GMV):\n'+S.lives.map(l=>[l.date,l.start,l.host,l.durationMin,l.views,l.avgViewers,l.clicks,l.orders,l.gmv].join(', ')).join('\n'),'Affiliate (ชื่อ, ระดับ, สถานะ, วิดีโอ, clicks, orders, GMV, คอม%):\n'+S.affiliates.map(a=>[a.name,a.tier,a.status,a.videos,a.clicks,a.orders,a.gmv,a.commissionPct].join(', ')).join('\n'));
+  if(agent==='strategist'){const q=quotaStats();parts.push('Content Quota เดือนนี้: '+q.rows.map(r=>`${r.name} ${r.done}/${r.quota}`).join(', '))}
+  if(agent==='meeting')parts.push('ประชุมล่าสุด:\n'+S.meetings.slice(0,3).map(m=>`- ${m.date} ${m.title} | Action: ${m.actions.map(a=>`${a.text} (${user(a.assignee).name}, ${a.status})`).join('; ')}`).join('\n'));
+  return parts.join('\n\n');}
+function pAI(){const ag=UI.aiAgent,A=AGENTS[ag];
+  return `<p class="note" style="margin-top:0"><b>ตอนนี้ยังเป็นตัวช่วยสร้างพรอมต์:</b> หน้านี้เป็นเว็บสาธารณะ จึงยังใส่กุญแจ API ของ AI ไม่ได้ (คนอื่นจะเห็นกุญแจ) ระบบจะรวบรวมข้อมูลในแดชบอร์ดเป็นพรอมต์ให้คุณคัดลอกไปถาม Claude พอย้ายไปหลังล็อกอินแล้วค่อยต่อ AI ตรง (Phase 4)</p>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0">${Object.entries(AGENTS).map(([k,a],i)=>`<button class="card ${k===ag?'hot':''}" data-act="agent" data-id="${k}" style="text-align:left;cursor:pointer;color:var(--ink)"><div class="row">${ic(a.ic,20)}<b>${i+1}. ${esc(a.t)}</b></div><div class="small muted" style="margin-top:4px">${esc(a.th)}</div></button>`).join('')}</div>
+   <section class="card"><h2>${ic(A.ic)} ${esc(A.t)}</h2><p class="sub">เลือกคำถามสำเร็จรูป หรือพิมพ์คำถามเอง</p><div class="row" style="margin-bottom:12px">${A.asks.map((q,i)=>`<button class="btn sm" data-act="ask" data-id="${i}">${esc(q)}</button>`).join('')}</div>
+    <label class="f w"><span>คำถาม / คำสั่ง</span><textarea id="aiQ" rows="3" placeholder="เช่น ช่วยสรุปงานที่ผมต้องทำในสัปดาห์นี้…">${esc(sub.aiQ||'')}</textarea></label>
+    ${ag==='meeting'?'<label class="f w" style="margin-top:10px"><span>วาง Transcript / บันทึกการประชุม (ไม่บังคับ)</span><textarea id="aiT" rows="5"></textarea></label>':''}
+    <div class="row" style="margin-top:12px"><button class="btn primary" data-act="ai-build">${ic('spark',15)} สร้างพรอมต์พร้อมข้อมูลทีม</button></div>
+    <div id="aiOut" hidden style="margin-top:14px"><label class="f w"><span>พรอมต์ (แก้ได้ก่อนคัดลอก)</span><textarea id="aiP" rows="12"></textarea></label><div class="row" style="margin-top:10px"><button class="btn primary" data-act="ai-copy">${ic('copy',15)} คัดลอก</button><a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener noreferrer">${ic('ext',15)} เปิด Claude</a><span class="small muted">ข้อมูลที่ส่งไปคือข้อมูลในแดชบอร์ดนี้เท่านั้น</span></div></div></section>`;}
+
+/* ---------------- 10 Files ---------------- */
+function pFiles(){const cats=['all',...new Set(S.files.map(f=>f.category||'อื่นๆ'))];const F=S.files.filter(f=>UI.fileCat==='all'||(f.category||'อื่นๆ')===UI.fileCat);
+  return `<div class="toolbar"><div class="seg">${cats.map(c=>`<button aria-pressed="${UI.fileCat===c}" data-act="fcat" data-id="${esc(c)}">${c==='all'?'ทั้งหมด':esc(c)}</button>`).join('')}</div><span class="sp"></span><button class="btn primary" data-act="file-new">${ic('plus',15)} เพิ่มลิงก์เอกสาร</button></div>
+   <div class="card tw"><table class="tb"><thead><tr><th>ไฟล์</th><th>หมวด</th><th>แคมเปญ</th><th>เพิ่มโดย</th><th class="r">วันที่</th><th></th></tr></thead><tbody>${F.map(f=>`<tr><td>${ic('link',14)} <a href="${esc(safeUrl(f.url))}" target="_blank" rel="noopener noreferrer"><b>${esc(f.name)}</b></a></td><td><span class="pill">${esc(f.category||'อื่นๆ')}</span></td><td>${esc(campName(f.campaign)||'–')}</td><td>${esc(user(f.by).name)}</td><td class="r">${fd(f.added)}</td><td class="r"><button class="btn sm" data-act="file-edit" data-id="${f.id}">${ic('edit',13)}</button></td></tr>`).join('')||'<tr><td colspan="6" class="muted">ไม่มีไฟล์</td></tr>'}</tbody></table></div>
+   <p class="small muted">เก็บเป็น “ลิงก์” ไปยังไฟล์จริง (เช่น Google Drive) ไม่ได้อัปโหลดไฟล์ขึ้นเว็บนี้ · การเชื่อม Google Drive โดยตรงอยู่ใน Phase 3 · ไฟล์ในงานแต่ละชิ้นแนบได้ที่ช่อง “ลิงก์ไฟล์” ในหน้าแก้ไขงาน</p>`;}
+
+/* ---------------- 11 Notification & Approval ---------------- */
+function pNotify(){const N=notifs(),pend=S.approvals.filter(a=>a.status==='pending'),hist=S.approvals.filter(a=>a.status!=='pending'&&a.status!=='withdrawn').slice(0,15);const canDecide=a=>isSup()||a.reviewer===ME;
+  const kindL={task:'งาน',content:'คอนเทนต์',campaign:'แคมเปญ'};
+  return `<div class="grid"><section class="card s7 hot"><div class="ch"><div><h2>${ic('check',16)} Approval Queue</h2><p class="sub" style="margin:2px 0 0">อนุมัติ หรือขอให้แก้ไขพร้อมความคิดเห็น (Review → Approve / Revision)</p></div><span class="sp"></span><span class="pill warn">รอ ${pend.length}</span></div>
+     ${isSup()?'':'<p class="note">คุณกำลังใช้งานในชื่อ <b>'+esc(user(ME).name)+'</b> จะอนุมัติได้เฉพาะรายการที่ตัวเองเป็นผู้ตรวจ เปลี่ยนเป็น Brand Supervisor ที่มุมขวาบนเพื่อทดลองอนุมัติ</p>'}
+     <ul class="list">${pend.map(a=>`<li style="display:block"><div class="row"><span class="pill">${kindL[a.kind]||a.kind}</span><b style="flex:1">${esc(a.title)}</b></div><div class="m" style="margin:4px 0 8px">ขอโดย ${esc(user(a.requestedBy).name)} · ผู้ตรวจ ${esc(user(a.reviewer).name)} · ${fd(a.date)}</div><div class="row"><input id="cm-${a.id}" placeholder="ความคิดเห็น (ไม่บังคับ)" style="flex:1;min-width:160px;background:var(--sunk);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;color:var(--ink)"><button class="btn sm" data-act="ap" data-id="${a.id}" data-d="revision" ${canDecide(a)?'':'disabled'}>ขอให้แก้ไข</button><button class="btn sm primary" data-act="ap" data-id="${a.id}" data-d="approved" ${canDecide(a)?'':'disabled'}>อนุมัติ</button>${a.kind==='task'?`<button class="btn sm ghost" data-act="task-open" data-id="${a.ref}">ดูงาน</button>`:''}</div></li>`).join('')||'<li class="muted">ไม่มีรายการรออนุมัติ</li>'}</ul></section>
+    <section class="card s5"><div class="ch"><div><h2>${ic('bell',16)} การแจ้งเตือน</h2><p class="sub" style="margin:2px 0 0">สร้างอัตโนมัติจากเดดไลน์ แคมเปญ อีเวนต์ Quota และ Action Items</p></div><span class="sp"></span><button class="btn sm" data-act="read-all">อ่านทั้งหมด</button></div>
+     <ul class="list">${N.map(n=>`<li class="click" data-act="notif" data-id="${esc(n.id)}" data-go2="${n.go}" data-ref="${esc(n.ref||'')}" style="${S.readN.includes(n.id)?'opacity:.55':''}"><span class="ndot" style="background:var(--${n.lv})"></span><div style="flex:1"><div class="t small">${esc(n.text)}</div><div class="m">${esc(n.sub||'')}</div></div></li>`).join('')||'<li class="muted">ไม่มีการแจ้งเตือน</li>'}</ul></section>
+    <section class="card s12"><h2>ประวัติการอนุมัติ</h2><div class="tw" style="margin-top:8px"><table class="tb"><thead><tr><th>รายการ</th><th>ผล</th><th>ความคิดเห็น</th><th>โดย</th><th class="r">เมื่อ</th></tr></thead><tbody>${hist.map(a=>`<tr><td>${esc(a.title)} <span class="muted small">(${kindL[a.kind]||a.kind})</span></td><td><span class="pill ${a.status==='approved'?'ok':'bad'}">${a.status==='approved'?'อนุมัติ':'ขอแก้ไข'}</span></td><td class="small">${esc(a.comment||'–')}</td><td>${esc(user(a.decidedBy).name)}</td><td class="r small">${a.decidedAt?fts(a.decidedAt):'–'}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">ยังไม่มี</td></tr>'}</tbody></table></div></section></div>`;}
+
+/* ---------------- 12 Settings ---------------- */
+function pSettings(){const tab=UI.setTab;
+  const tabs=`<div class="tabs" role="tablist">${[['users','Users & Roles'],['modules','Module Manager'],['integrations','Integrations'],['data','ข้อมูลและถังขยะ'],['activity','Activity Log']].map(([k,l])=>`<button role="tab" aria-selected="${tab===k}" data-act="stab" data-id="${k}">${l}</button>`).join('')}</div>`;
+  if(tab==='modules')return tabs+`<section class="card"><h2>Module Manager</h2><p class="sub">เปิด/ปิดเมนูให้เหมาะกับทีม (Overview และ Settings ปิดไม่ได้) การตั้งค่านี้เก็บในเบราว์เซอร์ของเครื่องนี้</p><ul class="list">${NAV.flatMap(g=>g.items).map(m=>`<li><span style="color:var(--accent2)">${ic(m.ic)}</span><div style="flex:1"><b>${m.n}. ${esc(m.t)}</b><div class="small muted">${esc(m.th)}</div></div><label class="row small"><input type="checkbox" data-act="mod" data-id="${m.id}" ${S.modules[m.id]!==false?'checked':''} ${m.core?'disabled':''}> เปิดใช้</label></li>`).join('')}</ul></section>`;
+  if(tab==='integrations'){const I=[['Market Research (ข่าวคู่แข่ง)','ดึงข่าว 17 แบรนด์ + 8 แหล่ง RSS ทุกเช้าผ่าน GitHub Actions','ok','เชื่อมแล้ว'],['ระบบล็อกอิน (Cloudflare Access)','ให้เข้าได้เฉพาะสมาชิก ต้องมีโดเมนก่อน','warn','รอตั้งค่า'],['ฐานข้อมูลกลาง','ให้ทุกคนเห็นข้อมูลชุดเดียวกันแบบเรียลไทม์ (เช่น Supabase ตาม Blueprint)','warn','รอตั้งค่า'],['Google Drive','ดูไฟล์ แนบไฟล์ในงาน ผูกแคมเปญกับโฟลเดอร์','',"Phase 3"],['Google Calendar','ซิงก์ประชุม/เดดไลน์','',"Phase 3"],['Google Sheets','นำเข้า KPI และยอดขาย','',"Phase 3"],['Gmail','อีเมลที่เกี่ยวกับแคมเปญ สร้าง Draft','',"Phase 3"],['TikTok / TikTok Shop','ผล LIVE คอนเทนต์ และ Affiliate (ขึ้นกับสิทธิ์ API)','',"Phase 3 · API Dependent"],['Shopee','ยอดขาย ออเดอร์ โปรโมชัน (ขึ้นกับสิทธิ์ API)','',"Phase 3 · API Dependent"],['AI (Claude API)','AI Assistant ทำงานในหน้าโดยตรง','',"Phase 4"]];
+    return tabs+`<p class="note" style="margin-top:0">ระหว่างที่ยังไม่มี API ใช้การนำเข้าเอง (กรอกฟอร์ม หรือ Import ไฟล์ JSON ในแท็บ “ข้อมูล”) ระบบควรแสดงวันที่อัปเดตข้อมูลล่าสุดเสมอ เพื่อไม่ให้เข้าใจผิดว่าเป็นข้อมูลเรียลไทม์</p><div class="grid" style="margin-top:14px">${I.map(([n,d,c,s])=>`<section class="card s4"><div class="row"><b style="flex:1">${esc(n)}</b><span class="pill ${c}">${esc(s)}</span></div><p class="small muted" style="margin:6px 0 0">${esc(d)}</p></section>`).join('')}</div>`}
+  if(tab==='data')return tabs+`<div class="grid"><section class="card s6"><h2>สำรอง/ย้ายข้อมูล</h2><p class="sub">ข้อมูลอยู่ในเบราว์เซอร์นี้เท่านั้น ส่งออกเป็นไฟล์เพื่อสำรอง หรือส่งให้อีกคนนำเข้า</p><div class="row"><button class="btn primary" data-act="export">ส่งออก JSON</button><label class="btn">นำเข้า JSON<input type="file" accept="application/json,.json" id="importFile" hidden></label><button class="btn danger" data-act="reset">รีเซ็ตเป็นข้อมูลตัวอย่าง</button></div><p class="small muted" style="margin-top:10px">การนำเข้าจะแทนที่ข้อมูลทั้งหมดในเบราว์เซอร์นี้</p></section>
+    <section class="card s6"><h2>ถังขยะ (Soft Delete)</h2><p class="sub">รายการที่ลบล่าสุด 50 รายการ กู้คืนได้</p><ul class="list">${S.trash.map((t,i)=>`<li><div style="flex:1"><b class="small">${esc(t.item.title||t.item.name||t.item.date||t.type)}</b><div class="m">${esc(t.type)} · ลบโดย ${esc(user(t.by).name)} · ${fts(t.at)}</div></div><button class="btn sm" data-act="restore" data-id="${i}">กู้คืน</button></li>`).join('')||'<li class="muted">ว่าง</li>'}</ul></section></div>`;
+  if(tab==='activity')return tabs+`<section class="card"><h2>Activity Log</h2><p class="sub">ใครทำอะไร เมื่อไร (80 รายการล่าสุด)</p><ul class="list">${S.activity.map(x=>`<li>${av(x.who)}<div style="flex:1"><div class="small"><b>${esc(user(x.who).name)}</b> · <span class="muted">${fts(x.t)}</span></div><div class="small">${esc(x.text)}</div></div></li>`).join('')}</ul></section>`;
+  return tabs+`<div class="grid"><section class="card s7"><div class="ch"><div><h2>สมาชิกในทีม</h2><p class="sub" style="margin:2px 0 0">เริ่มที่ 2 คน เพิ่มสมาชิกได้ภายหลังโดยไม่ต้องเปลี่ยนโครงสร้าง</p></div><span class="sp"></span><button class="btn primary sm" data-act="user-new">${ic('plus',14)} เพิ่มสมาชิก</button></div><ul class="list">${S.users.map(u=>`<li>${av(u.id)}<div style="flex:1"><b>${esc(u.name)}</b>${u.id===ME?' <span class="pill ac">คุณ</span>':''}<div class="small muted">${esc(ROLES[u.role]||u.role)}</div></div><button class="btn sm" data-act="user-edit" data-id="${u.id}">${ic('edit',13)} แก้ไข</button></li>`).join('')}</ul></section>
+   <section class="card s5"><h2>สิทธิ์ตามบทบาท (ตาม Blueprint)</h2><ul class="list small"><li><b style="width:150px;flex:none">Brand Supervisor</b><span>เห็นทั้งทีม แก้ไขทุกอย่าง อนุมัติ/ขอแก้ไขได้ทุกรายการ</span></li><li><b style="width:150px;flex:none">Marketing Executive</b><span>เห็นทั้งทีม สร้าง/แก้งาน ส่งขออนุมัติ อนุมัติได้เฉพาะรายการที่ตัวเองเป็นผู้ตรวจ</span></li><li><b style="width:150px;flex:none">Member</b><span>สำหรับขยายทีมในอนาคต</span></li></ul><p class="note">ตอนนี้ยังไม่มีล็อกอินจริง ทุกคนเลือก “ใช้งานในชื่อ” ได้เอง สิทธิ์จะบังคับจริงเมื่อย้ายไปหลังระบบล็อกอิน</p></section></div>`;}
+
+/* ---------------- Market Research ---------------- */
+function pResearch(){return `<div class="toolbar"><p class="muted small" style="margin:0">หน้าข่าวคู่แข่งเดิม (อัปเดตอัตโนมัติทุกเช้า) แสดงในกรอบนี้</p><span class="sp"></span><a class="btn" href="../index.html" target="_blank" rel="noopener">${ic('ext',15)} เปิดเต็มหน้า</a></div><iframe class="mr" src="../index.html" title="Market Research"></iframe>`}
+
+/* ---------------- Render ---------------- */
+const PAGES={overview:pOverview,tasks:pTasks,calendar:pCalendar,campaigns:pCampaigns,content:pContent,live:pLive,affiliate:pAffiliate,meetings:pMeetings,ai:pAI,files:pFiles,notify:pNotify,settings:pSettings,research:pResearch};
+function render(){
+  const m=MOD[route];$('#pageTitle').textContent=m.t;$('#eyebrow').textContent=(m.n==='MR'?'':'Module '+m.n+' · ')+m.th;document.title=m.t+' · Steapex Marketing OS';
+  renderNav();
+  try{$('#view').innerHTML=PAGES[route]()}catch(e){console.error(e);$('#view').innerHTML=`<div class="empty">หน้านี้แสดงผลไม่ได้: ${esc(e.message)}<br><button class="btn" data-act="reset" style="margin-top:10px">รีเซ็ตข้อมูลตัวอย่าง</button></div>`}
+  const imp=$('#importFile');if(imp)imp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.v!==1||!Array.isArray(o.tasks))throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');S=o;save();toast('นำเข้าข้อมูลแล้ว');render()}catch(err){toast('นำเข้าไม่ได้: '+err.message)}};r.readAsText(f)};
+}
+
+/* ---------------- Events ---------------- */
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-stop]'))return;
+  const g=e.target.closest('[data-go]');if(g){e.preventDefault();go(g.dataset.go);return}
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const a=el.dataset.act,id=el.dataset.id;
+  const T=today();
+  switch(a){
+   case 'scope':UI.scope=id;render();break;
+   case 'range':UI.range=id;render();break;
+   case 'customize':UI.customize=!UI.customize;render();break;
+   case 'w-up':case 'w-down':{const o=S.widgets.order;const i=o.indexOf(id);const j=a==='w-up'?i-1:i+1;if(i>=0&&j>=0&&j<o.length){[o[i],o[j]]=[o[j],o[i]];save();render()}break}
+   case 'w-hide':{const h=S.widgets.hidden;S.widgets.hidden=h.includes(id)?h.filter(x=>x!==id):[...h,id];save();render();break}
+   case 'tview':UI.taskView=id;render();break;
+   case 'towner':UI.taskOwner=id;render();break;
+   case 'task-new':taskForm(null,{campaign:el.dataset.camp||'',event:el.dataset.event||''});break;
+   case 'task-open':{const t=taskById(id);if(t)taskView(t);break}
+   case 'task-edit':{const t=taskById(id);$('#dlg').close();if(t)taskForm(t);break}
+   case 'task-sub':{const t=taskById(id);$('#dlg').close();if(t)taskForm(null,{parent:t.id,campaign:t.campaign,event:t.event,goal:t.goal});break}
+   case 'task-move':{const t=taskById(id);$('#dlg').close();setTaskStatus(t,el.dataset.st);break}
+   case 'sch-new':schForm(null,id?{date:id}:{});break;
+   case 'sch-edit':schForm(S.schedule.find(x=>x.id===id));break;
+   case 'cview':UI.calView=id;render();break;
+   case 'cnav':{if(id==='0')UI.calRef=T;else{const n=+id;UI.calRef=UI.calView==='month'?(()=>{const d=new Date(UI.calRef+'T00:00:00');return iso(new Date(d.getFullYear(),d.getMonth()+n,1))})():addDays(UI.calRef,UI.calView==='week'?7*n:n)}render();break}
+   case 'cal-day':UI.calView='day';UI.calRef=id;render();break;
+   case 'ctab':UI.campTab=id;render();break;
+   case 'camp-new':campForm();break;
+   case 'camp-edit':campForm(S.campaigns.find(x=>x.id===id));break;
+   case 'goal-new':goalForm();break;
+   case 'goal-edit':goalForm(S.goals.find(x=>x.id===id));break;
+   case 'event-new':eventForm();break;
+   case 'event-edit':eventForm(S.events.find(x=>x.id===id));break;
+   case 'chk':{const ev=S.events.find(x=>x.id===id);if(ev){const c=ev.checklist[+el.dataset.i];c.done=el.checked;commit(`${c.done?'ติ๊ก':'ยกเลิก'}เช็กลิสต์ “${c.t}” (${ev.name})`)}break}
+   case 'ctview':UI.contentView=id;render();break;
+   case 'content-new':contentForm(null,{campaign:el.dataset.camp||'',date:el.dataset.date||today()});break;
+   case 'content-edit':contentForm(S.contents.find(x=>x.id===id));break;
+   case 'quota-edit':quotaForm();break;
+   case 'lrange':UI.liveRange=id;render();break;
+   case 'live-new':liveForm();break;
+   case 'live-edit':liveForm(S.lives.find(x=>x.id===id));break;
+   case 'aff-new':affForm();break;
+   case 'aff-edit':affForm(S.affiliates.find(x=>x.id===id));break;
+   case 'meet-new':meetingForm();break;
+   case 'meet-edit':meetingForm(S.meetings.find(x=>x.id===id));break;
+   case 'ma-done':{const m=S.meetings.find(x=>x.id===id),it=m&&m.actions.find(x=>x.id===el.dataset.i);if(it){it.status=el.checked?'done':'open';const t=taskById(it.taskId);if(t&&el.checked&&t.status!=='done'){t.status='done';logTask(t,'ปิดจาก Action Item ในประชุม')}commit(`อัปเดต Action Item “${it.text}”`)}break}
+   case 'ma-task':{const m=S.meetings.find(x=>x.id===id),it=m&&m.actions.find(x=>x.id===el.dataset.i);if(!it)break;if(!confirm(`สร้างงาน “${it.text}” ให้ ${user(it.assignee).name}?`))break;const nt={id:uid(),title:it.text,desc:'จากการประชุม: '+m.title,status:'todo',priority:'med',assignees:[it.assignee],reviewer:S.users.find(u=>u.role==='sup')?.id||'',due:it.due||addDays(T,3),campaign:'',event:'',goal:'',parent:'',dependsOn:[],files:[],comments:[],history:[],created:T};logTask(nt,'สร้างจาก Meeting Summary');S.tasks.unshift(nt);it.taskId=nt.id;commit(`สร้างงาน “${nt.title}” จากการประชุม`);toast('สร้างงานแล้ว ดูได้ใน Task Management');break}
+   case 'agent':UI.aiAgent=id;sub.aiQ='';render();break;
+   case 'ai-go':UI.aiAgent=id;sub.aiQ='';go('ai');break;
+   case 'ask':{sub.aiQ=AGENTS[UI.aiAgent].asks[+id];$('#aiQ').value=sub.aiQ;break}
+   case 'ai-build':{const q=$('#aiQ').value.trim()||AGENTS[UI.aiAgent].asks[0];const tr=$('#aiT')?$('#aiT').value.trim():'';const A=AGENTS[UI.aiAgent];
+     const p=`คุณคือ ${A.t} (${A.th}) ของทีมการตลาดแบรนด์รองเท้าวิ่ง Steapex ในไทย ตอบเป็นภาษาไทย กระชับ ใช้เฉพาะข้อมูลที่ให้ไว้ ถ้าข้อมูลไม่พอให้บอกว่าขาดอะไร แยกข้อเท็จจริงออกจากข้อเสนอแนะ\n\nคำถาม: ${q}\n\n=== ข้อมูลจาก Marketing OS (ข้อมูลตัวอย่าง/ที่ทีมกรอกเอง) ===\n${aiContext(UI.aiAgent)}${tr?`\n\n=== Transcript / บันทึกการประชุม ===\n${tr}`:''}`;
+     $('#aiOut').hidden=false;$('#aiP').value=p;$('#aiP').focus();break}
+   case 'ai-copy':{const v=$('#aiP').value;const done=()=>toast('คัดลอกแล้ว นำไปวางใน Claude ได้เลย');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(done,()=>{$('#aiP').select();document.execCommand('copy');done()});else{$('#aiP').select();document.execCommand('copy');done()}break}
+   case 'fcat':UI.fileCat=id;render();break;
+   case 'file-new':fileForm();break;
+   case 'file-edit':fileForm(S.files.find(x=>x.id===id));break;
+   case 'ap':decide(id,el.dataset.d,($('#cm-'+id)||{}).value);break;
+   case 'read-all':S.readN=[...new Set([...S.readN,...notifs().map(n=>n.id)])].slice(-300);save();render();break;
+   case 'notif':{if(!S.readN.includes(id)){S.readN.push(id);save()}const ref=el.dataset.ref;go(el.dataset.go2);if(ref){const t=taskById(ref);if(t)taskView(t)}break}
+   case 'stab':UI.setTab=id;render();break;
+   case 'mod':S.modules[id]=el.checked;save();renderNav();break;
+   case 'user-new':userForm();break;
+   case 'user-edit':userForm(S.users.find(x=>x.id===id));break;
+   case 'export':{const blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download=`steapex-os-${T}.json`;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('ดาวน์โหลดไฟล์สำรองแล้ว');break}
+   case 'reset':if(confirm('รีเซ็ตข้อมูลทั้งหมดในเบราว์เซอร์นี้เป็นข้อมูลตัวอย่าง?')){S=sample();save();toast('รีเซ็ตแล้ว');render()}break;
+   case 'restore':{const t=S.trash.splice(+id,1)[0];if(t){S[t.list].push(t.item);commit(`กู้คืน ${t.type} “${t.item.title||t.item.name||''}”`)}break}
+  }
+});
+/* drag & drop (Task / Content boards) */
+let dragId=null,dragKind=null;
+document.addEventListener('dragstart',e=>{const c=e.target.closest&&e.target.closest('[data-drag]');if(!c)return;dragId=c.dataset.id;dragKind=c.dataset.drag;e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',dragId)}catch(_){}});
+document.addEventListener('dragover',e=>{const col=e.target.closest&&e.target.closest('[data-drop]');if(!col||col.dataset.drop!==dragKind)return;e.preventDefault();document.querySelectorAll('.col.over').forEach(x=>x!==col&&x.classList.remove('over'));col.classList.add('over')});
+document.addEventListener('dragleave',e=>{const col=e.target.closest&&e.target.closest('[data-drop]');if(col&&!col.contains(e.relatedTarget))col.classList.remove('over')});
+document.addEventListener('drop',e=>{const col=e.target.closest&&e.target.closest('[data-drop]');document.querySelectorAll('.col.over').forEach(x=>x.classList.remove('over'));if(!col||!dragId||col.dataset.drop!==dragKind)return;e.preventDefault();const st=col.dataset.st;
+  if(dragKind==='task')setTaskStatus(taskById(dragId),st);
+  else{const c=S.contents.find(x=>x.id===dragId);if(c&&c.status!==st){c.status=st;if(st==='review')S.approvals.unshift({id:uid(),kind:'content',ref:c.id,title:c.title,requestedBy:ME,reviewer:S.users.find(u=>u.role==='sup')?.id||'',status:'pending',date:today(),comment:''});commit(`ย้ายคอนเทนต์ “${c.title}” ไป ${CST[st][1]}`)}}
+  dragId=null});
+document.addEventListener('dragend',()=>{dragId=null;document.querySelectorAll('.col.over').forEach(x=>x.classList.remove('over'))});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'){const t=e.target.closest&&e.target.closest('.tc[data-act]');if(t){t.click()}}if(e.key==='Escape'){$('#qres').hidden=true;$('#bellPanel').hidden=true}});
+
+/* search */
+$('#searchIc').innerHTML=ic('search',16);
+$('#q').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase(),box=$('#qres');if(q.length<1){box.hidden=true;return}
+  const hit=s=>String(s||'').toLowerCase().includes(q);const R=[];
+  S.tasks.filter(t=>hit(t.title)||hit(t.desc)).slice(0,6).forEach(t=>R.push(['งาน',t.title,'tasks','task-open',t.id]));
+  S.campaigns.filter(c=>hit(c.name)||hit(c.brief)).slice(0,4).forEach(c=>R.push(['แคมเปญ',c.name,'campaigns','camp-edit',c.id]));
+  S.contents.filter(c=>hit(c.title)).slice(0,4).forEach(c=>R.push(['คอนเทนต์',c.title,'content','content-edit',c.id]));
+  S.meetings.filter(m=>hit(m.title)||hit(m.notes)).slice(0,3).forEach(m=>R.push(['ประชุม',m.title,'meetings','meet-edit',m.id]));
+  S.files.filter(f=>hit(f.name)).slice(0,3).forEach(f=>R.push(['ไฟล์',f.name,'files','file-edit',f.id]));
+  S.affiliates.filter(a=>hit(a.name)||hit(a.username)).slice(0,3).forEach(a=>R.push(['Affiliate',a.name,'affiliate','aff-edit',a.id]));
+  box.innerHTML=R.map(r=>`<button type="button" data-sgo="${r[2]}" data-sact="${r[3]}" data-sid="${esc(r[4])}"><small>${esc(r[0])}</small><br>${esc(r[1])}</button>`).join('')||'<p class="muted small" style="padding:8px">ไม่พบ</p>';box.hidden=false});
+$('#qres').addEventListener('click',e=>{const b=e.target.closest('[data-sgo]');if(!b)return;$('#qres').hidden=true;$('#q').value='';go(b.dataset.sgo);const fake=document.createElement('span');fake.dataset.act=b.dataset.sact;fake.dataset.id=b.dataset.sid;document.body.appendChild(fake);fake.click();fake.remove()});
+document.addEventListener('click',e=>{if(!e.target.closest('.search'))$('#qres').hidden=true;if(!e.target.closest('.bellwrap'))$('#bellPanel').hidden=true});
+
+/* top bar */
+$('#bellBtn').addEventListener('click',()=>{const p=$('#bellPanel');if(!p.hidden){p.hidden=true;return}const N=notifs(),pend=S.approvals.filter(a=>a.status==='pending');
+  p.innerHTML=`<div class="row" style="padding:6px 8px"><b style="flex:1">การแจ้งเตือน</b><button class="btn sm" data-go="notify">ดูทั้งหมด</button></div><ul class="list" style="padding:0 8px">${pend.length?`<li class="click" data-go="notify"><span class="pill warn">รออนุมัติ ${pend.length}</span></li>`:''}${N.slice(0,8).map(n=>`<li class="click" data-act="notif" data-id="${esc(n.id)}" data-go2="${n.go}" data-ref="${esc(n.ref||'')}"><span class="ndot" style="background:var(--${n.lv})"></span><div class="small" style="flex:1">${esc(n.text)}<div class="m">${esc(n.sub||'')}</div></div></li>`).join('')||'<li class="muted small">ไม่มี</li>'}</ul>`;p.hidden=false});
+$('#themeBtn').innerHTML=ic('moon');
+$('#themeBtn').addEventListener('click',()=>{const n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('sos-theme',n)}catch(_){}});
+$('#who').addEventListener('change',e=>{ME=e.target.value;try{localStorage.setItem('sos-me',ME)}catch(_){}toast('ใช้งานในชื่อ '+user(ME).name);render()});
+$('#menuBtn').innerHTML=ic('menu');
+$('#menuBtn').addEventListener('click',()=>{$('#app').classList.add('open');$('#scrim').hidden=false});
+$('#scrim').addEventListener('click',()=>{$('#app').classList.remove('open');$('#scrim').hidden=true});
+$('#collapseBtn').innerHTML=ic('side')+'<span class="lbl">ย่อเมนู</span>';
+try{if(localStorage.getItem('sos-collapsed')==='1')$('#app').classList.add('collapsed')}catch(_){}
+$('#collapseBtn').addEventListener('click',()=>{const c=$('#app').classList.toggle('collapsed');try{localStorage.setItem('sos-collapsed',c?'1':'0')}catch(_){}});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h&&h!==route&&MOD[h])go(h)});
+
+save();
+go((location.hash.slice(1)&&MOD[location.hash.slice(1)])?location.hash.slice(1):'overview');
+</script>
+</body>
+</html>
