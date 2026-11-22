@@ -1,29 +1,513 @@
 {
-  "_readme": "เพิ่ม/ลบแบรนด์ได้ที่นี่ แล้วทั้งหน้าเว็บและสคริปต์อัปเดตจะใช้รายการเดียวกัน queries = คำค้นที่ใช้ดึงข่าวจาก Google News RSS (lang: en หรือ th)",
-  "lookback_days_daily": 3,
-  "lookback_days_first_run": 14,
-  "brands": [
-    {"id":"nike","name":"Nike","origin":"สหรัฐฯ","queries":[{"q":"Nike running shoes","lang":"en"},{"q":"Nike Inc earnings OR strategy OR Alphafly","lang":"en"}]},
-    {"id":"adidas","name":"Adidas","origin":"เยอรมนี","queries":[{"q":"Adidas running shoes OR Adizero","lang":"en"},{"q":"Adidas AG earnings OR strategy","lang":"en"}]},
-    {"id":"asics","name":"ASICS","origin":"ญี่ปุ่น","queries":[{"q":"ASICS running shoes OR Novablast OR Metaspeed","lang":"en"},{"q":"ASICS earnings OR marathon","lang":"en"}]},
-    {"id":"puma","name":"Puma","origin":"เยอรมนี","queries":[{"q":"Puma running shoes OR Deviate","lang":"en"},{"q":"Puma SE Anta OR earnings OR restructuring","lang":"en"}]},
-    {"id":"newbalance","name":"New Balance","origin":"สหรัฐฯ","queries":[{"q":"New Balance running shoes","lang":"en"},{"q":"New Balance marathon OR collection OR lawsuit","lang":"en"}]},
-    {"id":"hoka","name":"HOKA","origin":"สหรัฐฯ (Deckers)","queries":[{"q":"HOKA running shoes","lang":"en"},{"q":"Deckers HOKA earnings","lang":"en"}]},
-    {"id":"saucony","name":"Saucony","origin":"สหรัฐฯ (Wolverine)","queries":[{"q":"Saucony running shoes","lang":"en"}]},
-    {"id":"brooks","name":"Brooks","origin":"สหรัฐฯ","queries":[{"q":"Brooks Running shoes","lang":"en"},{"q":"Brooks Running growth OR store OR event","lang":"en"}]},
-    {"id":"on","name":"On Running","origin":"สวิตเซอร์แลนด์","queries":[{"q":"On Running shoes Cloudmonster OR Cloudboom","lang":"en"},{"q":"On Holding earnings OR guidance","lang":"en"}]},
-    {"id":"altra","name":"Altra","origin":"สหรัฐฯ (VF Corp)","queries":[{"q":"Altra Running shoes","lang":"en"}]},
-    {"id":"xtep","name":"Xtep","origin":"จีน","queries":[{"q":"Xtep running shoes OR 160X","lang":"en"},{"q":"特步 跑鞋","lang":"zh"}]},
-    {"id":"onke","name":"Onke","origin":"ยังยืนยันไม่ได้","queries":[{"q":"ONKE running shoes","lang":"en"},{"q":"欧克 跑鞋 ONKE","lang":"zh"}]},
-    {"id":"ving","name":"VING","origin":"ไทย","queries":[{"q":"VING รองเท้าแตะวิ่ง","lang":"th"},{"q":"VING NIRUN","lang":"en"}]},
-    {"id":"pan","name":"PAN","origin":"ไทย","queries":[{"q":"PAN รองเท้ากีฬา แพน","lang":"th"}]},
-    {"id":"reebok","name":"Reebok","origin":"สหรัฐฯ (Authentic Brands)","queries":[{"q":"Reebok running OR collection OR collab","lang":"en"}]}
-  ],
-  "market_queries": [
-    {"q":"running shoe market OR sneaker industry trends","lang":"en"},
-    {"q":"sportswear industry demand OR tariffs OR discounting","lang":"en"},
-    {"q":"super shoe marathon carbon plate","lang":"en"},
-    {"q":"ตลาดรองเท้าวิ่ง OR งานวิ่ง OR วิ่งมาราธอน","lang":"th"},
-    {"q":"รองเท้าวิ่ง แบรนด์ไทย","lang":"th"}
-  ]
+ "_readme": "เพิ่ม/ลบแบรนด์และแหล่งข่าวได้ที่นี่ ทั้งหน้าเว็บและสคริปต์อัปเดตใช้ไฟล์เดียวกัน brands[].queries = คำค้นใน Google News RSS (lang: en/th/zh) · brands[].aliases = คำที่ใช้จับคู่ชื่อแบรนด์ในพาดหัวของ feeds · brands[].domain = โดเมนที่ใช้ดึงไอคอนโลโก้ (ไม่ใส่ = แสดงตัวอักษรแทน) · brands[].logo = path/URL ของไฟล์โลโก้ที่ต้องการใช้แทน · feeds[] = RSS ของเว็บที่ติดตามโดยตรง (filter: all = เก็บทุกข่าว, relevant = เก็บเฉพาะที่เข้าแบรนด์หรือคำใน market_keywords; brand = ผูกทุกข่าวกับแบรนด์นั้น; enabled:false = ปิดชั่วคราว)",
+ "lookback_days_daily": 3,
+ "lookback_days_first_run": 14,
+ "brands": [
+  {
+   "id": "nike",
+   "name": "Nike",
+   "origin": "สหรัฐฯ",
+   "queries": [
+    {
+     "q": "Nike running shoes",
+     "lang": "en"
+    },
+    {
+     "q": "Nike Inc earnings OR strategy OR Alphafly",
+     "lang": "en"
+    }
+   ],
+   "domain": "nike.com",
+   "logo": null,
+   "aliases": [
+    "Nike",
+    "Air Jordan",
+    "Jordan Brand",
+    "Pegasus",
+    "Vaporfly",
+    "Alphafly",
+    "Vomero",
+    "ไนกี้"
+   ]
+  },
+  {
+   "id": "adidas",
+   "name": "Adidas",
+   "origin": "เยอรมนี",
+   "queries": [
+    {
+     "q": "Adidas running shoes OR Adizero",
+     "lang": "en"
+    },
+    {
+     "q": "Adidas AG earnings OR strategy",
+     "lang": "en"
+    }
+   ],
+   "domain": "adidas.com",
+   "logo": null,
+   "aliases": [
+    "adidas",
+    "Adizero",
+    "Ultraboost",
+    "Yeezy",
+    "อาดิดาส"
+   ]
+  },
+  {
+   "id": "asics",
+   "name": "ASICS",
+   "origin": "ญี่ปุ่น",
+   "queries": [
+    {
+     "q": "ASICS running shoes OR Novablast OR Metaspeed",
+     "lang": "en"
+    },
+    {
+     "q": "ASICS earnings OR marathon",
+     "lang": "en"
+    }
+   ],
+   "domain": "asics.com",
+   "logo": null,
+   "aliases": [
+    "ASICS",
+    "Novablast",
+    "Metaspeed",
+    "Gel-Nimbus",
+    "Gel Nimbus",
+    "Gel-Kayano",
+    "Gel Kayano",
+    "Gel-Cumulus",
+    "Gel Cumulus",
+    "Superblast",
+    "Megablast"
+   ]
+  },
+  {
+   "id": "puma",
+   "name": "Puma",
+   "origin": "เยอรมนี",
+   "queries": [
+    {
+     "q": "Puma running shoes OR Deviate",
+     "lang": "en"
+    },
+    {
+     "q": "Puma SE Anta OR earnings OR restructuring",
+     "lang": "en"
+    }
+   ],
+   "domain": "puma.com",
+   "logo": null,
+   "aliases": [
+    "PUMA",
+    "Deviate Nitro",
+    "MagMax",
+    "Fast-R"
+   ]
+  },
+  {
+   "id": "newbalance",
+   "name": "New Balance",
+   "origin": "สหรัฐฯ",
+   "queries": [
+    {
+     "q": "New Balance running shoes",
+     "lang": "en"
+    },
+    {
+     "q": "New Balance marathon OR collection OR lawsuit",
+     "lang": "en"
+    }
+   ],
+   "domain": "newbalance.com",
+   "logo": null,
+   "aliases": [
+    "New Balance",
+    "Fresh Foam",
+    "FuelCell",
+    "นิวบาลานซ์"
+   ]
+  },
+  {
+   "id": "hoka",
+   "name": "HOKA",
+   "origin": "สหรัฐฯ (Deckers)",
+   "queries": [
+    {
+     "q": "HOKA running shoes",
+     "lang": "en"
+    },
+    {
+     "q": "Deckers HOKA earnings",
+     "lang": "en"
+    }
+   ],
+   "domain": "hoka.com",
+   "logo": null,
+   "aliases": [
+    "HOKA",
+    "Speedgoat",
+    "Cielo X1",
+    "Deckers"
+   ]
+  },
+  {
+   "id": "saucony",
+   "name": "Saucony",
+   "origin": "สหรัฐฯ (Wolverine)",
+   "queries": [
+    {
+     "q": "Saucony running shoes",
+     "lang": "en"
+    }
+   ],
+   "domain": "saucony.com",
+   "logo": null,
+   "aliases": [
+    "Saucony",
+    "Endorphin",
+    "Kinvara"
+   ]
+  },
+  {
+   "id": "brooks",
+   "name": "Brooks",
+   "origin": "สหรัฐฯ",
+   "queries": [
+    {
+     "q": "Brooks Running shoes",
+     "lang": "en"
+    },
+    {
+     "q": "Brooks Running growth OR store OR event",
+     "lang": "en"
+    }
+   ],
+   "domain": "brooksrunning.com",
+   "logo": null,
+   "aliases": [
+    "Brooks Running",
+    "Brooks Ghost",
+    "Brooks Glycerin",
+    "Brooks Hyperion",
+    "Brooks Adrenaline",
+    "Brooks Cascadia",
+    "Brooks Caldera",
+    "Brooks Launch"
+   ]
+  },
+  {
+   "id": "on",
+   "name": "On Running",
+   "origin": "สวิตเซอร์แลนด์",
+   "queries": [
+    {
+     "q": "On Running shoes Cloudmonster OR Cloudboom",
+     "lang": "en"
+    },
+    {
+     "q": "On Holding earnings OR guidance",
+     "lang": "en"
+    }
+   ],
+   "domain": "on.com",
+   "logo": null,
+   "aliases": [
+    "On Running",
+    "On Holding",
+    "Cloudmonster",
+    "Cloudboom",
+    "Cloudsurfer",
+    "Cloudtilt"
+   ]
+  },
+  {
+   "id": "altra",
+   "name": "Altra",
+   "origin": "สหรัฐฯ (VF Corp)",
+   "queries": [
+    {
+     "q": "Altra Running shoes",
+     "lang": "en"
+    }
+   ],
+   "domain": "altrarunning.com",
+   "logo": null,
+   "aliases": [
+    "Altra"
+   ]
+  },
+  {
+   "id": "xtep",
+   "name": "Xtep",
+   "origin": "จีน",
+   "queries": [
+    {
+     "q": "Xtep running shoes OR 160X",
+     "lang": "en"
+    },
+    {
+     "q": "特步 跑鞋",
+     "lang": "zh"
+    }
+   ],
+   "domain": "xtep.com.cn",
+   "logo": null,
+   "aliases": [
+    "Xtep",
+    "特步",
+    "160X"
+   ]
+  },
+  {
+   "id": "onke",
+   "name": "Onke",
+   "origin": "ยังยืนยันไม่ได้",
+   "queries": [
+    {
+     "q": "ONKE running shoes",
+     "lang": "en"
+    },
+    {
+     "q": "欧克 跑鞋 ONKE",
+     "lang": "zh"
+    }
+   ],
+   "domain": null,
+   "logo": null,
+   "aliases": [
+    "ONKE",
+    "欧克"
+   ]
+  },
+  {
+   "id": "ving",
+   "name": "VING",
+   "origin": "ไทย",
+   "queries": [
+    {
+     "q": "VING รองเท้าแตะวิ่ง",
+     "lang": "th"
+    },
+    {
+     "q": "VING NIRUN",
+     "lang": "en"
+    }
+   ],
+   "domain": null,
+   "logo": null,
+   "aliases": [
+    "VING"
+   ]
+  },
+  {
+   "id": "pan",
+   "name": "PAN",
+   "origin": "ไทย",
+   "queries": [
+    {
+     "q": "PAN รองเท้ากีฬา แพน",
+     "lang": "th"
+    }
+   ],
+   "domain": null,
+   "logo": null,
+   "aliases": [
+    "PAN Footwear",
+    "รองเท้าแพน",
+    "รองเท้า PAN",
+    "แพน รองเท้า"
+   ]
+  },
+  {
+   "id": "reebok",
+   "name": "Reebok",
+   "origin": "สหรัฐฯ (Authentic Brands)",
+   "queries": [
+    {
+     "q": "Reebok running OR collection OR collab",
+     "lang": "en"
+    }
+   ],
+   "domain": "reebok.com",
+   "logo": null,
+   "aliases": [
+    "Reebok",
+    "รีบ็อก"
+   ]
+  },
+  {
+   "id": "361degrees",
+   "name": "361 Degrees",
+   "origin": "จีน",
+   "domain": "361sport.com",
+   "logo": null,
+   "aliases": [
+    "361 Degrees",
+    "361 Degree",
+    "361°",
+    "361度",
+    "三六一度"
+   ],
+   "queries": [
+    {
+     "q": "361 Degrees running shoes",
+     "lang": "en"
+    },
+    {
+     "q": "361 Degrees earnings OR 361° OR results",
+     "lang": "en"
+    },
+    {
+     "q": "361度 跑鞋",
+     "lang": "zh"
+    }
+   ]
+  },
+  {
+   "id": "anta",
+   "name": "Anta",
+   "origin": "จีน",
+   "domain": "anta.com",
+   "logo": null,
+   "aliases": [
+    "ANTA",
+    "Anta Sports",
+    "安踏",
+    "แอนตา"
+   ],
+   "queries": [
+    {
+     "q": "Anta running shoes OR Anta Sports",
+     "lang": "en"
+    },
+    {
+     "q": "Anta Sports earnings OR Amer Sports OR strategy",
+     "lang": "en"
+    },
+    {
+     "q": "安踏 跑鞋",
+     "lang": "zh"
+    }
+   ]
+  }
+ ],
+ "market_queries": [
+  {
+   "q": "running shoe market OR sneaker industry trends",
+   "lang": "en"
+  },
+  {
+   "q": "sportswear industry demand OR tariffs OR discounting",
+   "lang": "en"
+  },
+  {
+   "q": "super shoe marathon carbon plate",
+   "lang": "en"
+  },
+  {
+   "q": "ตลาดรองเท้าวิ่ง OR งานวิ่ง OR วิ่งมาราธอน",
+   "lang": "th"
+  },
+  {
+   "q": "รองเท้าวิ่ง แบรนด์ไทย",
+   "lang": "th"
+  }
+ ],
+ "feed_lookback_days_daily": 7,
+ "feed_lookback_days_first_run": 30,
+ "market_keywords": [
+  "shoe",
+  "sneaker",
+  "footwear",
+  "trail runner",
+  "marathon",
+  "midsole",
+  "super shoe",
+  "supershoe",
+  "รองเท้า",
+  "วิ่ง",
+  "มาราธอน",
+  "สนีกเกอร์",
+  "跑鞋",
+  "跑步",
+  "运动鞋"
+ ],
+ "feeds": [
+  {
+   "id": "sneakernews",
+   "name": "Sneaker News",
+   "url": "https://sneakernews.com/feed/",
+   "stype": "media",
+   "lang": "en",
+   "filter": "relevant",
+   "note": "โพสต์ราว 13 ข่าว/วัน เก็บเฉพาะข่าวที่พาดหัวเข้าแบรนด์ที่ติดตามหรือมีคำอย่าง shoe/sneaker/marathon"
+  },
+  {
+   "id": "adidas-running",
+   "name": "adidas News · Running",
+   "url": "https://news.adidas.com/RSS/sports/running",
+   "stype": "official",
+   "lang": "en",
+   "filter": "all",
+   "brand": "adidas",
+   "note": "newsroom ทางการ โพสต์ไม่ถี่ (ราวเดือนละครั้ง) และเป็นถ้อยแถลงของแบรนด์เอง"
+  },
+  {
+   "id": "adidas-sports",
+   "name": "adidas News · Sports",
+   "url": "https://news.adidas.com/RSS/sports",
+   "stype": "official",
+   "lang": "en",
+   "filter": "all",
+   "brand": "adidas"
+  },
+  {
+   "id": "adidas-brands",
+   "name": "adidas News · Brands",
+   "url": "https://news.adidas.com/RSS/brands",
+   "stype": "official",
+   "lang": "en",
+   "filter": "all",
+   "brand": "adidas"
+  },
+  {
+   "id": "sanook-economic",
+   "name": "Sanook ข่าวเศรษฐกิจ",
+   "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml",
+   "stype": "media",
+   "lang": "th",
+   "filter": "relevant",
+   "note": "feed นี้อัปเดตไม่ถี่และเป็นข่าวเศรษฐกิจทั่วไป จึงกรองเฉพาะข่าวที่เกี่ยวกับแบรนด์/รองเท้า/วิ่ง"
+  },
+  {
+   "id": "believeintherun",
+   "name": "Believe in the Run",
+   "url": "https://believeintherun.com/feed/",
+   "stype": "review",
+   "lang": "en",
+   "filter": "all",
+   "note": "รีวิวและข่าวรองเท้าวิ่ง/เทรล"
+  },
+  {
+   "id": "runningshoesguru",
+   "name": "Running Shoes Guru",
+   "url": "https://www.runningshoesguru.com/feed/",
+   "stype": "review",
+   "lang": "en",
+   "filter": "all",
+   "note": "ตรวจเมื่อ 22 พ.ย. 2026: ข่าวล่าสุดใน feed คือ 28 มิ.ย. 2026 (ไม่ได้อัปเดตมาราว 5 เดือน) ยังเปิดไว้ตามที่เลือก"
+  },
+  {
+   "id": "gearjunkie",
+   "name": "GearJunkie",
+   "url": "https://gearjunkie.com/feed",
+   "stype": "media",
+   "lang": "en",
+   "filter": "relevant",
+   "note": "เว็บอุปกรณ์กลางแจ้งทั่วไป เก็บเฉพาะข่าวที่เกี่ยวกับรองเท้า/แบรนด์ที่ติดตาม"
+  }
+ ]
 }

@@ -108,7 +108,7 @@ h2.sec{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0 0 4p
 .trend h3{margin:0 0 4px;font-size:16.5px;line-height:1.45;font-weight:600}
 .trend p{margin:0 0 8px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0;align-items:center}
-.btag{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--sunk)}
+.btag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--sunk)}
 .btag:hover{border-color:var(--heat);color:var(--accent)}
 .daysel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .lesson{background:var(--accent-soft);border-left:3px solid var(--heat);border-radius:8px;padding:10px 13px;font-size:14px;margin-top:8px}
@@ -136,6 +136,7 @@ h2.sec{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0 0 4p
 .mtable tr{cursor:pointer}
 .mtable tr:hover td{background:var(--sunk)}
 .mtable .bn{font-weight:600;white-space:nowrap}
+.mtable .bn .lg{margin-right:8px}
 .mtable .hl{color:var(--muted);font-size:13px}
 .mom{display:inline-block;font-size:11.5px;font-weight:600;border-radius:999px;padding:1px 9px;white-space:nowrap}
 .m-up{background:var(--up-soft);color:var(--up)} .m-steady{background:var(--sunk);color:var(--muted)}
@@ -160,6 +161,32 @@ h2.sec{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0 0 4p
 .src{margin-top:12px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
 .src a{text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent);overflow-wrap:anywhere}
 .src a:hover{border-bottom-color:var(--accent)}
+
+/* Brand logos: ช่องสีขาวเสมอ เพื่อให้โลโก้สีเข้มอ่านออกทั้งโหมดสว่าง/มืด · ถ้าโหลดรูปไม่ได้จะเหลือตัวอักษรแรกของแบรนด์ */
+.lg{position:relative;display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid rgba(122,42,5,.14);overflow:hidden;vertical-align:middle}
+.lg img{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);object-fit:contain}
+.lg i{font-style:normal;font-family:var(--f-display);font-weight:800;font-size:12px;line-height:1;color:#D9480F}
+.lg.has i{visibility:hidden}
+.lg.xs{width:16px;height:16px;border-radius:4px}.lg.xs i{font-size:9px}
+.lg.xl{width:54px;height:54px;border-radius:14px}.lg.xl i{font-size:26px}
+.bid{display:flex;align-items:center;gap:14px}
+.st{font-size:11px;font-weight:600;border-radius:5px;padding:0 6px;line-height:18px;border:1px solid var(--line);color:var(--muted)}
+.st-official{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+
+/* Source status */
+.srcs{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:0 16px}
+.srcs summary{cursor:pointer;padding:12px 0;font-weight:600;list-style:none;display:flex;gap:8px;align-items:center}
+.srcs summary::-webkit-details-marker{display:none}
+.srcs summary::before{content:"▸";color:var(--heat);transition:transform .15s}
+.srcs[open] summary::before{transform:rotate(90deg)}
+.srcs .tw{overflow-x:auto;padding-bottom:12px}
+.srcs table{width:100%;border-collapse:collapse;font-size:13px}
+.srcs th{font-family:var(--f-display);font-variation-settings:"wdth" 80;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--muted);text-align:left;padding:6px 8px 6px 0;white-space:nowrap}
+.srcs td{padding:7px 8px 7px 0;border-top:1px solid var(--line);vertical-align:top}
+.srcs .ok{color:#1F7A4D;font-weight:600}.srcs .bad{color:#B42318;font-weight:600}.srcs .quiet{color:var(--muted)}
+:root[data-theme="dark"] .srcs .ok{color:#7BE0A8}:root[data-theme="dark"] .srcs .bad{color:#FF9A8F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .srcs .ok{color:#7BE0A8}:root:not([data-theme="light"]) .srcs .bad{color:#FF9A8F}}
+.srcs .nt{display:block;color:var(--muted);font-size:12px}
 
 /* Live headlines */
 .hls{list-style:none;margin:0;padding:0}
@@ -215,7 +242,8 @@ h2.sec{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0 0 4p
 <main class="wrap">
   <nav class="brandbar" id="brandbar" aria-label="เลือกแบรนด์"></nav>
   <div id="view"></div>
-  <p class="foot">ข่าวที่ติดป้าย "สรุปอัตโนมัติ" สร้างจากพาดหัวข่าวสาธารณะ ใช้เฉพาะข้อเท็จจริงในพาดหัว ส่วน "Steapex เรียนรู้" เป็นความเห็นเชิงกลยุทธ์ ไม่ใช่ข้อเท็จจริง ตัวเลขจากแหล่งเดียวควรตรวจกับต้นทางก่อนนำไปตัดสินใจ</p>
+  <details class="srcs" id="srcs" hidden></details>
+  <p class="foot">ข่าวที่ติดป้าย "สรุปอัตโนมัติ" สร้างจากพาดหัวข่าวสาธารณะ ใช้เฉพาะข้อเท็จจริงในพาดหัว ส่วน "Steapex เรียนรู้" เป็นความเห็นเชิงกลยุทธ์ ไม่ใช่ข้อเท็จจริง ตัวเลขจากแหล่งเดียวควรตรวจกับต้นทางก่อนนำไปตัดสินใจ ป้าย "ทางการ" คือข่าวจาก newsroom ของแบรนด์เอง เป็นถ้อยแถลงของแบรนด์ ไม่ใช่การยืนยันโดยอิสระ โลโก้ดึงจากไอคอนเว็บของแบรนด์ ใช้เพื่อระบุตัวแบรนด์เท่านั้น</p>
 </main>
 
 <script>
@@ -233,7 +261,14 @@ const fmtStamp=d=>{try{return new Intl.DateTimeFormat('th-TH',{day:'numeric',mon
 const domain=u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return ''}};
 const heat=n=>{n=Math.max(0,Math.min(5,Number(n)||0));let h='';for(let i=1;i<=5;i++)h+=`<i class="${i<=n?'on':''}" style="height:${4+i*1.6}px"></i>`;return `<span class="heat" role="img" aria-label="ความร้อนแรง ${n} จาก 5">${h}</span>`};
 const brandName=id=>id==='market'?'ตลาดรวม':(BMAP[id]?BMAP[id].name:id);
-const brandTags=ids=>(ids||[]).filter(id=>BMAP[id]).map(id=>`<button class="btag" data-brand="${id}">${esc(BMAP[id].name)}</button>`).join('');
+const STYPE={official:'ทางการ',review:'รีวิว',media:'สื่อ'};
+const hlIds=h=>(h.tags&&h.tags.length)?h.tags:[h.tag];
+/* โลโก้: ใช้ b.logo (ไฟล์ของเราเอง) ก่อน ไม่มีก็ดึงไอคอนจาก b.domain ไม่มีทั้งคู่ = แสดงตัวอักษรแรก */
+const logoSrc=b=>b.logo||(b.domain?`https://www.google.com/s2/favicons?domain=${encodeURIComponent(b.domain)}&sz=64`:'');
+const logo=(b,size)=>{const src=logoSrc(b),l=String(b.name||'?').trim().charAt(0).toUpperCase();
+  return `<span class="lg${size?' '+size:''}${src?' has':''}" aria-hidden="true">${src?`<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`:''}<i>${esc(l)}</i></span>`};
+const btn=b=>`<button class="btag" data-brand="${esc(b.id)}">${logo(b,'xs')}${esc(b.name)}</button>`;
+const brandTags=ids=>(ids||[]).filter(id=>BMAP[id]).map(id=>btn(BMAP[id])).join('');
 const sources=l=>(l&&l.length)?`<div class="src"><span>แหล่งที่มา:</span>${l.map(s=>`<a href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer">${esc(s.name||domain(s.url))} ↗</a>`).join('')}</div>`:'';
 const daysUntil=d=>{const t=new Date();t.setHours(0,0,0,0);return Math.round((new Date(d+'T00:00:00')-t)/864e5)};
 const sortDesc=(a,b)=>String(b.date||b.published||'').localeCompare(String(a.date||a.published||''));
@@ -266,6 +301,17 @@ function renderStatus(){
   else if(state.load==='error')tx.textContent='โหลดข้อมูลไม่สำเร็จ';
   else{const m=state.meta||{};tx.textContent=(m.updatedAt?`อัปเดต ${fmtStamp(m.updatedAt)}`:'ยังไม่เคยอัปเดต')+` · ${MODE[m.mode]||'ข้อมูลตั้งต้น'}`}
 }
+function renderSources(){
+  const el=document.getElementById('srcs'),m=state.meta||{},list=m.sources;
+  if(state.load!=='ok'||!list||!list.length){el.hidden=true;return}
+  const g=m.googleNews,bad=list.filter(s=>!s.ok).length;
+  const row=s=>{const age=s.newest?Math.round((Date.now()-new Date(s.newest+'T00:00:00'))/864e5):null;
+    const st=!s.ok?`<span class="bad">ดึงไม่ได้</span><span class="nt">${esc(s.error||'')}</span>`
+      :(s.fresh===0?`<span class="quiet">ไม่มีข่าวใหม่</span>`:`<span class="ok">ปกติ</span>`);
+    return `<tr><td>${esc(s.name)}</td><td>${esc(STYPE[s.stype]||s.stype)}</td><td>${st}</td><td>${s.ok?s.total:'–'}</td><td>${s.ok?s.kept:'–'}</td><td>${s.newest?esc(fmtDate(s.newest))+(age>45?' <span class="quiet">(เก่ากว่า 45 วัน จึงไม่แสดง)</span>':''):'–'}</td></tr>`};
+  el.hidden=false;
+  el.innerHTML=`<summary>แหล่งข่าวที่ติดตาม (${list.length} เว็บ + Google News)${bad?` · <span class="bad">ดึงไม่ได้ ${bad}</span>`:''}</summary><div class="tw"><table><thead><tr><th>แหล่ง</th><th>ประเภท</th><th>สถานะรอบล่าสุด</th><th>รายการใน feed</th><th>นำมาใช้</th><th>ข่าวล่าสุดใน feed</th></tr></thead><tbody>${list.map(row).join('')}${g?`<tr><td>Google News (ค้นตามแบรนด์/ตลาด)</td><td>สื่อ</td><td>${g.failed?`<span class="bad">คำค้นพลาด ${g.failed}/${g.queries}</span>`:'<span class="ok">ปกติ</span>'}</td><td>${g.raw}</td><td>–</td><td>–</td></tr>`:''}</tbody></table></div>`;
+}
 function renderStats(){
   const el=document.getElementById('stats');if(state.load!=='ok'){el.innerHTML='';return}
   const wk=Date.now()-7*864e5;
@@ -275,10 +321,10 @@ function renderStats(){
 }
 function renderBrandbar(){
   if(state.load!=='ok'){document.getElementById('brandbar').innerHTML='';return}
-  const cnt=id=>state.items.filter(i=>i.brand===id).length+state.headlines.filter(h=>h.tag===id).length;
+  const cnt=id=>state.items.filter(i=>i.brand===id).length+state.headlines.filter(h=>hlIds(h).includes(id)).length;
   document.getElementById('brandbar').innerHTML=
    `<button class="chip" aria-pressed="${state.brand==='all'}" data-brand="all">ภาพรวมทุกแบรนด์</button>`+
-   BRANDS.map(b=>`<button class="chip" aria-pressed="${state.brand===b.id}" data-brand="${b.id}">${esc(b.name)} <span class="n">${cnt(b.id)}</span></button>`).join('');
+   BRANDS.map(b=>`<button class="chip" aria-pressed="${state.brand===b.id}" data-brand="${b.id}">${logo(b)}${esc(b.name)} <span class="n">${cnt(b.id)}</span></button>`).join('');
 }
 function emptyState(){
   if(state.load==='error')return `<div class="empty"><b>โหลดไฟล์ข้อมูลไม่ได้</b>ถ้าเปิดไฟล์ index.html ตรงๆ จากเครื่อง เบราว์เซอร์จะบล็อกการอ่านไฟล์ JSON ให้รันเซิร์ฟเวอร์ในโฟลเดอร์นี้ด้วย <code>python -m http.server 8000</code> แล้วเปิด http://localhost:8000 หรือใช้ผ่าน GitHub Pages</div>`;
@@ -289,7 +335,7 @@ function emptyState(){
 function card(it,showBrand){
   const b=BMAP[it.brand];
   return `<article class="card">
-    <div class="meta"><span class="kind k-${esc(it.kind)}">${esc(KINDS[it.kind]||it.kind)}</span>${showBrand&&b?`<button class="btag" data-brand="${b.id}">${esc(b.name)}</button>`:''}<time datetime="${esc(it.date)}">${esc(fmtDate(it.date))}</time>${it.platform?`<span>${esc(it.platform)}</span>`:''}${heat(it.heat)}${it.auto?'<span class="auto" title="สร้างอัตโนมัติจากพาดหัวข่าว">สรุปอัตโนมัติ</span>':''}</div>
+    <div class="meta"><span class="kind k-${esc(it.kind)}">${esc(KINDS[it.kind]||it.kind)}</span>${showBrand&&b?btn(b):''}<time datetime="${esc(it.date)}">${esc(fmtDate(it.date))}</time>${it.platform?`<span>${esc(it.platform)}</span>`:''}${heat(it.heat)}${it.auto?'<span class="auto" title="สร้างอัตโนมัติจากพาดหัวข่าว">สรุปอัตโนมัติ</span>':''}</div>
     <h3>${esc(it.title)}</h3><p>${esc(it.summary)}</p>
     ${it.insight?`<div class="lesson"><b>Steapex เรียนรู้:</b> ${esc(it.insight)}</div>`:''}
     ${sources(it.sources)}</article>`;
@@ -304,9 +350,9 @@ function feed(list,showBrand){
 }
 function headlinesPanel(list,title,showTag){
   const rows=list.slice(0,state.hlLimit);
-  const body=rows.length?`<ul class="hls">${rows.map(h=>`<li><a href="${esc(safeUrl(h.url))}" target="_blank" rel="noopener noreferrer">${esc(h.title)} ↗</a><div class="m"><span>${esc(h.source)}</span><time>${esc(fmtDate(h.published))}</time>${showTag?`<button class="btag" ${BMAP[h.tag]?`data-brand="${esc(h.tag)}"`:''}>${esc(brandName(h.tag))}</button>`:''}</div></li>`).join('')}</ul>${list.length>rows.length?`<button class="more" data-more="1">ดูเพิ่ม (อีก ${list.length-rows.length})</button>`:''}`
+  const body=rows.length?`<ul class="hls">${rows.map(h=>`<li><a href="${esc(safeUrl(h.url))}" target="_blank" rel="noopener noreferrer">${esc(h.title)} ↗</a><div class="m">${h.stype&&STYPE[h.stype]?`<span class="st st-${esc(h.stype)}">${STYPE[h.stype]}</span>`:''}<span>${esc(h.source)}</span><time>${esc(fmtDate(h.published))}</time>${showTag?hlIds(h).map(id=>BMAP[id]?btn(BMAP[id]):`<span class="btag">${esc(brandName(id))}</span>`).join(''):''}</div></li>`).join('')}</ul>${list.length>rows.length?`<button class="more" data-more="1">ดูเพิ่ม (อีก ${list.length-rows.length})</button>`:''}`
    :`<div class="empty" style="border:0;padding:12px">ยังไม่มีพาดหัวที่ดึงอัตโนมัติ ระบบจะเริ่มเก็บในรอบอัปเดตถัดไป</div>`;
-  return `<section class="panel"><h2 class="sec">${esc(title)}</h2><p class="sub">พาดหัวจาก Google News ดึงอัตโนมัติทุกเช้า (เปิดอ่านต้นฉบับที่ลิงก์)</p>${body}</section>`;
+  return `<section class="panel"><h2 class="sec">${esc(title)}</h2><p class="sub">พาดหัวจาก Google News และเว็บที่ติดตามโดยตรง ดึงอัตโนมัติทุกเช้า (เปิดอ่านต้นฉบับที่ลิงก์)</p>${body}</section>`;
 }
 function calendar(brand){
   let ev=state.events.slice();if(brand)ev=ev.filter(e=>(e.brands||[]).includes(brand));
@@ -324,7 +370,7 @@ function renderOverview(){
      ${(day.trends||[]).map((t,i)=>`<div class="trend"><div class="rank">${i+1}</div><div><h3>${esc(t.title)}</h3><p>${esc(t.summary)}</p><div class="tags">${heat(t.heat)}${brandTags(t.brands)}</div>${t.steapex?`<div class="lesson"><b>Steapex เรียนรู้:</b> ${esc(t.steapex)}</div>`:''}${sources(t.sources)}</div></div>`).join('')}</section>`;
   }
   const take=day&&day.takeaway?`<section class="takeaway"><p class="label">สรุปวิเคราะห์ของวันสำหรับ Steapex</p><p>${esc(day.takeaway)}</p>${day.actions&&day.actions.length?`<ul>${day.actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}</section>`:'';
-  const rows=BRANDS.map(b=>{const p=state.brands[b.id]||{};return `<tr data-brand="${b.id}" tabindex="0"><td class="bn">${esc(b.name)}</td><td>${p.momentum?`<span class="mom m-${esc(p.momentum)}">${esc(MOM[p.momentum]||p.momentum)}</span>`:''}</td><td class="hl">${esc(p.headline||'')}</td></tr>`}).join('');
+  const rows=BRANDS.map(b=>{const p=state.brands[b.id]||{};return `<tr data-brand="${b.id}" tabindex="0"><td class="bn">${logo(b)}${esc(b.name)}</td><td>${p.momentum?`<span class="mom m-${esc(p.momentum)}">${esc(MOM[p.momentum]||p.momentum)}</span>`:''}</td><td class="hl">${esc(p.headline||'')}</td></tr>`}).join('');
   const mom=`<section class="panel"><p class="label">สถานะแต่ละแบรนด์</p><div style="overflow-x:auto"><table class="mtable"><tbody>${rows}</tbody></table></div></section>`;
   const hl=headlinesPanel(state.headlines,'พาดหัวข่าวสดล่าสุด',true);
   document.getElementById('view').innerHTML=`<div class="grid2"><div class="stack">${trends||emptyState()}${hl}</div><div class="stack">${take}${calendar()}${mom}</div></div>
@@ -338,9 +384,9 @@ function promptFor(id){
 function renderBrand(){
   const b=BMAP[state.brand],p=state.brands[b.id]||{};
   const list=state.items.filter(i=>i.brand===b.id).sort(sortDesc);
-  const hls=state.headlines.filter(h=>h.tag===b.id);
+  const hls=state.headlines.filter(h=>hlIds(h).includes(b.id));
   document.getElementById('view').innerHTML=`<div class="grid2"><div class="stack">
-    <section class="bhead"><div><p class="label">${esc(b.origin)}</p><h2>${esc(b.name)}</h2>${p.headline?`<p class="hl">${esc(p.headline)}</p>`:''}</div><div>${p.momentum?`<span class="mom m-${esc(p.momentum)}">${esc(MOM[p.momentum]||p.momentum)}</span>`:''}</div></section>
+    <section class="bhead"><div><div class="bid">${logo(b,'xl')}<div><p class="label" style="margin-bottom:4px">${esc(b.origin)}</p><h2>${esc(b.name)}</h2></div></div>${p.headline?`<p class="hl">${esc(p.headline)}</p>`:''}</div><div>${p.momentum?`<span class="mom m-${esc(p.momentum)}">${esc(MOM[p.momentum]||p.momentum)}</span>`:''}</div></section>
     ${list.length?feed(list,false):emptyState()}
     ${headlinesPanel(hls,'พาดหัวข่าวสดของ '+b.name,false)}
    </div><div class="stack">
@@ -349,7 +395,7 @@ function renderBrand(){
    </div></div>`;
 }
 function render(){
-  renderStatus();renderStats();renderBrandbar();
+  renderStatus();renderStats();renderBrandbar();renderSources();
   if(state.load!=='ok'){document.getElementById('view').innerHTML=emptyState();return}
   if(state.brand==='all')renderOverview();else renderBrand();
 }
@@ -364,6 +410,7 @@ document.addEventListener('click',e=>{
   if(t.dataset.kind){state.kind=t.dataset.kind;render();return}
   if(t.dataset.day){state.day=t.dataset.day;render();return}
 });
+document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'){const lg=t.closest&&t.closest('.lg');if(lg){lg.classList.remove('has');t.remove()}}},true);
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const r=e.target.closest&&e.target.closest('tr[data-brand]');if(r)r.click()}});
 document.getElementById('themeBtn').addEventListener('click',()=>{
   const cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');

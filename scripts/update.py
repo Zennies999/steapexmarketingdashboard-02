@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Daily updater for Steapex Market Pulse.
 
-Step 1  ดึงพาดหัวข่าวจาก Google News RSS ตามแบรนด์/ตลาด (ไม่ต้องใช้ API key)
+Step 1  ดึงพาดหัวข่าวจาก (ก) RSS ของเว็บที่เลือกไว้โดยตรง (config.json → "feeds")
+        และ (ข) Google News RSS ตามแบรนด์/ตลาด (ไม่ต้องใช้ API key ทั้งคู่)
 Step 2  (ถ้ามี ANTHROPIC_API_KEY) ให้ Claude คัดข่าวที่เกี่ยวข้อง เขียนสรุปภาษาไทย
         และบทเรียนสำหรับ Steapex แล้วอัปเดต items / daily / brands
 
@@ -10,11 +11,13 @@ Step 2  (ถ้ามี ANTHROPIC_API_KEY) ให้ Claude คัดข่า�
   ANTHROPIC_API_KEY   (ไม่บังคับ) เปิดโหมดวิเคราะห์ด้วย Claude
   ANTHROPIC_MODEL     (ไม่บังคับ) ค่าเริ่มต้น claude-sonnet-5-5
   DRY_RUN=1           ไม่เขียนไฟล์ แสดงผลลัพธ์อย่างเดียว
-  RSS_FIXTURE=path    อ่าน RSS จากไฟล์ (ใช้ทดสอบ)
+  RSS_FIXTURE=path    อ่าน Google News RSS จากไฟล์ (ใช้ทดสอบ)
+  FEED_FIXTURE_DIR=d  อ่าน feeds จาก d/<feed id>.xml (ใช้ทดสอบ)
 """
 import datetime as dt
 import email.utils
 import hashlib
+import html
 import json
 import os
 import re
@@ -28,11 +31,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-UA = "Mozilla/5.0 (compatible; SteapexMarketPulse/1.0; +https://github.com)"
+UA = "Mozilla/5.0 (compatible; SteapexMarketPulse/1.1; RSS reader; +https://github.com)"
 KEEP_HEADLINE_DAYS = 45
 KEEP_ITEMS = 500
 KEEP_DAILY = 30
-MAX_HEADLINES_TO_AI = 90
+MAX_HEADLINES_TO_AI = 120
 KINDS = {"news", "product", "campaign", "finance"}
 MOMENTUM = {"up", "steady", "down", "watch"}
 LOCALES = {
@@ -78,31 +81,65 @@ def rss_url(q, lang, days):
     )
 
 
-def parse_rss(xml_bytes):
+ATOM = "{http://www.w3.org/2005/Atom}"
+
+
+def clean_text(x):
+    x = html.unescape(re.sub(r"<[^>]+>", "", x or ""))
+    return re.sub(r"\s+", " ", x).strip()
+
+
+def parse_date(raw):
+    """RSS (RFC 822) หรือ Atom (ISO 8601) → datetime UTC; อ่านไม่ได้ = ตอนนี้"""
+    try:
+        if raw and re.match(r"\d{4}-\d{2}-\d{2}", raw.strip()):
+            d = dt.datetime.fromisoformat(raw.strip().replace("Z", "+00:00"))
+            if d.tzinfo is None:
+                d = d.replace(tzinfo=dt.timezone.utc)
+            return d.astimezone(dt.timezone.utc)
+        return email.utils.parsedate_to_datetime(raw).astimezone(dt.timezone.utc)
+    except Exception:
+        return dt.datetime.now(dt.timezone.utc)
+
+
+def parse_rss(xml_bytes, default_source="Google News"):
+    """รองรับ RSS 2.0 และ Atom"""
     out = []
     root = ET.fromstring(xml_bytes)
     for it in root.iter("item"):
-        title = (it.findtext("title") or "").strip()
+        title = clean_text(it.findtext("title"))
         link = (it.findtext("link") or "").strip()
-        pub = it.findtext("pubDate")
+        if not link.startswith("http"):
+            g = (it.findtext("guid") or "").strip()
+            link = g if g.startswith("http") else link
         src_el = it.find("source")
-        source = (src_el.text or "").strip() if src_el is not None else ""
+        source = clean_text(src_el.text) if src_el is not None else ""
         if source and title.endswith(" - " + source):
             title = title[: -(len(source) + 3)].strip()
-        try:
-            d = email.utils.parsedate_to_datetime(pub).astimezone(dt.timezone.utc)
-        except Exception:
-            d = dt.datetime.now(dt.timezone.utc)
-        if title and link:
-            out.append({"title": title, "url": link, "source": source or "Google News",
+        d = parse_date(it.findtext("pubDate") or it.findtext("{http://purl.org/dc/elements/1.1/}date"))
+        if title and link.startswith("http"):
+            out.append({"title": title, "url": link, "source": source or default_source,
+                        "published": d.strftime("%Y-%m-%dT%H:%M:%SZ")})
+    for it in root.iter(ATOM + "entry"):
+        title = clean_text(it.findtext(ATOM + "title"))
+        link = ""
+        for l in it.findall(ATOM + "link"):
+            if l.get("rel", "alternate") == "alternate" and l.get("href"):
+                link = l.get("href").strip()
+                break
+        d = parse_date(it.findtext(ATOM + "published") or it.findtext(ATOM + "updated"))
+        if title and link.startswith("http"):
+            out.append({"title": title, "url": link, "source": default_source,
                         "published": d.strftime("%Y-%m-%dT%H:%M:%SZ")})
     return out
 
 
-def fetch_queries(queries, days, tag):
+def fetch_queries(queries, days, tag, stats=None):
     got = []
     fixture = os.environ.get("RSS_FIXTURE")
     for q in queries:
+        if stats is not None:
+            stats["queries"] += 1
         try:
             if fixture:
                 raw = Path(fixture).read_bytes()
@@ -113,9 +150,84 @@ def fetch_queries(queries, days, tag):
                 got.append(h)
         except Exception as e:  # network/parse failures must not kill the whole run
             log(f"  ! {tag} / {q['q']}: {e}")
+            if stats is not None:
+                stats["failed"] += 1
         if not fixture:
             time.sleep(0.6)
     return got
+
+
+# ---------------------------------------------------------------- direct feeds
+def term_regex(term, whole=True):
+    """ตัวอักษรละติน/ตัวเลขต้องไม่ติดกับตัวอักษรอื่น (กัน 'Brooks' ชน 'Brooksby'); ไทย/จีนใช้ substring"""
+    t = term.strip().lower()
+    pre = r"(?<![0-9a-z])" if re.match(r"[0-9a-z]", t[0]) else ""
+    post = r"(?![0-9a-z])" if whole and re.match(r"[0-9a-z]", t[-1]) else ""
+    return re.compile(pre + re.escape(t) + post)
+
+
+def build_matchers(cfg):
+    aliases = []
+    for b in cfg["brands"]:
+        terms = b.get("aliases") or [b["name"]]
+        aliases.append((b["id"], [term_regex(a) for a in terms if a.strip()]))
+    kws = [term_regex(k, whole=False) for k in cfg.get("market_keywords", []) if k.strip()]
+    return aliases, kws
+
+
+def match_brands(text, aliases):
+    t = text.lower()
+    hits = []
+    for bid, rxs in aliases:
+        pos = [m.start() for rx in rxs for m in [rx.search(t)] if m]
+        if pos:
+            hits.append((min(pos), bid))
+    return [b for _, b in sorted(hits)]
+
+
+def fetch_feeds(cfg, days, now):
+    """ดึง RSS ของเว็บที่เลือกไว้ → (รายการพาดหัว, สถานะรายแหล่งสำหรับแสดงบนหน้าเว็บ)"""
+    aliases, kws = build_matchers(cfg)
+    fixture_dir = os.environ.get("FEED_FIXTURE_DIR")
+    cutoff = (now - dt.timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    items, status = [], []
+    for f in cfg.get("feeds", []):
+        if f.get("enabled") is False:
+            continue
+        st = {"id": f["id"], "name": f["name"], "stype": f.get("stype", "media"), "ok": False,
+              "total": 0, "fresh": 0, "kept": 0, "newest": None}
+        try:
+            if fixture_dir:
+                raw = (Path(fixture_dir) / f"{f['id']}.xml").read_bytes()
+            else:
+                raw = http(f["url"], headers={"Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8"})
+            parsed = parse_rss(raw, f["name"])
+            st["ok"] = True
+            st["total"] = len(parsed)
+            if parsed:
+                st["newest"] = max(h["published"] for h in parsed)[:10]
+            for h in parsed:
+                if h["published"] < cutoff:
+                    continue
+                st["fresh"] += 1
+                fixed = f.get("brand")
+                found = match_brands(h["title"], aliases)
+                ids = ([fixed] + [b for b in found if b != fixed]) if fixed else found
+                if f.get("filter", "relevant") == "relevant" and not fixed:
+                    if not ids and not any(rx.search(h["title"].lower()) for rx in kws):
+                        continue
+                h.update({"tag": ids[0] if ids else "market", "tags": ids,
+                          "stype": st["stype"], "via": f["id"]})
+                items.append(h)
+                st["kept"] += 1
+        except Exception as e:  # แหล่งเดียวพังต้องไม่ทำให้ทั้งระบบพัง
+            st["error"] = str(e)[:140]
+            log(f"  ! feed {f['id']}: {e}")
+        status.append(st)
+        log(f"  feed {f['id']}: ok={st['ok']} total={st['total']} fresh={st['fresh']} kept={st['kept']}")
+        if not fixture_dir:
+            time.sleep(0.6)
+    return items, status
 
 
 def norm(t):
@@ -182,10 +294,14 @@ def curate(new_headlines, cfg, today):
     brand_lines = ", ".join(f'{b["id"]}={b["name"]}' for b in cfg["brands"])
     lines = []
     for i, h in enumerate(new_headlines):
-        lines.append(f'[{i}] ({h["tag"]}) {h["published"][:10]} | {h["source"]} | {h["title"]}')
+        tg = "/".join(h.get("tags") or [h["tag"]])
+        if h.get("stype") == "official":
+            tg += ", official"
+        lines.append(f'[{i}] ({tg}) {h["published"][:10]} | {h["source"]} | {h["title"]}')
     prompt = (
         f"วันนี้ {today}\nรายการแบรนด์ (id=ชื่อ): {brand_lines}\n"
-        "แท็กในวงเล็บคือแบรนด์หรือ 'market' ที่คำค้นพบข่าวนั้น (อาจไม่ตรงเนื้อข่าว ให้ตัดสินจากพาดหัว)\n\n"
+        "แท็กในวงเล็บคือแบรนด์หรือ 'market' ที่คำค้นหรือแหล่งข่าวจับคู่ไว้ (อาจไม่ตรงเนื้อข่าว ให้ตัดสินจากพาดหัว)\n"
+        "แท็ก official = พาดหัวจาก newsroom ของแบรนด์เอง เป็นถ้อยแถลงของแบรนด์ ให้เขียนว่าเป็นข้อมูลจากแบรนด์ ไม่ใช่ข้อเท็จจริงที่ยืนยันโดยอิสระ\n\n"
         "พาดหัวข่าวใหม่:\n" + "\n".join(lines) + "\n\n" + SCHEMA_HINT
     )
     out = extract_json(call_claude(prompt))
@@ -260,11 +376,18 @@ def main():
     days = cfg["lookback_days_first_run"] if first_run else cfg["lookback_days_daily"]
     log(f"fetching headlines (last {days} days, first_run={first_run}) …")
 
-    fetched = []
+    # 1) RSS ของเว็บที่เลือกไว้ (มาก่อน เพื่อให้ลิงก์ต้นทางตรงๆ ชนะลิงก์ผ่าน Google News เมื่อข่าวซ้ำกัน)
+    feed_days = cfg.get("feed_lookback_days_first_run", 30) if first_run else cfg.get("feed_lookback_days_daily", 7)
+    log(f"fetching {len(cfg.get('feeds', []))} direct feeds (last {feed_days} days) …")
+    fetched, feed_status = fetch_feeds(cfg, feed_days, now)
+    n_feed = len(fetched)
+
+    # 2) Google News ตามแบรนด์/ตลาด
+    gstats = {"queries": 0, "failed": 0}
     for b in cfg["brands"]:
-        fetched += fetch_queries(b["queries"], days, b["id"])
-    fetched += fetch_queries(cfg["market_queries"], days, "market")
-    log(f"  fetched {len(fetched)} raw headlines")
+        fetched += fetch_queries(b["queries"], days, b["id"], gstats)
+    fetched += fetch_queries(cfg["market_queries"], days, "market", gstats)
+    log(f"  fetched {len(fetched)} raw headlines ({n_feed} from direct feeds)")
 
     new = []
     for h in fetched:
@@ -286,7 +409,8 @@ def main():
 
     meta = load("meta.json", {})
     meta.update({"updatedAt": store["updatedAt"], "newHeadlines": len(new),
-                 "mode": "headlines"})
+                 "mode": "headlines", "sources": feed_status,
+                 "googleNews": {**gstats, "raw": len(fetched) - n_feed}})
 
     if os.environ.get("ANTHROPIC_API_KEY") and new:
         batch = new[:MAX_HEADLINES_TO_AI]
