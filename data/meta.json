@@ -1,8 +1,8 @@
 {
- "updatedAt": "2026-11-22T13:43:11Z",
+ "updatedAt": "2026-11-23T03:55:48Z",
  "mode": "headlines",
  "note": "ข้อมูลตั้งต้นจากเวอร์ชัน claude.ai ก่อนเปิดระบบอัปเดตอัตโนมัติ",
- "newHeadlines": 104,
+ "newHeadlines": 83,
  "sources": [
   {
    "id": "sneakernews",
@@ -23,7 +23,7 @@
    "fresh": 0,
    "kept": 0,
    "newest": null,
-   "error": "no element found: line 1, column 0"
+   "error": "mismatched tag: line 21, column 2"
   },
   {
    "id": "adidas-sports",
@@ -34,7 +34,7 @@
    "fresh": 0,
    "kept": 0,
    "newest": null,
-   "error": "no element found: line 1, column 0"
+   "error": "mismatched tag: line 21, column 2"
   },
   {
    "id": "adidas-brands",
@@ -45,7 +45,7 @@
    "fresh": 0,
    "kept": 0,
    "newest": null,
-   "error": "no element found: line 1, column 0"
+   "error": "mismatched tag: line 21, column 2"
   },
   {
    "id": "sanook-economic",
@@ -90,7 +90,7 @@
  ],
  "googleNews": {
   "queries": 37,
-  "failed": 0,
-  "raw": 512
+  "failed": 1,
+  "raw": 489
  }
 }
