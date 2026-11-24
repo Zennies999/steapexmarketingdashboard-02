@@ -1,8 +1,8 @@
 {
- "updatedAt": "2026-11-23T03:55:48Z",
+ "updatedAt": "2026-11-24T07:03:38Z",
  "mode": "headlines",
  "note": "ข้อมูลตั้งต้นจากเวอร์ชัน claude.ai ก่อนเปิดระบบอัปเดตอัตโนมัติ",
- "newHeadlines": 83,
+ "newHeadlines": 239,
  "sources": [
   {
    "id": "sneakernews",
@@ -11,8 +11,8 @@
    "ok": true,
    "total": 7,
    "fresh": 7,
-   "kept": 7,
-   "newest": "2026-11-22"
+   "kept": 6,
+   "newest": "2026-11-23"
   },
   {
    "id": "adidas-running",
@@ -53,9 +53,9 @@
    "stype": "media",
    "ok": true,
    "total": 10,
-   "fresh": 0,
+   "fresh": 2,
    "kept": 0,
-   "newest": "2026-11-10"
+   "newest": "2026-11-23"
   },
   {
    "id": "believeintherun",
@@ -65,7 +65,7 @@
    "total": 12,
    "fresh": 12,
    "kept": 12,
-   "newest": "2026-11-20"
+   "newest": "2026-11-23"
   },
   {
    "id": "runningshoesguru",
@@ -85,12 +85,12 @@
    "total": 8,
    "fresh": 8,
    "kept": 0,
-   "newest": "2026-11-20"
+   "newest": "2026-11-23"
   }
  ],
  "googleNews": {
   "queries": 37,
-  "failed": 1,
-  "raw": 489
+  "failed": 0,
+  "raw": 486
  }
 }
