@@ -285,6 +285,7 @@ dialog::backdrop{background:rgba(5,3,2,.6);backdrop-filter:blur(3px)}
 .cmt{background:var(--panel2);border-radius:12px;padding:8px 12px;font-size:13.5px}
 .cmt small{color:var(--muted)}
 
+iframe.gcal{width:100%;height:max(620px,calc(100vh - 250px));border:1px solid var(--line);border-radius:var(--r);background:#fff;display:block}
 iframe.mr{width:100%;height:calc(100vh - 170px);min-height:560px;border:1px solid var(--line);border-radius:var(--r);background:#fff}
 
 /* Responsive shell */
@@ -794,7 +795,29 @@ function calItems(from,to){const out=[];const inr=d=>d>=from&&d<=to;
   S.campaigns.forEach(c=>{if(inr(c.start))out.push({d:c.start,tm:'',l:'เริ่ม: '+c.name,k:'campaign',cls:'t-campaign',act:'camp-edit',id:c.id});if(inr(c.end))out.push({d:c.end,tm:'',l:'จบ: '+c.name,k:'campaign',cls:'t-campaign',act:'camp-edit',id:c.id})});
   return out.sort((a,b)=>(a.d+a.tm).localeCompare(b.d+b.tm));}
 const evBtn=i=>`<button class="ev ${i.cls}" data-act="${i.act}" data-id="${i.id}" title="${esc(i.l)}">${i.tm?`<span class="tm">${esc(i.tm)}</span>`:''}${esc(i.l)}</button>`;
+/* ---- Google Calendar embed (วิธี C) : เก็บการตั้งค่าในเบราว์เซอร์ของแต่ละคนเท่านั้น ไม่อยู่ใน repo ---- */
+const GKEY='sos-gcal';
+function gcalCfg(){try{return JSON.parse(localStorage.getItem(GKEY)||'null')}catch(e){return null}}
+function parseGcal(raw){raw=String(raw||'').trim();const m=raw.match(/src=["']([^"']+)["']/i);if(m)raw=m[1].replace(/&amp;/g,'&');
+  if(/^https:\/\/calendar\.google\.com\/calendar\/(u\/\d+\/)?embed\?/i.test(raw))return {url:raw};
+  const ids=raw.split(/[\s,]+/).filter(Boolean);if(ids.length&&ids.length<=10&&ids.every(x=>/^[^\s@<>"'&?]+@[^\s@<>"'&?]+\.[^\s@<>"'&?]+$/.test(x)))return {ids};return null}
+function gcalSrc(c,mode){if(c.url){const u=new URL(c.url);u.searchParams.set('mode',mode);if(!u.searchParams.get('ctz'))u.searchParams.set('ctz','Asia/Bangkok');return u.toString()}
+  const p=new URLSearchParams({ctz:'Asia/Bangkok',mode,showPrint:'0',showTitle:'0',wkst:'2'});c.ids.forEach(id=>p.append('src',id));return 'https://calendar.google.com/calendar/embed?'+p}
+function pGcal(){const c=gcalCfg(),mode=(c&&c.mode)||'WEEK';
+  const help=`<div class="note" style="margin-top:12px"><b>วิธีเอาค่าจาก Google Calendar:</b> เปิด calendar.google.com บนคอม → ไอคอนเฟือง → การตั้งค่า → เลือกปฏิทินทางซ้ายใต้ “การตั้งค่าสำหรับปฏิทินของฉัน” → เลื่อนลงหา “ผสานรวมปฏิทิน” (Integrate calendar) → คัดลอก <b>รหัสปฏิทิน</b> (Calendar ID เช่น อีเมลของคุณ) หรือ <b>โค้ดสำหรับฝัง</b> (Embed code) มาวาง<br><br>
+    <b>ใครจะเห็นอะไร:</b> หน้านี้แสดงผ่านบัญชี Google ของคนที่เปิดดู ปฏิทินส่วนตัวจะเห็นกิจกรรมเฉพาะคนที่ล็อกอิน Google ในเบราว์เซอร์นั้นและมีสิทธิ์ดูปฏิทินนั้น คนอื่นจะไม่เห็นรายละเอียด ถ้าต้องการให้ Supervisor เห็นด้วย ให้แชร์ปฏิทินให้อีเมลของเขาใน Google Calendar ก่อน (อย่าตั้งปฏิทินเป็นสาธารณะ)<br><br>
+    <b>การตั้งค่านี้เก็บในเบราว์เซอร์เครื่องนี้เท่านั้น</b> ไม่ขึ้นไปบน GitHub และไม่รวมในไฟล์ส่งออก แต่ละคนตั้งเองได้ · ห้ามวาง “ที่อยู่ลับในรูปแบบ iCal” (Secret address) ที่นี่ ใช้รหัสปฏิทินหรือโค้ดฝังเท่านั้น</div>`;
+  if(!c||sub.gEdit){const cur=c?(c.url||c.ids.join('\n')):'';
+    return `<section class="card"><h2>${ic('cal')} เชื่อม Google Calendar (แสดงในหน้านี้)</h2><p class="sub">วางรหัสปฏิทิน (บรรทัดละ 1 ปฏิทิน รวมหลายปฏิทินได้สูงสุด 10) หรือโค้ดฝังทั้งก้อนจาก Google Calendar</p>
+      <form id="gForm" style="display:grid;gap:12px"><label class="f w"><span>รหัสปฏิทิน หรือ โค้ดฝัง</span><textarea name="raw" rows="4" placeholder="เช่น yourname@gmail.com&#10;หรือ abc123@group.calendar.google.com&#10;หรือ <iframe src=&quot;https://calendar.google.com/calendar/embed?src=...&quot;></iframe>">${esc(cur)}</textarea></label>
+      <label class="f" style="max-width:260px"><span>มุมมองเริ่มต้น</span><select name="mode">${[['WEEK','สัปดาห์'],['MONTH','เดือน'],['AGENDA','รายการ (Agenda)']].map(([k,l])=>`<option value="${k}" ${mode===k?'selected':''}>${l}</option>`).join('')}</select></label>
+      <div class="row"><button class="btn primary" type="submit">บันทึกและแสดงปฏิทิน</button>${c?'<button class="btn ghost" type="button" data-act="g-cancel">ยกเลิก</button>':''}</div></form>${help}</section>`}
+  return `<div class="toolbar"><div class="seg">${[['WEEK','สัปดาห์'],['MONTH','เดือน'],['AGENDA','รายการ']].map(([k,l])=>`<button aria-pressed="${mode===k}" data-act="g-mode" data-id="${k}">${l}</button>`).join('')}</div><span class="small muted">${c.url?'จากโค้ดฝัง':c.ids.length+' ปฏิทิน'}</span><span class="sp"></span>
+    <a class="btn" href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener noreferrer">${ic('ext',15)} เปิด Google Calendar</a><button class="btn" data-act="g-edit">${ic('edit',15)} เปลี่ยนปฏิทิน</button><button class="btn danger" data-act="g-remove">ยกเลิกการเชื่อม</button></div>
+    <iframe class="gcal" src="${esc(gcalSrc(c,mode))}" title="Google Calendar" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <p class="small muted" style="margin-top:10px">ถ้าเห็นปฏิทินว่างหรือขึ้นให้ขอสิทธิ์: ตรวจว่าล็อกอิน Google ในเบราว์เซอร์นี้ด้วยบัญชีที่มีสิทธิ์ดูปฏิทิน และเบราว์เซอร์ไม่ได้บล็อกคุกกี้บุคคลที่สาม (third-party cookies) · กิจกรรมใน Google ยังไม่ถูกนำมารวมกับรายการของระบบนี้ (ต้องรอระบบล็อกอิน)</p>`}
 function pCalendar(){
+  if(UI.calView==='google')return `<div class="toolbar"><div class="seg">${[['day','Daily'],['week','Weekly'],['month','Monthly'],['google','Google Calendar']].map(([k,l])=>`<button aria-pressed="${UI.calView===k}" data-act="cview" data-id="${k}">${l}</button>`).join('')}</div></div>`+pGcal();
   const ref=UI.calRef,T=today(),v=UI.calView;let body='',label='';
   if(v==='month'){const d=new Date(ref+'T00:00:00');const first=iso(new Date(d.getFullYear(),d.getMonth(),1)),last=iso(new Date(d.getFullYear(),d.getMonth()+1,0));const s=weekStart(first);const e=addDays(weekStart(last),6);const items=calItems(s,e);label=THM.format(d);
     let cells='';for(let x=s;x<=e;x=addDays(x,1)){const its=items.filter(i=>i.d===x);cells+=`<div class="dc ${x.slice(0,7)!==first.slice(0,7)?'out':''} ${x===T?'today':''}"><span class="dn">${Number(x.slice(8))}</span>${its.slice(0,4).map(evBtn).join('')}${its.length>4?`<button class="ev" data-act="cal-day" data-id="${x}">+${its.length-4} รายการ</button>`:''}</div>`}
@@ -803,10 +826,10 @@ function pCalendar(){
     body=`<div class="wgrid">${[0,1,2,3,4,5,6].map(i=>{const x=addDays(s,i),its=items.filter(it=>it.d===x);return `<div class="wday ${x===T?'today':''}"><h4>${new Intl.DateTimeFormat('th-TH',{weekday:'short'}).format(new Date(x+'T00:00:00'))}<b>${Number(x.slice(8))}</b></h4>${its.map(evBtn).join('')||'<span class="dim small">ว่าง</span>'}<button class="btn sm ghost" data-act="sch-new" data-id="${x}" style="margin-top:auto">${ic('plus',13)} เพิ่ม</button></div>`}).join('')}</div>`}
   else{const its=calItems(ref,ref);label=THL.format(new Date(ref+'T00:00:00'));
     body=`<div class="card"><ul class="list">${its.map(i=>`<li class="click" data-act="${i.act}" data-id="${i.id}"><span class="mono small muted" style="width:48px;flex:none">${esc(i.tm||'—')}</span><span class="t" style="flex:1">${esc(i.l)}</span><span class="pill">${{schedule:'กำหนดการ',task:'งาน',content:'คอนเทนต์',live:'LIVE',event:'อีเวนต์',campaign:'แคมเปญ'}[i.k]}</span></li>`).join('')||'<li class="muted">ไม่มีรายการ</li>'}</ul></div>`}
-  return `<div class="toolbar"><div class="seg">${[['day','Daily'],['week','Weekly'],['month','Monthly']].map(([k,l])=>`<button aria-pressed="${v===k}" data-act="cview" data-id="${k}">${l}</button>`).join('')}</div>
+  return `<div class="toolbar"><div class="seg">${[['day','Daily'],['week','Weekly'],['month','Monthly'],['google','Google Calendar']].map(([k,l])=>`<button aria-pressed="${v===k}" data-act="cview" data-id="${k}">${l}</button>`).join('')}</div>
    <button class="btn sm" data-act="cnav" data-id="-1" aria-label="ก่อนหน้า">${ic('left',15)}</button><button class="btn sm" data-act="cnav" data-id="0">วันนี้</button><button class="btn sm" data-act="cnav" data-id="1" aria-label="ถัดไป">${ic('right',15)}</button><b>${esc(label)}</b><span class="sp"></span><button class="btn primary" data-act="sch-new">${ic('plus',15)} เพิ่มกำหนดการ</button></div>
    <div class="lg-row" style="margin-bottom:12px"><span><i style="background:var(--accent)"></i>กำหนดการ/ประชุม</span><span><i style="background:var(--info)"></i>เดดไลน์งาน</span><span><i style="background:var(--vio)"></i>คอนเทนต์</span><span><i style="background:var(--bad)"></i>LIVE</span><span><i style="background:var(--ok)"></i>อีเวนต์</span><span><i style="background:var(--warn)"></i>แคมเปญ</span></div>${body}
-   <p class="small muted" style="margin-top:12px">ยังไม่ได้ซิงก์กับ Google Calendar (อยู่ใน Phase 3 · Integrations) ตอนนี้แสดงรายการที่บันทึกในระบบนี้</p>`;
+   <p class="small muted" style="margin-top:12px">มุมมองนี้แสดงรายการที่บันทึกในระบบนี้ · ดูปฏิทิน Google ของคุณได้ที่แท็บ “Google Calendar” ด้านบน</p>`;
 }
 
 /* ---------------- 04 Campaign & Event ---------------- */
@@ -965,6 +988,9 @@ function render(){
   const m=MOD[route];$('#pageTitle').textContent=m.t;$('#eyebrow').textContent=(m.n==='MR'?'':'Module '+m.n+' · ')+m.th;document.title=m.t+' · Steapex Marketing OS';
   renderNav();
   try{$('#view').innerHTML=PAGES[route]()}catch(e){console.error(e);$('#view').innerHTML=`<div class="empty">หน้านี้แสดงผลไม่ได้: ${esc(e.message)}<br><button class="btn" data-act="reset" style="margin-top:10px">รีเซ็ตข้อมูลตัวอย่าง</button></div>`}
+  const gf=$('#gForm');if(gf)gf.onsubmit=e=>{e.preventDefault();const raw=gf.raw.value;if(/\/ical\/|private-[0-9a-f]+|basic\.ics/i.test(raw)){toast('นี่คือที่อยู่ลับ (Secret iCal) ห้ามใช้ที่นี่ ใช้รหัสปฏิทินหรือโค้ดฝังแทน');return}
+    const c=parseGcal(raw);if(!c){toast('รูปแบบไม่ถูกต้อง: วางรหัสปฏิทิน (มี @) หรือโค้ดฝังจาก calendar.google.com');return}
+    c.mode=gf.mode.value;try{localStorage.setItem(GKEY,JSON.stringify(c))}catch(_){toast('บันทึกในเบราว์เซอร์ไม่ได้');return}sub.gEdit=false;toast('เชื่อม Google Calendar แล้ว');render()};
   const imp=$('#importFile');if(imp)imp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.v!==1||!Array.isArray(o.tasks))throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');S=o;save();toast('นำเข้าข้อมูลแล้ว');render()}catch(err){toast('นำเข้าไม่ได้: '+err.message)}};r.readAsText(f)};
 }
 
@@ -990,7 +1016,11 @@ document.addEventListener('click',e=>{
    case 'task-move':{const t=taskById(id);$('#dlg').close();setTaskStatus(t,el.dataset.st);break}
    case 'sch-new':schForm(null,id?{date:id}:{});break;
    case 'sch-edit':schForm(S.schedule.find(x=>x.id===id));break;
-   case 'cview':UI.calView=id;render();break;
+   case 'cview':UI.calView=id;sub.gEdit=false;render();break;
+   case 'g-mode':{const c=gcalCfg();if(c){c.mode=id;try{localStorage.setItem(GKEY,JSON.stringify(c))}catch(_){}}render();break}
+   case 'g-edit':sub.gEdit=true;render();break;
+   case 'g-cancel':sub.gEdit=false;render();break;
+   case 'g-remove':if(confirm('ยกเลิกการเชื่อม Google Calendar ในเบราว์เซอร์นี้?')){try{localStorage.removeItem(GKEY)}catch(_){}sub.gEdit=false;render()}break;
    case 'cnav':{if(id==='0')UI.calRef=T;else{const n=+id;UI.calRef=UI.calView==='month'?(()=>{const d=new Date(UI.calRef+'T00:00:00');return iso(new Date(d.getFullYear(),d.getMonth()+n,1))})():addDays(UI.calRef,UI.calView==='week'?7*n:n)}render();break}
    case 'cal-day':UI.calView='day';UI.calRef=id;render();break;
    case 'ctab':UI.campTab=id;render();break;
