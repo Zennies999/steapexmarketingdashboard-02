@@ -1,8 +1,8 @@
 {
- "updatedAt": "2026-11-26T05:22:15Z",
+ "updatedAt": "2026-11-27T05:16:42Z",
  "mode": "headlines",
  "note": "ข้อมูลตั้งต้นจากเวอร์ชัน claude.ai ก่อนเปิดระบบอัปเดตอัตโนมัติ",
- "newHeadlines": 204,
+ "newHeadlines": 159,
  "sources": [
   {
    "id": "sneakernews",
@@ -11,7 +11,7 @@
    "ok": true,
    "total": 7,
    "fresh": 7,
-   "kept": 4,
+   "kept": 7,
    "newest": "2026-11-26"
   },
   {
@@ -65,7 +65,7 @@
    "total": 12,
    "fresh": 12,
    "kept": 12,
-   "newest": "2026-11-25"
+   "newest": "2026-11-26"
   },
   {
    "id": "runningshoesguru",
@@ -90,7 +90,7 @@
  ],
  "googleNews": {
   "queries": 37,
-  "failed": 0,
-  "raw": 714
+  "failed": 2,
+  "raw": 609
  }
 }
