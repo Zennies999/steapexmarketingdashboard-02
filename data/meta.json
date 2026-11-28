@@ -1,8 +1,8 @@
 {
- "updatedAt": "2026-11-27T05:16:42Z",
+ "updatedAt": "2026-11-28T04:54:41Z",
  "mode": "headlines",
  "note": "ข้อมูลตั้งต้นจากเวอร์ชัน claude.ai ก่อนเปิดระบบอัปเดตอัตโนมัติ",
- "newHeadlines": 159,
+ "newHeadlines": 228,
  "sources": [
   {
    "id": "sneakernews",
@@ -11,8 +11,8 @@
    "ok": true,
    "total": 7,
    "fresh": 7,
-   "kept": 7,
-   "newest": "2026-11-26"
+   "kept": 6,
+   "newest": "2026-11-28"
   },
   {
    "id": "adidas-running",
@@ -63,9 +63,9 @@
    "stype": "review",
    "ok": true,
    "total": 12,
-   "fresh": 12,
-   "kept": 12,
-   "newest": "2026-11-26"
+   "fresh": 10,
+   "kept": 10,
+   "newest": "2026-11-27"
   },
   {
    "id": "runningshoesguru",
@@ -85,12 +85,12 @@
    "total": 8,
    "fresh": 8,
    "kept": 0,
-   "newest": "2026-11-25"
+   "newest": "2026-11-27"
   }
  ],
  "googleNews": {
   "queries": 37,
-  "failed": 2,
-  "raw": 609
+  "failed": 0,
+  "raw": 635
  }
 }
